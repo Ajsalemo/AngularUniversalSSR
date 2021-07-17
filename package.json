@@ -10,7 +10,6 @@
     "dev:ssr": "ng run AngularUniversalSSR:serve-ssr",
     "serve:ssr": "node dist/AngularUniversalSSR/server/main.js",
     "build:ssr": "ng build && ng run AngularUniversalSSR:server",
-    "build-prod:ssr": "ng build && ng run AngularUniversalSSR:server",
     "prerender": "ng run AngularUniversalSSR:prerender"
   },
   "private": true,
