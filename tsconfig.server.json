@@ -5,10 +5,6 @@
     "outDir": "./out-tsc/server",
     "target": "es2019",
     "types": ["node"],
-    "baseUrl": "src",
-    "paths": {
-      "@components/*": ["app/components/**"]
-    }
   },
   "files": ["src/main.server.ts", "server.ts"],
   "angularCompilerOptions": {
