@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && ng run AngularUniversalSSR:server",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run AngularUniversalSSR:serve-ssr",
@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "~12.1.2",
     "@angular/platform-server": "~12.1.2",
     "@angular/router": "~12.1.2",
+    "@ngneat/tailwind": "^7.0.3",
     "@nguniversal/express-engine": "^12.1.0",
     "express": "^4.15.2",
     "rxjs": "~6.6.0",
@@ -36,6 +37,8 @@
     "@angular/cli": "~12.1.2",
     "@angular/compiler-cli": "~12.1.2",
     "@nguniversal/builders": "^12.1.0",
+    "@tailwindcss/forms": "0.3.3",
+    "@tailwindcss/typography": "0.4.1",
     "@types/express": "^4.17.0",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
@@ -45,6 +48,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "tailwindcss": "2.2.4",
     "typescript": "~4.3.2"
   }
 }
