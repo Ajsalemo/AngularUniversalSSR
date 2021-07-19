@@ -10,7 +10,14 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: (theme) => ({
+        "main-background-placeholder": "url('/assets/images/beach.jpg')",
+      }),
+      width: {
+        "1/7": "14%",
+      },
+    },
   },
   variants: {
     extend: {},

@@ -4,10 +4,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from '@components/app-root/app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
-import { SideNavComponent } from '@components/side-nav/side-nav.component';
+import { ContentEntrypointComponent } from '@components/content-entrypoint/content-entrypoint.component';
 
 @NgModule({
-  declarations: [AppComponent, SideNavComponent],
+  declarations: [AppComponent, ContentEntrypointComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
