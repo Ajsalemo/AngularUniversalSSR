@@ -15,6 +15,11 @@
       hover:border-gray-500
     "
   >
-    <span>{{ sidenavOption.text }}</span>
+    <mat-icon
+      aria-hidden="false"
+      [attr.aria-label]="sidenavOption.ariaLabelText"
+      class="text-sm"
+      >{{ sidenavOption.icon }}</mat-icon
+    ><span>{{ sidenavOption.text }}</span>
   </div>
 </div>
