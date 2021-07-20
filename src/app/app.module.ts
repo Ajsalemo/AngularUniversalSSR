@@ -5,9 +5,10 @@ import { AppComponent } from '@components/app-root/app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { ContentEntrypointComponent } from '@components/content-entrypoint/content-entrypoint.component';
+import { AvatarComponent } from './avatar/avatar.component';
 
 @NgModule({
-  declarations: [AppComponent, ContentEntrypointComponent],
+  declarations: [AppComponent, ContentEntrypointComponent, AvatarComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
