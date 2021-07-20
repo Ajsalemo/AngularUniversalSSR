@@ -1,0 +1,20 @@
+<div
+  class="flex flex-col cursor-default"
+  *ngFor="let sidenavOption of sidenavOptionLinks"
+>
+  <div
+    class="
+      h-8
+      hover:bg-gray-700
+      pl-4
+      flex
+      items-center
+      text-gray-300
+      w-full
+      border-l-2 border-transparent
+      hover:border-gray-500
+    "
+  >
+    <span>{{ sidenavOption.text }}</span>
+  </div>
+</div>
