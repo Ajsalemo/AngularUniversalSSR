@@ -23,19 +23,19 @@ export class SidenavOptionsComponent implements OnInit {
     {
       text: 'Planned',
       link: 'TBD',
-      icon: 'flare',
+      icon: 'event',
       ariaLabelText: 'Planned Tasks icon',
     },
     {
       text: 'Assigned To You',
       link: 'TBD',
-      icon: 'flare',
+      icon: 'person_outline',
       ariaLabelText: 'Assigned Tasks icon',
     },
     {
       text: 'Tasks',
       link: 'TBD',
-      icon: 'flare',
+      icon: 'home',
       ariaLabelText: 'Normal Tasks icon',
     },
   ];
