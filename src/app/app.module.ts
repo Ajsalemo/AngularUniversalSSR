@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from '@components/app-root/app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material.module';
-import { ContentEntrypointComponent } from '@components/content-entrypoint/content-entrypoint.component';
+import { AppComponent } from '@components/app-root/app.component';
 import { AvatarComponent } from '@components/avatar/avatar.component';
-import { SidenavOptionsComponent } from '@components/sidenav-options/sidenav-options.component';
+import { ContentEntrypointComponent } from '@components/content-entrypoint/content-entrypoint.component';
+import { LeftSidenavOptionsComponent } from '@components/left-sidenav-options/left-sidenav-options.component';
+import { AppRoutingModule } from './app-routing.module';
+import { MaterialModule } from './material.module';
+import { RightSidenavTitleComponent } from './components/right-sidenav-title/right-sidenav-title.component';
 
 @NgModule({
-  declarations: [AppComponent, ContentEntrypointComponent, AvatarComponent, SidenavOptionsComponent],
+  declarations: [AppComponent, ContentEntrypointComponent, AvatarComponent, LeftSidenavOptionsComponent, RightSidenavTitleComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
