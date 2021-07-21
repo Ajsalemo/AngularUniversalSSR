@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './content-entrypoint.component.html',
 })
 export class ContentEntrypointComponent implements OnInit {
+  // Boolean to open/close the right-hand sidenav
+  isOpen: boolean = false;
   constructor() {}
 
   ngOnInit(): void {}

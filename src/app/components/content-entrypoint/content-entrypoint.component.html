@@ -6,9 +6,15 @@
     <div class="h-10 w-5/6 border-b-2 border-gray-500 mx-auto"></div>
   </mat-sidenav>
   <mat-sidenav-content class="bg-main-background-placeholder"
-    >Main content</mat-sidenav-content
-  >
-  <mat-sidenav mode="side" position="end" class="w-1/6 bg-gray-800" closed
+    >Main content
+    <button (click)="isOpen = !isOpen">X {{ isOpen }}</button>
+    <!-- Placeholder button to open/close the sidenav (2) -->
+  </mat-sidenav-content>
+  <mat-sidenav
+    mode="side"
+    position="end"
+    class="w-1/6 bg-gray-800"
+    [(opened)]="isOpen"
     >Sidenav content 2</mat-sidenav
   >
 </mat-sidenav-container>
