@@ -1,8 +1,12 @@
 <mat-sidenav-container class="h-full">
-  <mat-sidenav mode="side" position="start" class="w-1/7 bg-gray-800" opened
+  <mat-sidenav
+    mode="side"
+    position="start"
+    class="w-1/7 bg-gray-800 border-r-2 border-black"
+    opened
     ><div class="text-gray-400 p-2 mb-2">To Do</div>
     <app-avatar></app-avatar>
-    <app-sidenav-options></app-sidenav-options>
+    <app-left-sidenav-options></app-left-sidenav-options>
     <div class="h-10 w-5/6 border-b-2 border-gray-500 mx-auto"></div>
   </mat-sidenav>
   <mat-sidenav-content class="bg-main-background-placeholder"
@@ -15,6 +19,6 @@
     position="end"
     class="w-1/6 bg-gray-800"
     [(opened)]="isOpen"
-    >Sidenav content 2</mat-sidenav
-  >
+    ><app-right-sidenav-title></app-right-sidenav-title
+  ></mat-sidenav>
 </mat-sidenav-container>

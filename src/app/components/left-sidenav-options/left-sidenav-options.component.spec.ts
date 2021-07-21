@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidenavOptionsComponent } from './sidenav-options.component';
+import { LeftSidenavOptionsComponent } from './left-sidenav-options.component';
 
-describe('SidenavOptionsComponent', () => {
-  let component: SidenavOptionsComponent;
-  let fixture: ComponentFixture<SidenavOptionsComponent>;
+describe('LeftSidenavOptionsComponent', () => {
+  let component: LeftSidenavOptionsComponent;
+  let fixture: ComponentFixture<LeftSidenavOptionsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SidenavOptionsComponent ]
+      declarations: [ LeftSidenavOptionsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SidenavOptionsComponent);
+    fixture = TestBed.createComponent(LeftSidenavOptionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

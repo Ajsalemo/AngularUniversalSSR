@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-sidenav-options',
-  templateUrl: './sidenav-options.component.html',
+  selector: 'app-left-sidenav-options',
+  templateUrl: './left-sidenav-options.component.html',
 })
-export class SidenavOptionsComponent implements OnInit {
+export class LeftSidenavOptionsComponent implements OnInit {
   constructor() {}
 
   sidenavOptionLinks: any[] = [
