@@ -10,7 +10,13 @@ import { MaterialModule } from './material.module';
 import { RightSidenavTitleComponent } from './components/right-sidenav-title/right-sidenav-title.component';
 
 @NgModule({
-  declarations: [AppComponent, ContentEntrypointComponent, AvatarComponent, LeftSidenavOptionsComponent, RightSidenavTitleComponent],
+  declarations: [
+    AppComponent,
+    ContentEntrypointComponent,
+    AvatarComponent,
+    LeftSidenavOptionsComponent,
+    RightSidenavTitleComponent,
+  ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
