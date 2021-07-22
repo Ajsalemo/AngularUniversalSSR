@@ -19,6 +19,13 @@
     position="end"
     class="w-1/6 bg-gray-800"
     [(opened)]="isOpen"
-    ><app-right-sidenav-title></app-right-sidenav-title
-  ></mat-sidenav>
+    ><app-right-sidenav-title></app-right-sidenav-title>
+    <div
+      class="bg-gray-700 border-t-2 border-gray-600 absolute bottom-0 w-full"
+    >
+      <button (click)="isOpen = !isOpen" aria-label="Close sidenav button">
+        <mat-icon class="text-gray-400">arrow_forward_ios</mat-icon>
+      </button>
+    </div>
+  </mat-sidenav>
 </mat-sidenav-container>
