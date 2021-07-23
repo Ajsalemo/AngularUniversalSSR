@@ -21,12 +21,15 @@
       </button>
       <!-- Button to open the themes menu -->
       <button
-        (click)="isOpen = !isOpen"
         aria-label="Open suggestions"
         class="p-1 mr-2 my-2 bg-gray-800"
+        [matMenuTriggerFor]="menu"
       >
         <mat-icon class="text-white text-sm">more_horiz</mat-icon>
       </button>
+      <mat-menu #menu="matMenu" class="border-gray-700 border-2 bg-gray-800">
+        <div class="text-gray-300 ml-2">Theme</div>
+      </mat-menu>
     </div>
   </mat-sidenav-content>
   <mat-sidenav
