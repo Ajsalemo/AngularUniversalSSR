@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { themeApiArray } from '@api/themeApi';
 
 @Component({
   selector: 'app-content-entrypoint',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class ContentEntrypointComponent implements OnInit {
   // Boolean to open/close the right-hand sidenav
   isOpen: boolean = true;
+  backgroundTheme = themeApiArray
   constructor() {}
 
   ngOnInit(): void {}
