@@ -29,8 +29,10 @@
       </button>
       <mat-menu #menu="matMenu" class="border-gray-700 border-2 bg-gray-800">
         <div class="text-gray-300 ml-2">Theme</div>
-        <div *ngFor="let theme of backgroundTheme">
-          <div class="{{ theme.classes }} w-8 h-8">{{ theme.classes }}</div>
+        <div class="grid grid-cols-5 gap-4 pl-2 pr-2">
+          <div *ngFor="let theme of backgroundTheme">
+            <div class="{{ theme.classes }} w-8 h-8"></div>
+          </div>
         </div>
       </mat-menu>
     </div>
