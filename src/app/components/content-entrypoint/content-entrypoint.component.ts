@@ -11,5 +11,9 @@ export class ContentEntrypointComponent implements OnInit {
   backgroundTheme = themeApiArray
   constructor() {}
 
+  setBackgroundTheme(theme: string): any {
+    console.log(theme)
+  }
+
   ngOnInit(): void {}
 }

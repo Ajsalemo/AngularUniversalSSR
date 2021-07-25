@@ -31,7 +31,7 @@
         <div class="text-gray-300 ml-2">Theme</div>
         <div class="grid grid-cols-5 gap-4 pl-2 pr-2">
           <div *ngFor="let theme of backgroundTheme">
-            <div class="{{ theme.classes }} w-8 h-8"></div>
+            <button class="{{ theme.classes }} w-8 h-8 border-2 border-white hover:border-gray-300" (click)="setBackgroundTheme(theme.classes)"></button>
           </div>
         </div>
       </mat-menu>
