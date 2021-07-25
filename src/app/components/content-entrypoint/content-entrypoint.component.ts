@@ -8,11 +8,13 @@ import { themeApiArray } from '@api/themeApi';
 export class ContentEntrypointComponent implements OnInit {
   // Boolean to open/close the right-hand sidenav
   isOpen: boolean = true;
-  backgroundTheme = themeApiArray
+  backgroundTheme = themeApiArray;
+  userSelectedTheme: string = '';
   constructor() {}
 
   setBackgroundTheme(theme: string): any {
-    console.log(theme)
+    // Sets the user selected background theme
+    this.userSelectedTheme = theme;
   }
 
   ngOnInit(): void {}

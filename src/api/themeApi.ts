@@ -36,4 +36,19 @@ export const themeApiArray: any[] = [
   {
     classes: 'bg-purple-300',
   },
+  {
+    classes: 'bg-beach bg-cover',
+  },
+  {
+    classes: 'bg-desert bg-cover',
+  },
+  {
+    classes: 'bg-waves bg-cover',
+  },
+  {
+    classes: 'bg-mountain bg-cover',
+  },
+  {
+    classes: 'bg-leaves bg-cover',
+  },
 ];

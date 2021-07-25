@@ -12,7 +12,11 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: (theme) => ({
-        "main-background-placeholder": "url('/assets/images/beach.jpg')",
+        "beach": "url('/assets/images/beach.jpg')",
+        "desert": "url('/assets/images/desert.jpg')",
+        "waves": "url('/assets/images/waves.jpg')",
+        "mountain": "url('/assets/images/mountain.jpg')",
+        "leaves": "url('/assets/images/leaves.jpg')",
       }),
       width: {
         "1/7": "14%",

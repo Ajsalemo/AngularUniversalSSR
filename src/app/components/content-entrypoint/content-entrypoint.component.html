@@ -9,7 +9,13 @@
     <app-left-sidenav-options></app-left-sidenav-options>
     <div class="h-10 w-5/6 border-b-2 border-gray-500 mx-auto"></div>
   </mat-sidenav>
-  <mat-sidenav-content class="bg-main-background-placeholder">
+  <mat-sidenav-content
+    [class]="
+      userSelectedTheme !== ''
+        ? userSelectedTheme
+        : 'bg-beach'
+    "
+  >
     <div class="flex justify-end">
       <!-- Button to close the sidenav -->
       <button
@@ -31,7 +37,12 @@
         <div class="text-gray-300 ml-2">Theme</div>
         <div class="grid grid-cols-5 gap-4 pl-2 pr-2">
           <div *ngFor="let theme of backgroundTheme">
-            <button class="{{ theme.classes }} w-8 h-8 border-2 border-white hover:border-gray-300" (click)="setBackgroundTheme(theme.classes)"></button>
+            <div
+              class="{{
+                theme.classes
+              }} w-8 h-8 border-2 border-white hover:border-gray-300 cursor-pointer"
+              (click)="setBackgroundTheme(theme.classes)"
+            ></div>
           </div>
         </div>
       </mat-menu>
