@@ -8,7 +8,8 @@ import { LeftSidenavOptionsComponent } from '@components/left-sidenav-options/le
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { RightSidenavTitleComponent } from './components/right-sidenav-title/right-sidenav-title.component';
-
+import { FormsModule } from '@angular/forms';
+import { MainTaskFormComponent } from './components/main-task-form/main-task-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,12 +17,14 @@ import { RightSidenavTitleComponent } from './components/right-sidenav-title/rig
     AvatarComponent,
     LeftSidenavOptionsComponent,
     RightSidenavTitleComponent,
+    MainTaskFormComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
