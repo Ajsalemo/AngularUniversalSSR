@@ -1,0 +1,3 @@
+<form #mainTaskForm="ngForm" (ngSubmit)="submitMainTaskForm(mainTaskForm)">
+  <input type="text" name="task" [(ngModel)]="task" required />
+</form>
