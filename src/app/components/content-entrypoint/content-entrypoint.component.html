@@ -12,36 +12,39 @@
   <mat-sidenav-content
     [class]="userSelectedTheme !== '' ? userSelectedTheme : 'bg-beach'"
   >
-    <div class="flex justify-end">
-      <!-- Button to close the sidenav -->
-      <button
-        (click)="isOpen = !isOpen"
-        aria-label="Open suggestions"
-        class="p-1 mr-2 my-2 bg-gray-800"
-      >
-        <mat-icon class="text-white text-sm">lightbulb</mat-icon>
-      </button>
-      <!-- Button to open the themes menu -->
-      <button
-        aria-label="Open suggestions"
-        class="p-1 mr-2 my-2 bg-gray-800"
-        [matMenuTriggerFor]="menu"
-      >
-        <mat-icon class="text-white text-sm">more_horiz</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu" class="border-gray-700 border-2 bg-gray-800">
-        <div class="text-gray-300 ml-2">Theme</div>
-        <div class="grid grid-cols-5 gap-4 pl-2 pr-2">
-          <div *ngFor="let theme of backgroundTheme">
-            <div
-              class="{{
-                theme.classes
-              }} w-8 h-8 border-2 border-white hover:border-gray-300 cursor-pointer"
-              (click)="setBackgroundTheme(theme.classes)"
-            ></div>
+    <div class="flex justify-between">
+      <app-task-heading></app-task-heading>
+      <div>
+        <!-- Button to close the sidenav -->
+        <button
+          (click)="isOpen = !isOpen"
+          aria-label="Open suggestions"
+          class="p-1 mr-2 my-2 bg-gray-800"
+        >
+          <mat-icon class="text-white text-sm">lightbulb</mat-icon>
+        </button>
+        <!-- Button to open the themes menu -->
+        <button
+          aria-label="Open suggestions"
+          class="p-1 mr-2 my-2 bg-gray-800"
+          [matMenuTriggerFor]="menu"
+        >
+          <mat-icon class="text-white text-sm">more_horiz</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" class="border-gray-700 border-2 bg-gray-800">
+          <div class="text-gray-300 ml-2">Theme</div>
+          <div class="grid grid-cols-5 gap-4 pl-2 pr-2">
+            <div *ngFor="let theme of backgroundTheme">
+              <div
+                class="{{
+                  theme.classes
+                }} w-8 h-8 border-2 border-white hover:border-gray-300 cursor-pointer"
+                (click)="setBackgroundTheme(theme.classes)"
+              ></div>
+            </div>
           </div>
-        </div>
-      </mat-menu>
+        </mat-menu>
+      </div>
     </div>
     <div class="absolute bottom-8 w-full">
       <app-main-task-form></app-main-task-form>
