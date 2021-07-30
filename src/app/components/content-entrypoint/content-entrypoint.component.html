@@ -13,7 +13,7 @@
     [class]="userSelectedTheme !== '' ? userSelectedTheme : 'bg-beach'"
   >
     <div class="flex justify-between">
-      <app-task-heading></app-task-heading>
+      <app-task-heading [userSelectedTheme]="userSelectedTheme"></app-task-heading>
       <div>
         <!-- Button to close the sidenav -->
         <button
