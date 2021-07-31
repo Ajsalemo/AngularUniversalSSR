@@ -10,8 +10,10 @@ export class TaskHeadingComponent implements OnInit {
   // Format the date to 'Day of week, Month Date'
   dayAndTime = format(new Date(), 'eeee, MMMM d');
   constructor() {}
-  // Switch statement to check the current background theme and address the text to change it from white to black
-  // This is to help with contrast
+  /* 
+    Switch statement to check the current background theme and address the text to change it from white to black
+    This is to help with contrast
+  */ 
   checkCurrentBackgroundColor(): string {
     switch (this.userSelectedTheme) {
       case 'bg-yellow-100':
