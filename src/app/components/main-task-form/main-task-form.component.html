@@ -10,10 +10,23 @@
       class="w-full rounded bg-black bg-opacity-80 text-gray-300"
       placeholder="+ Add a task"
     />
-    <span
-      *ngIf="getTaskControl.task.errors?.required"
-      class="text-red-900 bg-black bg-opacity-80 w-ft"
-      >A value must be provided</span
-    >
+    <div class="w-ft h-4">
+      <span
+        class="text-red-900 bg-black bg-opacity-80 w-ft h-4 px-2"
+        *ngIf="
+          getTaskControl.task.errors?.required &&
+          (getTaskControl.task.touched || getTaskControl.task.dirty)
+        "
+        >A value must be provided</span
+      >
+      <span
+        class="text-red-900 bg-black bg-opacity-80 w-ft h-4 px-2"
+        *ngIf="
+          getTaskControl.task.errors?.minlength &&
+          (getTaskControl.task.touched || getTaskControl.task.dirty)
+        "
+        >Task must have more than one character</span
+      >
+    </div>
   </div>
 </form>

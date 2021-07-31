@@ -13,7 +13,7 @@ export class MainTaskFormComponent implements OnInit {
   constructor() {}
 
   mainTaskForm = new FormGroup({
-    task: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    task: new FormControl('', [Validators.required, Validators.minLength(2)]),
   });
 
   // Field getter
