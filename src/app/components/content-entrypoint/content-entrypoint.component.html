@@ -13,7 +13,18 @@
     [class]="userSelectedTheme !== '' ? userSelectedTheme : 'bg-beach'"
   >
     <div class="flex justify-between">
-      <app-task-heading [userSelectedTheme]="userSelectedTheme"></app-task-heading>
+      <div class="flex">
+        <button
+          (click)="isLeftHandSideNavOpen = !isLeftHandSideNavOpen"
+          aria-label="Open main navigation"
+          [class]="hideLeftHandSideNavToggle === true ? 'hidden' : 'p-1 mr-2 my-2 bg-gray-800'"
+        >
+          <mat-icon class="text-white text-sm">lightbulb</mat-icon>
+        </button>
+        <app-task-heading
+          [userSelectedTheme]="userSelectedTheme"
+        ></app-task-heading>
+      </div>
       <div>
         <!-- Button to close the sidenav -->
         <button
@@ -25,7 +36,7 @@
         </button>
         <!-- Button to open the themes menu -->
         <button
-          aria-label="Open suggestions"
+          aria-label="Open themes"
           class="p-1 mr-2 my-2 bg-gray-800"
           [matMenuTriggerFor]="menu"
         >
@@ -67,7 +78,10 @@
         px-2
       "
     >
-      <button (click)="isRightSideNavOpen = !isRightSideNavOpen" aria-label="Close sidenav button">
+      <button
+        (click)="isRightSideNavOpen = !isRightSideNavOpen"
+        aria-label="Close sidenav button"
+      >
         <mat-icon class="text-gray-400">arrow_forward_ios</mat-icon>
       </button>
     </div>

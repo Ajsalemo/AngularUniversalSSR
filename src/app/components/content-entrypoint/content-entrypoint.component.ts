@@ -10,6 +10,8 @@ export class ContentEntrypointComponent implements OnInit {
   isRightSideNavOpen: boolean = true;
   // Boolean to open/close the left-hand sidenav
   isLeftHandSideNavOpen: boolean = true;
+  // Boolean to hide the left-hand sidenav toggle button
+  hideLeftHandSideNavToggle: boolean = true;
   backgroundTheme = themeApiArray;
   // Set the screen width to a variable
   innerWidth!: number;
@@ -33,9 +35,11 @@ export class ContentEntrypointComponent implements OnInit {
     if (this.innerWidth < 1465) {
       this.isLeftHandSideNavOpen = false;
       this.isRightSideNavOpen = false;
+      this.hideLeftHandSideNavToggle = false;
     } else {
       this.isLeftHandSideNavOpen = true;
       this.isRightSideNavOpen = true;
+      this.hideLeftHandSideNavToggle = true;
     }
   }
 
