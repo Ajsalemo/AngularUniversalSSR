@@ -8,8 +8,9 @@ import { LeftSidenavOptionsComponent } from '@components/left-sidenav-options/le
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { RightSidenavTitleComponent } from './components/right-sidenav-title/right-sidenav-title.component';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MainTaskFormComponent } from './components/main-task-form/main-task-form.component';
+import { TaskHeadingComponent } from './components/task-heading/task-heading.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,13 +19,14 @@ import { MainTaskFormComponent } from './components/main-task-form/main-task-for
     LeftSidenavOptionsComponent,
     RightSidenavTitleComponent,
     MainTaskFormComponent,
+    TaskHeadingComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

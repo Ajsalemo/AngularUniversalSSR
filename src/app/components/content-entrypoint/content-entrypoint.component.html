@@ -3,7 +3,7 @@
     mode="side"
     position="start"
     class="w-1/7 bg-gray-800 border-r-2 border-black"
-    opened
+    [(opened)]="isLeftHandSideNavOpen"
     ><div class="text-gray-400 p-2 mb-2">To Do</div>
     <app-avatar></app-avatar>
     <app-left-sidenav-options></app-left-sidenav-options>
@@ -12,36 +12,39 @@
   <mat-sidenav-content
     [class]="userSelectedTheme !== '' ? userSelectedTheme : 'bg-beach'"
   >
-    <div class="flex justify-end">
-      <!-- Button to close the sidenav -->
-      <button
-        (click)="isOpen = !isOpen"
-        aria-label="Open suggestions"
-        class="p-1 mr-2 my-2 bg-gray-800"
-      >
-        <mat-icon class="text-white text-sm">lightbulb</mat-icon>
-      </button>
-      <!-- Button to open the themes menu -->
-      <button
-        aria-label="Open suggestions"
-        class="p-1 mr-2 my-2 bg-gray-800"
-        [matMenuTriggerFor]="menu"
-      >
-        <mat-icon class="text-white text-sm">more_horiz</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu" class="border-gray-700 border-2 bg-gray-800">
-        <div class="text-gray-300 ml-2">Theme</div>
-        <div class="grid grid-cols-5 gap-4 pl-2 pr-2">
-          <div *ngFor="let theme of backgroundTheme">
-            <div
-              class="{{
-                theme.classes
-              }} w-8 h-8 border-2 border-white hover:border-gray-300 cursor-pointer"
-              (click)="setBackgroundTheme(theme.classes)"
-            ></div>
+    <div class="flex justify-between">
+      <app-task-heading [userSelectedTheme]="userSelectedTheme"></app-task-heading>
+      <div>
+        <!-- Button to close the sidenav -->
+        <button
+          (click)="isRightSideNavOpen = !isRightSideNavOpen"
+          aria-label="Open suggestions"
+          class="p-1 mr-2 my-2 bg-gray-800"
+        >
+          <mat-icon class="text-white text-sm">lightbulb</mat-icon>
+        </button>
+        <!-- Button to open the themes menu -->
+        <button
+          aria-label="Open suggestions"
+          class="p-1 mr-2 my-2 bg-gray-800"
+          [matMenuTriggerFor]="menu"
+        >
+          <mat-icon class="text-white text-sm">more_horiz</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" class="border-gray-700 border-2 bg-gray-800">
+          <div class="text-gray-300 ml-2">Theme</div>
+          <div class="grid grid-cols-5 gap-4 pl-2 pr-2">
+            <div *ngFor="let theme of backgroundTheme">
+              <div
+                class="{{
+                  theme.classes
+                }} w-8 h-8 border-2 border-white hover:border-gray-300 cursor-pointer"
+                (click)="setBackgroundTheme(theme.classes)"
+              ></div>
+            </div>
           </div>
-        </div>
-      </mat-menu>
+        </mat-menu>
+      </div>
     </div>
     <div class="absolute bottom-8 w-full">
       <app-main-task-form></app-main-task-form>
@@ -51,7 +54,7 @@
     mode="side"
     position="end"
     class="w-1/6 bg-gray-800"
-    [(opened)]="isOpen"
+    [(opened)]="isRightSideNavOpen"
     ><app-right-sidenav-title></app-right-sidenav-title>
     <div
       class="
@@ -64,7 +67,7 @@
         px-2
       "
     >
-      <button (click)="isOpen = !isOpen" aria-label="Close sidenav button">
+      <button (click)="isRightSideNavOpen = !isRightSideNavOpen" aria-label="Close sidenav button">
         <mat-icon class="text-gray-400">arrow_forward_ios</mat-icon>
       </button>
     </div>
