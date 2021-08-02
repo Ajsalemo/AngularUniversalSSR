@@ -17,9 +17,23 @@
         <button
           (click)="isLeftHandSideNavOpen = !isLeftHandSideNavOpen"
           aria-label="Open main navigation"
-          [class]="hideLeftHandSideNavToggle === true ? 'hidden' : 'p-1 mr-2 my-2 bg-gray-800'"
+          [class]="
+            hideLeftHandSideNavToggle === true
+              ? 'hidden'
+              : 'bg-gray-800'
+          "
         >
-          <mat-icon class="text-white text-sm">lightbulb</mat-icon>
+          <!-- These button change icons depending on if the left side-nav is opened or closed -->
+          <mat-icon
+            class="text-white text-sm"
+            *ngIf="!hideLeftHandSideNavToggle && isLeftHandSideNavOpen"
+            >menu_open</mat-icon
+          >
+          <mat-icon
+            class="text-white text-sm transform rotate-180"
+            *ngIf="!hideLeftHandSideNavToggle && !isLeftHandSideNavOpen"
+            >menu_open</mat-icon
+          >
         </button>
         <app-task-heading
           [userSelectedTheme]="userSelectedTheme"
