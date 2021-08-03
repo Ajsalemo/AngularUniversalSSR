@@ -17,6 +17,10 @@ body {
   width: auto !important;
 }
 
+.mat-bottom-sheet-container {
+  @apply bg-gray-800;
+}
+
 // Placeholder input color override 
 ::placeholder {
   color: #d1d5db !important;
