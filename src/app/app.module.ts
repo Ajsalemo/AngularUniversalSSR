@@ -11,6 +11,7 @@ import { RightSidenavTitleComponent } from './components/right-sidenav-title/rig
 import { ReactiveFormsModule } from '@angular/forms';
 import { MainTaskFormComponent } from './components/main-task-form/main-task-form.component';
 import { TaskHeadingComponent } from './components/task-heading/task-heading.component';
+import { MobileBottomMainNavComponent } from './components/mobile-bottom-main-nav/mobile-bottom-main-nav.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +21,7 @@ import { TaskHeadingComponent } from './components/task-heading/task-heading.com
     RightSidenavTitleComponent,
     MainTaskFormComponent,
     TaskHeadingComponent,
+    MobileBottomMainNavComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

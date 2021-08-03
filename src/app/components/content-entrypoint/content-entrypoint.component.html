@@ -14,8 +14,17 @@
   >
     <div class="flex justify-between">
       <div class="flex">
+        <!-- 
+          This button renders 1 of 2 methods based on the current width/breakpoint. 
+          If the breakpoint if smaller than 768px, render the button to open the mobile view of the sidenav, which is a bottom sheet 
+          Else the desktop view sidenav is loaded
+        -->
         <button
-          (click)="isLeftHandSideNavOpen = !isLeftHandSideNavOpen"
+          (click)="
+            !hideLeftHandSideNavToggle
+              ? openBottomMainNavSheet()
+              : (isLeftHandSideNavOpen = !isLeftHandSideNavOpen)
+          "
           aria-label="Open main navigation"
           [class]="
             hideLeftHandSideNavToggle === true
@@ -23,17 +32,7 @@
               : 'bg-gray-800 h-8 w-8 mt-2 ml-2'
           "
         >
-          <!-- These button change icons depending on if the left side-nav is opened or closed -->
-          <mat-icon
-            class="text-white text-sm"
-            *ngIf="!hideLeftHandSideNavToggle && isLeftHandSideNavOpen"
-            >menu_open</mat-icon
-          >
-          <mat-icon
-            class="text-white text-sm transform rotate-180"
-            *ngIf="!hideLeftHandSideNavToggle && !isLeftHandSideNavOpen"
-            >menu_open</mat-icon
-          >
+          <mat-icon class="text-white text-sm">menu</mat-icon>
         </button>
         <app-task-heading
           [userSelectedTheme]="userSelectedTheme"

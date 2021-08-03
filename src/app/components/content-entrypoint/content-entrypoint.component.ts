@@ -1,5 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { themeApiArray } from '@api/themeApi';
+import { MobileBottomMainNavComponent } from '@components/mobile-bottom-main-nav/mobile-bottom-main-nav.component';
 
 @Component({
   selector: 'app-content-entrypoint',
@@ -16,11 +18,15 @@ export class ContentEntrypointComponent implements OnInit {
   // Set the screen width to a variable
   innerWidth!: number;
   userSelectedTheme: string = '';
-  constructor() {}
+  constructor(private _bottomMainNavSheet: MatBottomSheet) {}
 
   setBackgroundTheme(theme: string): any {
     // Sets the user selected background theme
     this.userSelectedTheme = theme;
+  }
+
+  openBottomMainNavSheet(): void {
+    this._bottomMainNavSheet.open(MobileBottomMainNavComponent);
   }
 
   /* 
@@ -32,7 +38,7 @@ export class ContentEntrypointComponent implements OnInit {
   onResize(): void {
     this.innerWidth = window.innerWidth;
 
-    if (this.innerWidth < 1465) {
+    if (this.innerWidth < 768) {
       this.isLeftHandSideNavOpen = false;
       this.isRightSideNavOpen = false;
       this.hideLeftHandSideNavToggle = false;
