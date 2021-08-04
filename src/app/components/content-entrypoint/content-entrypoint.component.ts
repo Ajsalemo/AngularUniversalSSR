@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { themeApiArray } from '@api/themeApi';
 import { MobileBottomMainNavComponent } from '@components/mobile-bottom-main-nav/mobile-bottom-main-nav.component';
+import { MobileBottomSuggestionsComponent } from '@components/mobile-bottom-suggestions/mobile-bottom-suggestions.component'
 
 @Component({
   selector: 'app-content-entrypoint',
@@ -27,6 +28,10 @@ export class ContentEntrypointComponent implements OnInit {
 
   openBottomMainNavSheet(): void {
     this._bottomMainNavSheet.open(MobileBottomMainNavComponent);
+  }
+
+  openBottomSuggestionsSheet(): void {
+    this._bottomMainNavSheet.open(MobileBottomSuggestionsComponent);
   }
 
   /* 

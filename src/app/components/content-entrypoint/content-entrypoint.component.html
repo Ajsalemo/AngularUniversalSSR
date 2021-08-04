@@ -41,7 +41,11 @@
       <div>
         <!-- Button to close the sidenav -->
         <button
-          (click)="isRightSideNavOpen = !isRightSideNavOpen"
+          (click)="
+            !hideLeftHandSideNavToggle
+              ? openBottomSuggestionsSheet()
+              : (isRightSideNavOpen = !isRightSideNavOpen)
+          "
           aria-label="Open suggestions"
           class="p-1 mr-2 my-2 bg-gray-800"
         >
