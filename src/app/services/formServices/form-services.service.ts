@@ -9,9 +9,9 @@ export class FormServicesService {
 
   mainTaskFormSubmitTodo(data: any) {
     console.log(data);
-    this.http.post('/api/test', data).subscribe(
-      (response) => console.log(response),
-      (error) => console.log(error)
-    );
+    this.http
+      .post('/api/test', data)
+      .toPromise()
+      .then((res) => console.log(res));
   }
 }
