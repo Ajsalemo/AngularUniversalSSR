@@ -1,43 +1,52 @@
 <div class="flex flex-col items-center">
-  <ul
-    class="flex items-left w-5/6"
-    *ngFor="let task of mainTasksToDisplay"
-  >
-    <li class="w-full rounded bg-black bg-opacity-80 text-gray-300 h-8 break-words">
+  <ul class="flex items-left w-5/6" *ngFor="let task of mainTasksToDisplay">
+    <li
+      class="
+        w-full
+        rounded
+        bg-black bg-opacity-80
+        text-gray-300
+        h-8
+        break-words
+        mb-2
+      "
+    >
       {{ task }}
     </li>
   </ul>
 </div>
 
-<form
-  [formGroup]="mainTaskForm"
-  class="flex justify-center"
-  (ngSubmit)="submitMainTaskForm(mainTaskForm)"
->
-  <div class="flex flex-col items-left w-5/6">
-    <input
-      type="text"
-      formControlName="task"
-      class="w-full rounded bg-black bg-opacity-80 text-gray-300"
-      placeholder="+ Add a task"
-    />
-    <div class="w-ft h-4">
-      <span
-        class="text-red-900 bg-black bg-opacity-80 w-ft h-4 px-2"
-        *ngIf="
-          getTaskControl.task.errors?.required &&
-          (getTaskControl.task.touched || getTaskControl.task.dirty)
-        "
-        >A value must be provided</span
-      >
-      <span
-        class="text-red-900 bg-black bg-opacity-80 w-ft h-4 px-2"
-        *ngIf="
-          getTaskControl.task.errors?.minlength &&
-          (getTaskControl.task.touched || getTaskControl.task.dirty)
-        "
-        >Task must have more than one character</span
-      >
+<div class="absolute bottom-8 w-full">
+  <form
+    [formGroup]="mainTaskForm"
+    class="flex justify-center"
+    (ngSubmit)="submitMainTaskForm(mainTaskForm)"
+  >
+    <div class="flex flex-col items-left w-5/6">
+      <input
+        type="text"
+        formControlName="task"
+        class="w-full rounded bg-black bg-opacity-80 text-gray-300"
+        placeholder="+ Add a task"
+      />
+      <div class="w-ft h-4">
+        <span
+          class="text-red-900 bg-black bg-opacity-80 w-ft h-4 px-2"
+          *ngIf="
+            getTaskControl.task.errors?.required &&
+            (getTaskControl.task.touched || getTaskControl.task.dirty)
+          "
+          >A value must be provided</span
+        >
+        <span
+          class="text-red-900 bg-black bg-opacity-80 w-ft h-4 px-2"
+          *ngIf="
+            getTaskControl.task.errors?.minlength &&
+            (getTaskControl.task.touched || getTaskControl.task.dirty)
+          "
+          >Task must have more than one character</span
+        >
+      </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>
