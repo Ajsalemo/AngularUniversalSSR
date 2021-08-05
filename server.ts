@@ -27,10 +27,19 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
+  // TODO - this is to mock a database with persisted data
+  // TODO - hook this up to an actual database
+  const fakeDbArray: string[] = [];
+
   // Express Rest API endpoints
   server.post('/api/submit_task', (req, res) => {
-    console.log(req.body);
+    fakeDbArray.push(req.body.task);
     res.json(req.body).status(200);
+  });
+
+  server.get('/api/get_all_tasks', (req, res) => {
+    console.log(fakeDbArray);
+    res.send(fakeDbArray);
   });
 
   // Serve static files from /browser
