@@ -26,10 +26,12 @@ export class ContentEntrypointComponent implements OnInit {
     this.userSelectedTheme = theme;
   }
 
+  // Opens the left-sidenav bottom sheet component (mobile viewing)
   openBottomMainNavSheet(): void {
     this._bottomMainNavSheet.open(MobileBottomMainNavComponent);
   }
 
+  // Opens the right-sidenav bottom sheet component (mobile viewing)
   openBottomSuggestionsSheet(): void {
     this._bottomMainNavSheet.open(MobileBottomSuggestionsComponent);
   }
