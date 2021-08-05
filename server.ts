@@ -22,13 +22,15 @@ export function app(): express.Express {
     })
   );
 
+  // Add express's built in body parser
+  server.use(express.json());
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
-  // Example Express Rest API endpoints
-  server.post('/api/test', (req, res) => {
-    console.log(req);
-    res.json({ message: 'this works' }).status(200);
+  // Express Rest API endpoints
+  server.post('/api/submit_task', (req, res) => {
+    console.log(req.body);
+    res.json(req.body).status(200);
   });
 
   // Serve static files from /browser

@@ -8,9 +8,8 @@ export class FormServicesService {
   constructor(public http: HttpClient) {}
 
   mainTaskFormSubmitTodo(data: any) {
-    console.log(data);
     this.http
-      .post('/api/test', data)
+      .post('/api/submit_task', { data: data })
       .toPromise()
       .then((res) => console.log(res));
   }

@@ -18,8 +18,9 @@ export class MainTaskFormComponent implements OnInit {
     return this.mainTaskForm.controls;
   }
 
+  // Function to submit tasks on the main form/input
   submitMainTaskForm(data: any) {
-    this.formServicesService.mainTaskFormSubmitTodo(data.values);
+    this.formServicesService.mainTaskFormSubmitTodo(data.value);
   }
 
   ngOnInit(): void {}
