@@ -24,6 +24,8 @@ export class MainTaskFormComponent implements OnInit {
     this.formServicesService
       .mainTaskFormSubmitTodo(data.value)
       .then((res: any) => {
+        // Reset the form values after submission
+        this.mainTaskForm.reset()
         this.formServicesService.mainTaskFormGetAllTodos().then((res: any) => {
           console.log(res);
           this.mainTasksToDisplay = res;
