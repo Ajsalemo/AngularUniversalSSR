@@ -8,6 +8,7 @@ import { FormServicesService } from '@services/formServices/form-services.servic
 })
 export class MainTaskFormComponent implements OnInit {
   mainTasksToDisplay: any;
+  changeTaskIconOnHover: boolean = false;
   constructor(private formServicesService: FormServicesService) {}
 
   mainTaskForm = new FormGroup({
@@ -19,13 +20,21 @@ export class MainTaskFormComponent implements OnInit {
     return this.mainTaskForm.controls;
   }
 
+  changeTaskIconTernary(): string {
+    if (this.changeTaskIconOnHover === true) {
+      return 'check_circle';
+    } else {
+      return 'check_circle_outline';
+    }
+  }
+
   // Function to submit tasks on the main form/input
   submitMainTaskForm(data: any) {
     this.formServicesService
       .mainTaskFormSubmitTodo(data.value)
       .then((res: any) => {
         // Reset the form values after submission
-        this.mainTaskForm.reset()
+        this.mainTaskForm.reset();
         this.formServicesService.mainTaskFormGetAllTodos().then((res: any) => {
           console.log(res);
           this.mainTasksToDisplay = res;

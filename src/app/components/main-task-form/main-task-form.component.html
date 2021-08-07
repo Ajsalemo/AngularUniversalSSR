@@ -7,14 +7,17 @@
         bg-black bg-opacity-80
         text-gray-300
         h-8
-        break-words
+        break-all
         mb-2
         flex
         items-center
       "
     >
-      <mat-icon class="text-white mr-2 ml-1 cursor-pointer"
-        >check_circle_outline</mat-icon
+      <mat-icon
+        class="text-white mr-2 ml-1 cursor-pointer"
+        (mouseenter)="changeTaskIconOnHover = !changeTaskIconOnHover"
+        (mouseleave)="changeTaskIconOnHover = !changeTaskIconOnHover"
+        >{{ changeTaskIconTernary() }}</mat-icon
       >{{ task }}
     </li>
   </ul>
@@ -24,7 +27,7 @@
   <form
     [formGroup]="mainTaskForm"
     class="flex justify-center"
-    (ngSubmit)="submitMainTaskForm(mainTaskForm); "
+    (ngSubmit)="submitMainTaskForm(mainTaskForm)"
   >
     <div class="flex flex-col items-left w-5/6">
       <input
