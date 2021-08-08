@@ -1,3 +1,4 @@
+require('dotenv').config();
 import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
@@ -5,6 +6,7 @@ import { existsSync } from 'fs';
 import { join } from 'path';
 import 'zone.js/dist/zone-node';
 import { AppServerModule } from './src/main.server';
+import db from './src/server/models/index';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -63,14 +65,25 @@ export function app(): express.Express {
 
 function run(): void {
   const port = process.env.PORT || 4000;
-
-  // Start up the Node server
   const server = app();
-  server.listen(port, () => {
-    console.log(
-      `Angular Universal SSR - Node Express server listening on http://localhost:${port}`
-    );
-  });
+  try {
+    db.sequelize
+      .sync()
+      .then(() => {
+        console.log('Successfully connected to MySQL');
+        // Start up the Node server
+        server.listen(port, () => {
+          console.log(
+            `Angular Universal SSR - Node Express server listening on http://localhost:${port}`
+          );
+        });
+      })
+      .catch((e: any) =>
+        console.log(`An error has occurred with Sequelize and MySQL: ${e}`)
+      );
+  } catch (error) {
+    console.log(`An error has occurred: ${error}`);
+  }
 }
 
 // Webpack will replace 'require' with '__webpack_require__'
