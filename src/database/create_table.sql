@@ -1,0 +1,1 @@
+/* Creates the database table */
