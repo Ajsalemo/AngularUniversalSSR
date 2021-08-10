@@ -29,19 +29,19 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
-  // TODO - this is to mock a database with persisted data
-  // TODO - hook this up to an actual database
-  const fakeDbArray: string[] = [];
-
   // Express Rest API endpoints
   server.post('/api/submit_task', (req, res) => {
-    fakeDbArray.push(req.body.task);
     res.json(req.body).status(200);
   });
 
-  server.get('/api/get_all_tasks', (req, res) => {
-    console.log(fakeDbArray);
-    res.send(fakeDbArray);
+  server.get('/api/get_all_tasks', async (_, res) => {
+    try {
+      const getAllTasks = await db.Todos.findAll();
+      res.json(getAllTasks);
+    } catch (e) {
+      console.log(e);
+      res.send({ error: `An error has occurred: ${e}` }).status(500);
+    }
   });
 
   // Serve static files from /browser
@@ -85,6 +85,8 @@ function run(): void {
     console.log(`An error has occurred: ${error}`);
   }
 }
+
+// Ignore plugins
 
 // Webpack will replace 'require' with '__webpack_require__'
 // '__non_webpack_require__' is a proxy to Node 'require'

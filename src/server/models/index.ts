@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 import * as mysql2 from 'mysql2';
-console.log(process.env.MYSQL_DATABASE)
+import todoWrapper from './todos'
+
 const sequelize = new Sequelize(
   // Database
   '',
@@ -30,6 +31,7 @@ const sequelize = new Sequelize(
 const db = {
   sequelize,
   Sequelize,
+  Todos: todoWrapper(sequelize)
 };
 
 Object.values(db).forEach((model: any) => {
