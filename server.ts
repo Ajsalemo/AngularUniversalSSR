@@ -30,8 +30,9 @@ export function app(): express.Express {
   server.set('views', distFolder);
 
   // Express Rest API endpoints
-  server.post('/api/submit_task', (req, res) => {
-    res.json(req.body).status(200);
+  server.post('/api/submit_task', async (req, res) => {
+    const { body } = req;
+    res.json(body).status(200);
   });
 
   server.get('/api/get_all_tasks', async (_, res) => {
@@ -99,3 +100,4 @@ if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
 }
 
 export * from './src/main.server';
+

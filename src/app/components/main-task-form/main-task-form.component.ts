@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormServicesService } from '@services/formServices/form-services.service';
 
@@ -9,7 +10,13 @@ import { FormServicesService } from '@services/formServices/form-services.servic
 export class MainTaskFormComponent implements OnInit {
   mainTasksToDisplay: any;
   changeTaskIconOnHover: boolean = false;
-  constructor(private formServicesService: FormServicesService) {}
+  testBrowser!: boolean;
+  constructor(
+    private formServicesService: FormServicesService,
+    @Inject(PLATFORM_ID) platformId: string
+  ) {
+    this.testBrowser = isPlatformBrowser(platformId);
+  }
 
   mainTaskForm = new FormGroup({
     task: new FormControl('', [Validators.required, Validators.minLength(2)]),
@@ -28,19 +35,35 @@ export class MainTaskFormComponent implements OnInit {
     }
   }
 
-  // Function to submit tasks on the main form/input
-  submitMainTaskForm(data: any) {
-    this.formServicesService
-      .mainTaskFormSubmitTodo(data.value)
-      .then((res: any) => {
-        // Reset the form values after submission
-        this.mainTaskForm.reset();
-        this.formServicesService.mainTaskFormGetAllTodos().then((res: any) => {
-          console.log(res);
-          this.mainTasksToDisplay = res;
-        });
-      });
+  async retrieveAllTasks(): Promise<void> {
+    try {
+      const tasks = await this.formServicesService.mainTaskFormGetAllTodos();
+      this.mainTasksToDisplay = tasks;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  ngOnInit(): void {}
+  // Function to submit tasks on the main form/input
+  async submitMainTaskForm(data: any): Promise<void> {
+    try {
+      const submitForm = await this.formServicesService.mainTaskFormSubmitTodo(
+        data.value
+      );
+      console.log(submitForm);
+      this.mainTaskForm.reset();
+      if (submitForm && submitForm.task) {
+        await this.retrieveAllTasks();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  ngOnInit(): void {
+    // This prevents an 'NetworkError' when trying to run these functions onInit
+    if (this.testBrowser) {
+      this.retrieveAllTasks();
+    }
+  }
 }

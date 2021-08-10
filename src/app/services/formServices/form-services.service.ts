@@ -7,15 +7,11 @@ import { Injectable } from '@angular/core';
 export class FormServicesService {
   constructor(private http: HttpClient) {}
 
-  mainTaskFormSubmitTodo(data: any): any {
-    return this.http
-      .post('/api/submit_task', data)
-      .toPromise();
+  async mainTaskFormSubmitTodo(data: any): Promise<any> {
+    return await this.http.post('/api/submit_task', data).toPromise();
   }
 
-  mainTaskFormGetAllTodos(): any {
-    return this.http
-      .get('/api/get_all_tasks')
-      .toPromise()
+  async mainTaskFormGetAllTodos(): Promise<any> {
+    return await this.http.get('/api/get_all_tasks').toPromise();
   }
 }
