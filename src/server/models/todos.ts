@@ -3,9 +3,9 @@ import * as Sequelize from 'sequelize';
 interface TodoAttributes {
   id?: string;
   todo: string;
-  completed: boolean;
-  createdAt: string;
-  updatedAt: string;
+  completed?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 type TodoInstance = Sequelize.Model<TodoAttributes> & TodoAttributes;
@@ -24,11 +24,11 @@ export default (sequalize: Sequelize.Sequelize) => {
       defaultValue: false,
     },
     createdAt: {
-      type: Sequelize.STRING,
+      type: Sequelize.DATE,
       allowNull: false,
     },
     updatedAt: {
-      type: Sequelize.STRING,
+      type: Sequelize.DATE,
       allowNull: false,
     },
   };

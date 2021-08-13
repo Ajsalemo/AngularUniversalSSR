@@ -36,7 +36,14 @@ export function app(): express.Express {
       if (!body.task || body.task === null) {
         console.error('Error: Form data must contain a value');
         res.status(500).send({ error: 'Form data must contain a value' });
+      } else if (body.task.length < 2) {
+        console.error('Error: Value must be 2 or greater');
+        res.status(500).send({ error: 'Value must be 2 or greater' });
       } else {
+        const submitTask = await db.Todos.create({
+          todo: body.task
+        })
+        console.log(submitTask)
         res.json(body);
       }
     } catch (e) {

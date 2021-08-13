@@ -46,6 +46,7 @@ export class MainTaskFormComponent implements OnInit {
       );
       console.log(submitForm);
       this.mainTaskForm.reset();
+      // If the submit occurred successfully then retrieve tasks
       if (submitForm && submitForm.task) {
         await this.retrieveAllTasks();
       }
