@@ -31,8 +31,17 @@ export function app(): express.Express {
 
   // Express Rest API endpoints
   server.post('/api/submit_task', async (req, res) => {
-    const { body } = req;
-    res.json(body).status(200);
+    try {
+      const { body } = req;
+      if (!body.task || body.task === null) {
+        console.error('Error: Form data must contain a value');
+        res.status(500).send({ error: 'Form data must contain a value' });
+      } else {
+        res.json(body);
+      }
+    } catch (e) {
+      res.send({ error: `An error has occurred: ${e}` }).status(500);
+    }
   });
 
   server.get('/api/get_all_tasks', async (_, res) => {
@@ -40,8 +49,7 @@ export function app(): express.Express {
       const getAllTasks = await db.Todos.findAll();
       res.json(getAllTasks);
     } catch (e) {
-      console.log(e);
-      res.send({ error: `An error has occurred: ${e}` }).status(500);
+      res.status(500).send({ error: `An error has occurred: ${e}` });
     }
   });
 
@@ -100,4 +108,3 @@ if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
 }
 
 export * from './src/main.server';
-

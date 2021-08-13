@@ -14,10 +14,8 @@
       "
     >
       <mat-icon
-        class="text-white mr-2 ml-1 cursor-pointer"
-        (mouseenter)="changeTaskIconOnHover = !changeTaskIconOnHover"
-        (mouseleave)="changeTaskIconOnHover = !changeTaskIconOnHover"
-        >{{ changeTaskIconTernary() }}</mat-icon
+        class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
+        >check_circle_outline</mat-icon
       >{{ task.todo }}
     </li>
   </ul>

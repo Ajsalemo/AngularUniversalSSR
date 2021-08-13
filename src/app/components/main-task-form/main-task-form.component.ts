@@ -9,7 +9,6 @@ import { FormServicesService } from '@services/formServices/form-services.servic
 })
 export class MainTaskFormComponent implements OnInit {
   mainTasksToDisplay: any;
-  changeTaskIconOnHover: boolean = false;
   testBrowser!: boolean;
   constructor(
     private formServicesService: FormServicesService,
@@ -27,14 +26,6 @@ export class MainTaskFormComponent implements OnInit {
     return this.mainTaskForm.controls;
   }
 
-  changeTaskIconTernary(): string {
-    if (this.changeTaskIconOnHover === true) {
-      return 'check_circle';
-    } else {
-      return 'check_circle_outline';
-    }
-  }
-
   async retrieveAllTasks(): Promise<void> {
     try {
       const tasks = await this.formServicesService.mainTaskFormGetAllTodos();
@@ -47,6 +38,9 @@ export class MainTaskFormComponent implements OnInit {
   // Function to submit tasks on the main form/input
   async submitMainTaskForm(data: any): Promise<void> {
     try {
+      // Automatically return if the form isn't valid
+      if (!this.mainTaskForm.valid) return;
+
       const submitForm = await this.formServicesService.mainTaskFormSubmitTodo(
         data.value
       );
