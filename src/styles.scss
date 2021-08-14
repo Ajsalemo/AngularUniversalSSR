@@ -21,6 +21,11 @@ body {
   @apply bg-gray-800;
 }
 
+.mat-progress-bar {
+  position: absolute !important;
+  top: 0;
+}
+
 // Placeholder input color override 
 ::placeholder {
   color: #d1d5db !important;

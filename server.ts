@@ -40,10 +40,10 @@ export function app(): express.Express {
         console.error('Error: Value must be 2 or greater');
         res.status(500).send({ error: 'Value must be 2 or greater' });
       } else {
+        // Change this to return the actual database value
         const submitTask = await db.Todos.create({
           todo: body.task
         })
-        console.log(submitTask)
         res.json(body);
       }
     } catch (e) {

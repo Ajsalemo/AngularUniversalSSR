@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 @NgModule({
   imports: [
     MatSidenavModule,
@@ -11,6 +12,7 @@ import { MatListModule } from '@angular/material/list';
     MatMenuModule,
     MatBottomSheetModule,
     MatListModule,
+    MatProgressBarModule,
   ],
   exports: [
     MatSidenavModule,
@@ -18,6 +20,7 @@ import { MatListModule } from '@angular/material/list';
     MatMenuModule,
     MatBottomSheetModule,
     MatListModule,
+    MatProgressBarModule,
   ],
 })
 export class MaterialModule {}

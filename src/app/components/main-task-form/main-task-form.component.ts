@@ -10,6 +10,7 @@ import { FormServicesService } from '@services/formServices/form-services.servic
 export class MainTaskFormComponent implements OnInit {
   mainTasksToDisplay: any;
   testBrowser!: boolean;
+  isLoading: boolean = false;
   constructor(
     private formServicesService: FormServicesService,
     @Inject(PLATFORM_ID) platformId: string
@@ -27,9 +28,11 @@ export class MainTaskFormComponent implements OnInit {
   }
 
   async retrieveAllTasks(): Promise<void> {
+    this.isLoading = true;
     try {
       const tasks = await this.formServicesService.mainTaskFormGetAllTodos();
       this.mainTasksToDisplay = tasks;
+      this.isLoading = false;
     } catch (error) {
       console.log(error);
     }
@@ -40,7 +43,7 @@ export class MainTaskFormComponent implements OnInit {
     try {
       // Automatically return if the form isn't valid
       if (!this.mainTaskForm.valid) return;
-
+      this.isLoading = true;
       const submitForm = await this.formServicesService.mainTaskFormSubmitTodo(
         data.value
       );
@@ -49,6 +52,7 @@ export class MainTaskFormComponent implements OnInit {
       // If the submit occurred successfully then retrieve tasks
       if (submitForm && submitForm.task) {
         await this.retrieveAllTasks();
+        this.isLoading = false;
       }
     } catch (error) {
       console.log(error);
