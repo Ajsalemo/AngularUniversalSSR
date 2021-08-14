@@ -12,13 +12,45 @@
         break-all
         mb-2
         flex
-        items-center
+        justify-between
       "
     >
-      <mat-icon
-        class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
-        >check_circle_outline</mat-icon
-      >{{ task.todo }}
+      <div class="flex items-center">
+        <mat-icon
+          class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
+          >check_circle_outline</mat-icon
+        >{{ task.todo }}
+      </div>
+      <div class="flex items-center">
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon
+            class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
+            >more_vert</mat-icon
+          >
+        </button>
+        <mat-menu #menu="matMenu" class="text-gray-300 bg-gray-800">
+          <div class="text-sm flex flex-col px-2">
+            <button
+              class="
+                hover:bg-gray-700
+                border-l-2 border-transparent
+                hover:border-gray-500
+              "
+            >
+              <span>Mark as important</span>
+            </button>
+            <button
+              class="
+                hover:bg-gray-700
+                border-l-2 border-transparent
+                hover:border-gray-500
+              "
+            >
+              <span>Mark as completed</span>
+            </button>
+          </div>
+        </mat-menu>
+      </div>
     </li>
   </ul>
 </div>
