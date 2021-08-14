@@ -47,7 +47,6 @@ export class MainTaskFormComponent implements OnInit {
       const submitForm = await this.formServicesService.mainTaskFormSubmitTodo(
         data.value
       );
-      console.log(submitForm);
       this.mainTaskForm.reset();
       // If the submit occurred successfully then retrieve tasks
       if (submitForm && submitForm.task) {
