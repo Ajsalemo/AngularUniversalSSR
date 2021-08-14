@@ -35,9 +35,12 @@
                 hover:bg-gray-700
                 border-l-2 border-transparent
                 hover:border-gray-500
+                flex
+                items-center
               "
             >
-              <span>Mark as important</span>
+              <mat-icon class="text-gray-300 text-sm">star_border</mat-icon
+              ><span>Mark as important</span>
             </button>
             <button
               class="
@@ -46,6 +49,9 @@
                 hover:border-gray-500
               "
             >
+              <mat-icon class="text-gray-300 text-sm"
+                >check_circle_outline</mat-icon
+              >
               <span>Mark as completed</span>
             </button>
             <div class="h-2 w-full border-b-2 border-gray-500 mx-auto"></div>
@@ -55,8 +61,11 @@
                 border-l-2 border-transparent
                 hover:border-gray-500
                 text-left
+                flex
+                items-center
               "
             >
+              <mat-icon class="text-gray-300 text-sm">today</mat-icon>
               <span>Due today</span>
             </button>
             <button
@@ -65,8 +74,11 @@
                 border-l-2 border-transparent
                 hover:border-gray-500
                 text-left
+                flex
+                items-center
               "
             >
+              <mat-icon class="text-gray-300 text-sm">event</mat-icon>
               <span>Due tomorrow</span>
             </button>
             <div class="h-2 w-full border-b-2 border-gray-500 mx-auto"></div>
@@ -76,8 +88,11 @@
                 border-l-2 border-transparent
                 hover:border-gray-500
                 text-left
+                flex
+                items-center
               "
             >
+              <mat-icon class="text-gray-300 text-sm">delete_outline</mat-icon>
               <span>Delete</span>
             </button>
           </div>
