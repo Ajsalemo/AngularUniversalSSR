@@ -30,6 +30,7 @@ export function app(): express.Express {
   server.set('views', distFolder);
 
   // Express Rest API endpoints
+  // Add a task
   server.post('/api/submit_task', async (req, res) => {
     try {
       const { body } = req;
@@ -42,15 +43,48 @@ export function app(): express.Express {
       } else {
         // Change this to return the actual database value
         const submitTask = await db.Todos.create({
-          todo: body.task
-        })
+          todo: body.task,
+        });
         res.json(body);
       }
     } catch (e) {
-      res.send({ error: `An error has occurred: ${e}` }).status(500);
+      res.status(500).send({ error: `An error has occurred: ${e}` });
     }
   });
 
+  // Delete a task
+  server.delete('/api/delete_task/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const num_id = parseInt(id);
+      // Check if the parameter exists and if it's greater than 0
+      if (num_id && num_id > 0) {
+        const findTask = await db.Todos.findOne({
+          where: {
+            id: num_id,
+          },
+        });
+
+        // Check if we're able to return a valid Task ID from findTask
+        if (findTask?.id) {
+          const deleteTodo = await db.Todos.destroy({
+            where: {
+              id: findTask?.id,
+            },
+          });
+          res.status(200).send({ message: 'Task deleted' });
+        } else {
+          res.status(404).send({ error: 'Task not found' });
+        }
+      } else {
+        res.status(500).send({ error: 'Bad parameter provided' });
+      }
+    } catch (e) {
+      res.status(500).send({ error: `An error has occurred: ${e}` });
+    }
+  });
+
+  // Find all tasks
   server.get('/api/get_all_tasks', async (_, res) => {
     try {
       const getAllTasks = await db.Todos.findAll();
