@@ -34,7 +34,7 @@ export class MainTaskFormComponent implements OnInit {
       this.mainTasksToDisplay = tasks;
       this.isLoading = false;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -54,7 +54,23 @@ export class MainTaskFormComponent implements OnInit {
         this.isLoading = false;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    }
+  }
+
+  async deleteTask(id: number): Promise<void> {
+    try {
+      this.isLoading = true;
+      const { message } = await this.formServicesService.mainTaskFormDeleteTodo(
+        id
+      );
+      console.log(message);
+      if (message) {
+        this.isLoading = false;
+        await this.retrieveAllTasks();
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 

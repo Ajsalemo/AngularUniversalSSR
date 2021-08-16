@@ -14,4 +14,9 @@ export class FormServicesService {
   async mainTaskFormGetAllTodos(): Promise<any> {
     return await this.http.get('/api/get_all_tasks').toPromise();
   }
+
+  async mainTaskFormDeleteTodo(id: number): Promise<any> {
+    console.log(id)
+    return await this.http.delete(`/api/delete_task/${id}`).toPromise();
+  }
 }
