@@ -84,6 +84,42 @@ export function app(): express.Express {
     }
   });
 
+  // Update a task to be completed
+  server.put('/api/complete_task/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { isCompleted } = req.body;
+      const task_id = parseInt(id);
+      if (task_id && task_id > 0) {
+        const findTask = await db.Todos.findOne({
+          where: {
+            id: task_id,
+          },
+        });
+
+        if (findTask?.id) {
+          await db.Todos.update(
+            {
+              completed: isCompleted,
+            },
+            {
+              where: {
+                id: findTask?.id,
+              },
+            }
+          );
+          res.status(200).send({ message: 'Task updated' });
+        } else {
+          res.status(404).send({ error: 'Task not found' });
+        }
+      } else {
+        res.status(500).send({ error: `Bad parameter provided` });
+      }
+    } catch (e) {
+      res.status(500).send({ error: `An error has occurred: ${e}` });
+    }
+  });
+
   // Find all tasks
   server.get('/api/get_all_tasks', async (_, res) => {
     try {

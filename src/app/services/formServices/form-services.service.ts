@@ -16,7 +16,20 @@ export class FormServicesService {
   }
 
   async mainTaskFormDeleteTodo(id: number): Promise<any> {
-    console.log(id)
     return await this.http.delete(`/api/delete_task/${id}`).toPromise();
+  }
+
+  async mainTaskFormCompleteTodo(
+    id: number,
+    isCompleted: boolean
+  ): Promise<Object> {
+    console.log(isCompleted);
+    return await this.http
+      .put(
+        `/api/complete_task/${id}`,
+        { isCompleted },
+        { responseType: 'text' }
+      )
+      .toPromise();
   }
 }

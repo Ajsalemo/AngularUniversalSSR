@@ -17,7 +17,9 @@
     >
       <div class="flex items-center">
         <mat-icon
+          [attr.data-completedvalue]="task.completed"
           class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
+          (click)="completeTask(task.id, $event)"
           >check_circle_outline</mat-icon
         >{{ task.todo }}
       </div>

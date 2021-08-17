@@ -11,6 +11,7 @@ export class MainTaskFormComponent implements OnInit {
   mainTasksToDisplay: any;
   testBrowser!: boolean;
   isLoading: boolean = false;
+  isCompletedTask!: boolean;
   constructor(
     private formServicesService: FormServicesService,
     @Inject(PLATFORM_ID) platformId: string
@@ -58,6 +59,7 @@ export class MainTaskFormComponent implements OnInit {
     }
   }
 
+  // Delete tasks
   async deleteTask(id: number): Promise<void> {
     try {
       this.isLoading = true;
@@ -71,6 +73,17 @@ export class MainTaskFormComponent implements OnInit {
       }
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  // Update tasks to a completed status
+  async completeTask(id: number, event: any): Promise<void> {
+    if (event.target.dataset.completedvalue === 'true') {
+      await this.formServicesService.mainTaskFormCompleteTodo(id, false);
+      return await this.retrieveAllTasks();
+    } else {
+      await this.formServicesService.mainTaskFormCompleteTodo(id, true);
+      return await this.retrieveAllTasks();
     }
   }
 
