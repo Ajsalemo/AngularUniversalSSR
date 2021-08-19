@@ -23,7 +23,6 @@ export class FormServicesService {
     id: number,
     isCompleted: boolean
   ): Promise<Object> {
-    console.log(isCompleted);
     return await this.http
       .put(
         `/api/complete_task/${id}`,

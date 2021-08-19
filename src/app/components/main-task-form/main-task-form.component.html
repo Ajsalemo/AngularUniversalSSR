@@ -17,16 +17,17 @@
     >
       <div class="flex items-center">
         <mat-icon
-          [attr.data-completedvalue]="task.completed"
           class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
-          (click)="completeTask(task.id, $event)"
-          >check_circle_outline</mat-icon
+          (click)="completeTask(task.id, task.completed)"
+          >{{
+            task.completed ? "check_circle" : "check_circle_outline"
+          }}</mat-icon
         >
         <span *ngIf="task.completed === true; else notCompleted">
-          {{ task.todo }}
+          <s>{{ task.todo }}</s>
         </span>
         <ng-template #notCompleted
-          ><s>{{ task.todo }}</s></ng-template
+          ><span>{{ task.todo }}</span></ng-template
         >
       </div>
       <div class="flex items-center">
@@ -56,12 +57,14 @@
                 border-l-2 border-transparent
                 hover:border-gray-500
               "
-              (click)="completeTask(task.id, $event)"
+              (click)="completeTask(task.id, task.completed)"
             >
-              <mat-icon class="text-gray-300 text-sm"
-                >check_circle_outline</mat-icon
-              >
-              <span>{{ task.completed ? 'Mark as completed' : 'Mark as not completed' }}</span>
+              <mat-icon class="text-gray-300 text-sm">{{
+                task.completed ? "check_circle" : "check_circle_outline"
+              }}</mat-icon>
+              <span>{{
+                task.completed ? "Mark as not completed" : "Mark as completed"
+              }}</span>
             </button>
             <div class="h-2 w-full border-b-2 border-gray-500 mx-auto"></div>
             <button
