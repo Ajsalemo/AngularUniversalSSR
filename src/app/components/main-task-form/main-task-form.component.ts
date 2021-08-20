@@ -34,6 +34,7 @@ export class MainTaskFormComponent implements OnInit {
       const tasks = await this.formServicesService.mainTaskFormGetAllTodos();
       this.mainTasksToDisplay = tasks;
       this.isLoading = false;
+      console.log(tasks)
     } catch (error) {
       console.error(error);
     }
@@ -83,6 +84,16 @@ export class MainTaskFormComponent implements OnInit {
       return await this.retrieveAllTasks();
     } else {
       await this.formServicesService.mainTaskFormCompleteTodo(id, true);
+      return await this.retrieveAllTasks();
+    }
+  }
+
+  async makeTaskImportant(id: number, important: boolean): Promise<void> {
+    if (important === true) {
+      await this.formServicesService.mainTaskFormSetImportantTodo(id, false);
+      return await this.retrieveAllTasks();
+    } else {
+      await this.formServicesService.mainTaskFormSetImportantTodo(id, true);
       return await this.retrieveAllTasks();
     }
   }

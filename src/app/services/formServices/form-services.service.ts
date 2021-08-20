@@ -31,4 +31,18 @@ export class FormServicesService {
       )
       .toPromise();
   }
+
+  async mainTaskFormSetImportantTodo(
+    id: number,
+    isImportant: boolean
+  ): Promise<Object> {
+    return await this.http
+      .put(
+        `/api/task/important/${id}`,
+        { isImportant },
+        { responseType: 'text' }
+      )
+      .toPromise();
+  }
+
 }

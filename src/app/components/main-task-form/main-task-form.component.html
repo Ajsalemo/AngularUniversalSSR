@@ -31,10 +31,15 @@
         >
       </div>
       <div class="flex">
-        <button mat-button class="flex items-center">
+        <button
+          mat-button
+          class="flex items-center"
+          (click)="makeTaskImportant(task.id, task.important)"
+        >
           <mat-icon
             class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
-            >{{ task.important ? "star" : "star_border" }}</mat-icon>
+            >{{ task.important ? "star" : "star_border" }}</mat-icon
+          >
         </button>
         <button mat-button [matMenuTriggerFor]="menu" class="flex items-center">
           <mat-icon
@@ -52,9 +57,12 @@
                 flex
                 items-center
               "
+              (click)="makeTaskImportant(task.id, task.important)"
             >
               <mat-icon class="text-gray-300 text-sm">star_border</mat-icon
-              ><span>Mark as important</span>
+              ><span
+                >{{ task.important ? "Mark as not important" : "Mark as important" }}</span
+              >
             </button>
             <button
               class="
