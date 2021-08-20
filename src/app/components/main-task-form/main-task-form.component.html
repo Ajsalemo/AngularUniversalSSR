@@ -30,8 +30,14 @@
           ><span>{{ task.todo }}</span></ng-template
         >
       </div>
-      <div class="flex items-center">
-        <button mat-button [matMenuTriggerFor]="menu">
+      <div class="flex">
+        <button mat-button class="flex items-center">
+          <mat-icon
+            class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
+            >star_border</mat-icon
+          >
+        </button>
+        <button mat-button [matMenuTriggerFor]="menu" class="flex items-center">
           <mat-icon
             class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
             >more_vert</mat-icon
