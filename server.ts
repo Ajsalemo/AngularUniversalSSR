@@ -31,7 +31,7 @@ export function app(): express.Express {
 
   // Express Rest API endpoints
   // Add a task
-  server.post('/api/submit_task', async (req, res) => {
+  server.post('/api/task/submit', async (req, res) => {
     try {
       const { body } = req;
       if (!body.task || body.task === null) {
@@ -53,7 +53,7 @@ export function app(): express.Express {
   });
 
   // Delete a task
-  server.delete('/api/delete_task/:id', async (req, res) => {
+  server.delete('/api/task/delete/:id', async (req, res) => {
     try {
       const { id } = req.params;
       const num_id = parseInt(id);
@@ -85,7 +85,7 @@ export function app(): express.Express {
   });
 
   // Update a task to be completed
-  server.put('/api/complete_task/:id', async (req, res) => {
+  server.put('/api/task/complete/:id', async (req, res) => {
     try {
       const { id } = req.params;
       const { isCompleted } = req.body;
@@ -121,7 +121,7 @@ export function app(): express.Express {
   });
 
   // Find all tasks
-  server.get('/api/get_all_tasks', async (_, res) => {
+  server.get('/api/task/get', async (_, res) => {
     try {
       const getAllTasks = await db.Todos.findAll();
       res.json(getAllTasks);
@@ -185,3 +185,4 @@ if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
 }
 
 export * from './src/main.server';
+

@@ -8,15 +8,15 @@ export class FormServicesService {
   constructor(private http: HttpClient) {}
 
   async mainTaskFormSubmitTodo(data: any): Promise<any> {
-    return await this.http.post('/api/submit_task', data).toPromise();
+    return await this.http.post('/api/task/submit', data).toPromise();
   }
 
   async mainTaskFormGetAllTodos(): Promise<any> {
-    return await this.http.get('/api/get_all_tasks').toPromise();
+    return await this.http.get('/api/task/get').toPromise();
   }
 
   async mainTaskFormDeleteTodo(id: number): Promise<any> {
-    return await this.http.delete(`/api/delete_task/${id}`).toPromise();
+    return await this.http.delete(`/api/task/delete/${id}`).toPromise();
   }
 
   async mainTaskFormCompleteTodo(
@@ -25,7 +25,7 @@ export class FormServicesService {
   ): Promise<Object> {
     return await this.http
       .put(
-        `/api/complete_task/${id}`,
+        `/api/task/complete/${id}`,
         { isCompleted },
         { responseType: 'text' }
       )

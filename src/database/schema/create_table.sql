@@ -5,6 +5,7 @@ CREATE TABLE todos(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     todo VARCHAR(500) NOT NULL,
     completed BOOLEAN NOT NULL DEFAULT false,
+    important BOOLEAN NOT NULL DEFAULT false,
     createdAt VARCHAR(255) NOT NULL,
     updatedAt VARCHAR(255) NOT NULL
 );

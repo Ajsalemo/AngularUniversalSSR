@@ -2,7 +2,8 @@
 
 INSERT INTO todos(
     todo,
-    completed
+    completed,
+    important
 ) VALUES 
-('hang shelves', false),
-('mow the grass', true);
+('hang shelves', false, false),
+('mow the grass', true, true);

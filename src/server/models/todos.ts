@@ -4,6 +4,7 @@ interface TodoAttributes {
   id?: string;
   todo: string;
   completed?: boolean;
+  important?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -19,6 +20,11 @@ export default (sequalize: Sequelize.Sequelize) => {
     },
     todo: { type: Sequelize.STRING, allowNull: false },
     completed: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    important: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false,

@@ -78,7 +78,6 @@ export class MainTaskFormComponent implements OnInit {
 
   // Update tasks to a completed status
   async completeTask(id: number, completed: boolean): Promise<void> {
-    console.log(completed)
     if (completed === true) {
       await this.formServicesService.mainTaskFormCompleteTodo(id, false);
       return await this.retrieveAllTasks();
