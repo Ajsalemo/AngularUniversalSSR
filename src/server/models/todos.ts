@@ -33,7 +33,7 @@ export default (sequalize: Sequelize.Sequelize) => {
     dueBy: {
       type: Sequelize.DATE,
       allowNull: true,
-    }
+    },
     createdAt: {
       type: Sequelize.DATE,
       allowNull: false,
