@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormServicesService } from '@services/formServices/form-services.service';
-
+import { format } from 'date-fns';
 @Component({
   selector: 'app-main-task-form',
   templateUrl: './main-task-form.component.html',
@@ -96,6 +96,12 @@ export class MainTaskFormComponent implements OnInit {
       await this.formServicesService.mainTaskFormSetImportantTodo(id, true);
       return await this.retrieveAllTasks();
     }
+  }
+
+  async setTaskDueDateToToday(id: number): Promise<void> {
+    console.log(id)
+    const today = format(new Date(), 'M/d/y');
+    console.log(today)
   }
 
   ngOnInit(): void {

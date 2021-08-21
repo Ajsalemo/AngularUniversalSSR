@@ -89,6 +89,7 @@
                 flex
                 items-center
               "
+              (click)="setTaskDueDateToToday(task.id)"
             >
               <mat-icon class="text-gray-300 text-sm">today</mat-icon>
               <span>Due today</span>
