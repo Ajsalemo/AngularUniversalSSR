@@ -47,7 +47,7 @@ export class FormServicesService {
 
   async mainTaskFormSetDueDateToday(
     id: number,
-    isDueBy: number
+    isDueBy: any
   ): Promise<Object> {
     return await this.http
       .put(

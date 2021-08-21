@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormServicesService } from '@services/formServices/form-services.service';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 @Component({
   selector: 'app-main-task-form',
   templateUrl: './main-task-form.component.html',
@@ -27,6 +27,19 @@ export class MainTaskFormComponent implements OnInit {
   get getTaskControl() {
     return this.mainTaskForm.controls;
   }
+  
+  // This logic will be cleaned up
+  // TODO - test further, clean up logic
+  formatTaskDueDate(date: any) {
+    const today = format(new Date(), 'M/d/y')
+    if (!date) return;
+    const formatDate = format(parseISO(date), 'M/d/y');
+    if (today === formatDate) {
+      return 'Due Today'
+    } else {
+      return 'Not Due Today'
+    }
+  }
 
   async retrieveAllTasks(): Promise<void> {
     this.isLoading = true;
@@ -34,7 +47,7 @@ export class MainTaskFormComponent implements OnInit {
       const tasks = await this.formServicesService.mainTaskFormGetAllTodos();
       this.mainTasksToDisplay = tasks;
       this.isLoading = false;
-      console.log(tasks)
+      console.log(tasks);
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +112,9 @@ export class MainTaskFormComponent implements OnInit {
   }
 
   async setTaskDueDateToToday(id: number): Promise<void> {
-    console.log(id)
+    const date = new Date();
+    await this.formServicesService.mainTaskFormSetDueDateToday(id, date);
+    return await this.retrieveAllTasks();
   }
 
   ngOnInit(): void {

@@ -24,11 +24,11 @@
           }}</mat-icon
         >
         <span *ngIf="task.completed === true; else notCompleted">
-          <s>{{ task.todo }}</s>
+          <s>{{ task.todo }}</s> {{ formatTaskDueDate(task.dueBy) }}
         </span>
         <ng-template #notCompleted
-          ><span>{{ task.todo }}</span></ng-template
-        >
+          ><span>{{ task.todo }} {{ formatTaskDueDate(task.dueBy) }}</span>
+        </ng-template>
       </div>
       <div class="flex">
         <button
@@ -60,9 +60,9 @@
               (click)="makeTaskImportant(task.id, task.important)"
             >
               <mat-icon class="text-gray-300 text-sm">star_border</mat-icon
-              ><span
-                >{{ task.important ? "Mark as not important" : "Mark as important" }}</span
-              >
+              ><span>{{
+                task.important ? "Mark as not important" : "Mark as important"
+              }}</span>
             </button>
             <button
               class="
