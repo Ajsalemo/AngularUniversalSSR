@@ -45,4 +45,16 @@ export class FormServicesService {
       .toPromise();
   }
 
+  async mainTaskFormSetDueDateToday(
+    id: number,
+    isDueBy: number
+  ): Promise<Object> {
+    return await this.http
+      .put(
+        `/api/task/due/${id}`,
+        { isDueBy },
+        { responseType: 'text' }
+      )
+      .toPromise();
+  }
 }

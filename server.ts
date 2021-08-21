@@ -52,6 +52,42 @@ export function app(): express.Express {
     }
   });
 
+  // Update a task with a due date
+  server.put('/api/task/due/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { isDueBy } = req.body;
+      const dueDate_id = parseInt(id);
+      if (dueDate_id && dueDate_id > 0) {
+        const findDueDateTask = await db.Todos.findOne({
+          where: {
+            id: dueDate_id,
+          },
+        });
+
+        if (findDueDateTask?.id) {
+          await db.Todos.update(
+            {
+              dueBy: isDueBy,
+            },
+            {
+              where: {
+                id: findDueDateTask?.id,
+              },
+            }
+          );
+          res.status(200).send({ message: 'Task updated' });
+        } else {
+          res.status(404).send({ error: 'Task not found' });
+        }
+      } else {
+        res.status(500).send({ error: `Bad parameter provided` });
+      }
+    } catch (e) {
+      res.status(500).send({ error: `An error has occurred: ${e}` });
+    }
+  })
+
   // Delete a task
   server.delete('/api/task/delete/:id', async (req, res) => {
     try {

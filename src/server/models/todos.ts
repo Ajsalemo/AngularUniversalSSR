@@ -5,6 +5,7 @@ interface TodoAttributes {
   todo: string;
   completed?: boolean;
   important?: boolean;
+  dueBy?: number;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -29,6 +30,10 @@ export default (sequalize: Sequelize.Sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
+    dueBy: {
+      type: Sequelize.DATE,
+      allowNull: true,
+    }
     createdAt: {
       type: Sequelize.DATE,
       allowNull: false,

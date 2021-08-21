@@ -100,8 +100,6 @@ export class MainTaskFormComponent implements OnInit {
 
   async setTaskDueDateToToday(id: number): Promise<void> {
     console.log(id)
-    const today = format(new Date(), 'M/d/y');
-    console.log(today)
   }
 
   ngOnInit(): void {
