@@ -26,14 +26,14 @@
         <div *ngIf="task.completed === true; else notCompleted">
           <s>{{ task.todo }}</s>
           <span class="text-red-500 text-xs flex">{{
-            formatTaskDueDate(task.dueBy)
+            formatTaskDueDate(task.dueBy) ? 'Due today' : null
           }}</span>
         </div>
         <ng-template #notCompleted>
           <div>
             <span>{{ task.todo }}</span>
             <span class="text-red-500 text-xs flex">{{
-              formatTaskDueDate(task.dueBy)
+              formatTaskDueDate(task.dueBy) ? 'Due today' : null
             }}</span>
           </div>
         </ng-template>
@@ -97,10 +97,10 @@
                 flex
                 items-center
               "
-              (click)="setTaskDueDateToToday(task.id)"
+              (click)="formatTaskDueDate(task.dueBy) ? removeTaskDueDate(task.id) : setTaskDueDateToToday(task.id)"
             >
               <mat-icon class="text-gray-300 text-sm">today</mat-icon>
-              <span>Due today</span>
+              <span>{{ formatTaskDueDate(task.dueBy) ? 'Remove Due Date' : 'Due today' }}</span>
             </button>
             <button
               class="

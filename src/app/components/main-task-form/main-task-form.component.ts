@@ -28,19 +28,19 @@ export class MainTaskFormComponent implements OnInit {
     return this.mainTaskForm.controls;
   }
 
-  // This logic will be cleaned up
-  // TODO - test further, clean up logic
+  // Logic to check the current date
   formatTaskDueDate(date: any) {
-    const today = format(new Date(), 'M/d/y');
     if (!date) return;
+    const today = format(new Date(), 'M/d/y');
     const formatDate = format(parseISO(date), 'M/d/y');
     if (today === formatDate) {
-      return 'Due Today';
+      return true;
     } else {
-      return 'Test';
+      return false;
     }
   }
 
+  // Retrieve all stored tasks
   async retrieveAllTasks(): Promise<void> {
     this.isLoading = true;
     try {
@@ -101,6 +101,7 @@ export class MainTaskFormComponent implements OnInit {
     }
   }
 
+  // Update tasks to be important
   async makeTaskImportant(id: number, important: boolean): Promise<void> {
     if (important === true) {
       await this.formServicesService.mainTaskFormSetImportantTodo(id, false);
@@ -111,9 +112,16 @@ export class MainTaskFormComponent implements OnInit {
     }
   }
 
+  // Set a tasks due date
   async setTaskDueDateToToday(id: number): Promise<void> {
     const date = new Date();
     await this.formServicesService.mainTaskFormSetDueDateToday(id, date);
+    return await this.retrieveAllTasks();
+  }
+
+  // Remove a task's due date
+  async removeTaskDueDate(id: number): Promise<void> {
+    await this.formServicesService.mainTaskFormSetDueDateToday(id, null);
     return await this.retrieveAllTasks();
   }
 
