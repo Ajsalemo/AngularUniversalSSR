@@ -23,11 +23,19 @@
             task.completed ? "check_circle" : "check_circle_outline"
           }}</mat-icon
         >
-        <span *ngIf="task.completed === true; else notCompleted">
-          <s>{{ task.todo }}</s> {{ formatTaskDueDate(task.dueBy) }}
-        </span>
-        <ng-template #notCompleted
-          ><span>{{ task.todo }} {{ formatTaskDueDate(task.dueBy) }}</span>
+        <div *ngIf="task.completed === true; else notCompleted">
+          <s>{{ task.todo }}</s>
+          <span class="text-red-500 text-xs flex">{{
+            formatTaskDueDate(task.dueBy)
+          }}</span>
+        </div>
+        <ng-template #notCompleted>
+          <div>
+            <span>{{ task.todo }}</span>
+            <span class="text-red-500 text-xs flex">{{
+              formatTaskDueDate(task.dueBy)
+            }}</span>
+          </div>
         </ng-template>
       </div>
       <div class="flex">

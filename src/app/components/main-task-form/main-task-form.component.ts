@@ -27,17 +27,17 @@ export class MainTaskFormComponent implements OnInit {
   get getTaskControl() {
     return this.mainTaskForm.controls;
   }
-  
+
   // This logic will be cleaned up
   // TODO - test further, clean up logic
   formatTaskDueDate(date: any) {
-    const today = format(new Date(), 'M/d/y')
+    const today = format(new Date(), 'M/d/y');
     if (!date) return;
     const formatDate = format(parseISO(date), 'M/d/y');
     if (today === formatDate) {
-      return 'Due Today'
+      return 'Due Today';
     } else {
-      return 'Not Due Today'
+      return 'Test';
     }
   }
 
