@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormServicesService } from '@services/formServices/form-services.service';
-import { format, parseISO } from 'date-fns';
+import { differenceInCalendarDays, differenceInDays, format, formatDistanceToNow, parseISO } from 'date-fns';
 @Component({
   selector: 'app-main-task-form',
   templateUrl: './main-task-form.component.html',
@@ -28,15 +28,30 @@ export class MainTaskFormComponent implements OnInit {
     return this.mainTaskForm.controls;
   }
 
+  // This checks the calendar day difference in between now and the selected target date for the task
+  setFormatTaskDueDateBoolean(date: any) {
+    const todayDateDiffBool = differenceInCalendarDays(parseISO(date), new Date())
+    if (todayDateDiffBool === 0) {
+      return true;
+    } else if (todayDateDiffBool === 1) {
+      return false;
+    } else if (todayDateDiffBool > 1 || todayDateDiffBool < 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   // Logic to check the current date
   formatTaskDueDate(date: any) {
     if (!date) return;
-    const today = format(new Date(), 'M/d/y');
-    const formatDate = format(parseISO(date), 'M/d/y');
-    if (today === formatDate) {
-      return true;
+    const todayDateDiff = differenceInCalendarDays(parseISO(date), new Date())
+    if (todayDateDiff === 0) {
+      return 'Due today';
+    } else if (todayDateDiff === 1) {
+      return 'Due tomorrow';
     } else {
-      return false;
+      return `Due on ${format(parseISO(date), 'M/d/y')}`;
     }
   }
 
@@ -116,6 +131,17 @@ export class MainTaskFormComponent implements OnInit {
   async setTaskDueDateToToday(id: number): Promise<void> {
     const date = new Date();
     await this.formServicesService.mainTaskFormSetDueDateToday(id, date);
+    return await this.retrieveAllTasks();
+  }
+
+  // Set a tasks due date to one day ahead
+  async setTaskDueDateToTomorrow(id: number): Promise<void> {
+    const tomorrow = new Date();
+    const tomorrowDate = tomorrow.setDate(tomorrow.getDate() + 1);
+    await this.formServicesService.mainTaskFormSetDueDateToday(
+      id,
+      tomorrowDate
+    );
     return await this.retrieveAllTasks();
   }
 

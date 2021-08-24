@@ -8,14 +8,14 @@
         rounded
         bg-black bg-opacity-80
         text-gray-300
-        h-8
+        min-h-8
         break-all
         mb-2
         flex
         justify-between
       "
     >
-      <div class="flex items-center">
+      <div class="flex items-center py-1">
         <mat-icon
           class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
           (click)="completeTask(task.id, task.completed)"
@@ -24,16 +24,18 @@
           }}</mat-icon
         >
         <div *ngIf="task.completed === true; else notCompleted">
-          <s>{{ task.todo }}</s>
+          <span>
+            <s>{{ task.todo }}</s>
+          </span>
           <span class="text-red-500 text-xs flex">{{
-            formatTaskDueDate(task.dueBy) ? 'Due today' : null
+            formatTaskDueDate(task.dueBy)
           }}</span>
         </div>
         <ng-template #notCompleted>
           <div>
             <span>{{ task.todo }}</span>
             <span class="text-red-500 text-xs flex">{{
-              formatTaskDueDate(task.dueBy) ? 'Due today' : null
+              formatTaskDueDate(task.dueBy)
             }}</span>
           </div>
         </ng-template>
@@ -97,10 +99,17 @@
                 flex
                 items-center
               "
-              (click)="formatTaskDueDate(task.dueBy) ? removeTaskDueDate(task.id) : setTaskDueDateToToday(task.id)"
+              (click)="
+                formatTaskDueDate(task.dueBy)
+                  ? removeTaskDueDate(task.id)
+                  : setTaskDueDateToToday(task.id)
+              "
             >
               <mat-icon class="text-gray-300 text-sm">today</mat-icon>
-              <span>{{ formatTaskDueDate(task.dueBy) ? 'Remove Due Date' : 'Due today' }}</span>
+              <!-- If the format function returns a value then this will show "Remove Due Date" else it'll show 'Due today' since nothing was returned-->
+              <span>{{
+                formatTaskDueDate(task.dueBy) ? "Remove Due Date" : "Due today"
+              }}</span>
             </button>
             <button
               class="
@@ -111,9 +120,18 @@
                 flex
                 items-center
               "
+              (click)="
+                setFormatTaskDueDateBoolean(task.dueBy)
+                  ? setTaskDueDateToTomorrow(task.id)
+                  : setTaskDueDateToToday(task.id)
+              "
             >
               <mat-icon class="text-gray-300 text-sm">event</mat-icon>
-              <span>Due tomorrow</span>
+              <span>{{
+                setFormatTaskDueDateBoolean(task.dueBy)
+                  ? "Due tomorrow"
+                  : "Due today"
+              }}</span>
             </button>
             <div class="h-2 w-full border-b-2 border-gray-500 mx-auto"></div>
             <button
