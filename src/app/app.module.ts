@@ -37,8 +37,8 @@ import { LandingComponent } from './components/landing/landing.component';
     ReactiveFormsModule,
     HttpClientModule,
     AuthModule.forRoot({
-      domain: '',
-      clientId: '',
+      domain: 'reacttwitter.auth0.com',
+      clientId: 'BuheWQDchcUDokSaqoTyyD7p7F1Zri6n',
     }),
   ],
   providers: [],
