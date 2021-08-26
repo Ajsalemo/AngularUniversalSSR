@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormServicesService } from '@services/formServices/form-services.service';
-import { differenceInCalendarDays, differenceInDays, format, formatDistanceToNow, parseISO } from 'date-fns';
+import { differenceInCalendarDays, format, parseISO } from 'date-fns';
 @Component({
   selector: 'app-main-task-form',
   templateUrl: './main-task-form.component.html',
@@ -31,6 +31,7 @@ export class MainTaskFormComponent implements OnInit {
   // This checks the calendar day difference in between now and the selected target date for the task
   setFormatTaskDueDateBoolean(date: any) {
     const todayDateDiffBool = differenceInCalendarDays(parseISO(date), new Date())
+    console.log(todayDateDiffBool)
     if (todayDateDiffBool === 0) {
       return true;
     } else if (todayDateDiffBool === 1) {
@@ -138,6 +139,7 @@ export class MainTaskFormComponent implements OnInit {
   async setTaskDueDateToTomorrow(id: number): Promise<void> {
     const tomorrow = new Date();
     const tomorrowDate = tomorrow.setDate(tomorrow.getDate() + 1);
+    console.log(tomorrowDate)
     await this.formServicesService.mainTaskFormSetDueDateToday(
       id,
       tomorrowDate
