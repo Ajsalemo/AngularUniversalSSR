@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "~12.1.2",
     "@angular/platform-server": "~12.1.2",
     "@angular/router": "~12.1.2",
+    "@auth0/auth0-angular": "^1.6.0",
     "@ngneat/tailwind": "^7.0.3",
     "@nguniversal/express-engine": "^12.1.0",
     "date-fns": "^2.23.0",

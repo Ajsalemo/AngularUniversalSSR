@@ -14,7 +14,8 @@ import { RightSidenavTitleComponent } from '@components/right-sidenav-title/righ
 import { TaskHeadingComponent } from '@components/task-heading/task-heading.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
-
+import { AuthModule } from '@auth0/auth0-angular';
+import { LandingComponent } from './components/landing/landing.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { MaterialModule } from './material.module';
     TaskHeadingComponent,
     MobileBottomMainNavComponent,
     MobileBottomSuggestionsComponent,
+    LandingComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -34,6 +36,10 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AuthModule.forRoot({
+      domain: '',
+      clientId: '',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -46,11 +46,14 @@ export class MainTaskFormComponent implements OnInit {
   // Logic to check the current date
   formatTaskDueDate(date: any) {
     if (!date) return;
+    const today = new Date()
     const todayDateDiff = differenceInCalendarDays(parseISO(date), new Date())
     if (todayDateDiff === 0) {
       return 'Due today';
     } else if (todayDateDiff === 1) {
       return 'Due tomorrow';
+    } else if (todayDateDiff < 0) {
+      return `Overdue on ${format(parseISO(date), 'M/d/y')}`;
     } else {
       return `Due on ${format(parseISO(date), 'M/d/y')}`;
     }
