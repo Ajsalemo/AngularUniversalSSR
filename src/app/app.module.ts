@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthModule } from '@auth0/auth0-angular';
 import { AppComponent } from '@components/app-root/app.component';
 import { AvatarComponent } from '@components/avatar/avatar.component';
 import { ContentEntrypointComponent } from '@components/content-entrypoint/content-entrypoint.component';
@@ -13,9 +14,8 @@ import { MobileBottomSuggestionsComponent } from '@components/mobile-bottom-sugg
 import { RightSidenavTitleComponent } from '@components/right-sidenav-title/right-sidenav-title.component';
 import { TaskHeadingComponent } from '@components/task-heading/task-heading.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MaterialModule } from './material.module';
-import { AuthModule } from '@auth0/auth0-angular';
 import { LandingComponent } from './components/landing/landing.component';
+import { MaterialModule } from './material.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,8 +37,8 @@ import { LandingComponent } from './components/landing/landing.component';
     ReactiveFormsModule,
     HttpClientModule,
     AuthModule.forRoot({
-      domain: 'reacttwitter.auth0.com',
-      clientId: 'BuheWQDchcUDokSaqoTyyD7p7F1Zri6n',
+      domain: '',
+      clientId: '',
     }),
   ],
   providers: [],
