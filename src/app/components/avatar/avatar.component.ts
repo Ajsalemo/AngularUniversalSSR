@@ -6,13 +6,13 @@ import { AuthService } from '@auth0/auth0-angular';
   templateUrl: './avatar.component.html',
 })
 export class AvatarComponent implements OnInit {
-  constructor(private auth: AuthService) {}
+  constructor(public auth: AuthService) {}
 
   logout(): void {
     this.auth.logout({ returnTo: window.location.origin });
   }
 
   ngOnInit(): void {
-    console.log(this.auth.user$)
+    console.log(this.auth.user$.subscribe((user) => console.log(user)));
   }
 }

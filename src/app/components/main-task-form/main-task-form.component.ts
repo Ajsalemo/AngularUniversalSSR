@@ -30,8 +30,8 @@ export class MainTaskFormComponent implements OnInit {
 
   // This checks the calendar day difference in between now and the selected target date for the task
   setFormatTaskDueDateBoolean(date: any) {
-    const todayDateDiffBool = differenceInCalendarDays(parseISO(date), new Date())
-    console.log(todayDateDiffBool)
+    const todayDueDateBoolean = new Date()
+    const todayDateDiffBool = differenceInCalendarDays(parseISO(date), todayDueDateBoolean)
     if (todayDateDiffBool === 0) {
       return true;
     } else if (todayDateDiffBool === 1) {
@@ -46,8 +46,8 @@ export class MainTaskFormComponent implements OnInit {
   // Logic to check the current date
   formatTaskDueDate(date: any) {
     if (!date) return;
-    const today = new Date()
-    const todayDateDiff = differenceInCalendarDays(parseISO(date), new Date())
+    const todayDueDate = new Date()
+    const todayDateDiff = differenceInCalendarDays(parseISO(date), todayDueDate)
     if (todayDateDiff === 0) {
       return 'Due today';
     } else if (todayDateDiff === 1) {
@@ -99,7 +99,6 @@ export class MainTaskFormComponent implements OnInit {
       const { message } = await this.formServicesService.mainTaskFormDeleteTodo(
         id
       );
-      console.log(message);
       if (message) {
         this.isLoading = false;
         await this.retrieveAllTasks();

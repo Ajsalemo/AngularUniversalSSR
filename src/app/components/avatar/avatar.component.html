@@ -2,34 +2,35 @@
   class="flex hover:bg-gray-700 pt-1 cursor-default"
   [matMenuTriggerFor]="profileMenu"
 >
-  <!-- Placeholder initials -->
-  <div
-    class="
-      rounded-full
-      h-8
-      w-8
-      bg-blue-400
-      flex
-      items-center
-      justify-center
-      ml-2
-    "
-  >
-    AS
-  </div>
-  <!-- Placeholder name and email -->
-  <div class="flex flex-col ml-2 text-xs">
-    <span class="text-gray-300">Firstname Lastname</span>
-    <span class="text-gray-500"
-      >example@example.com
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Unfold more icon"
-        class="text-sm"
-        >unfold_more</mat-icon
-      ></span
-    >
-  </div>
+  <mat-spinner
+    class="mx-auto"
+    color="accent"
+    diameter="25"
+    aria-label="Loading indicator for user information"
+    *ngIf="auth.isLoading$ | async; else userInformationTemplate"
+  ></mat-spinner>
+  <ng-template #userInformationTemplate>
+    <div *ngIf="auth.user$ | async as user">
+      <img
+        src="{{ user.picture }}"
+        alt="User profile picture"
+        class="rounded-full h-8 w-8"
+      />
+    </div>
+    <!-- Placeholder name and email -->
+    <div class="flex flex-col ml-2 text-xs" *ngIf="auth.user$ | async as userInformation">
+      <span class="text-gray-300">Firstname Lastname</span>
+      <span class="text-gray-500"
+        >{{ userInformation.email }}
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Unfold more icon"
+          class="text-sm"
+          >unfold_more</mat-icon
+        ></span
+      >
+    </div>
+  </ng-template>
 </div>
 <!-- Menu for the user profile -->
 <mat-menu #profileMenu="matMenu" class="text-gray-300 bg-gray-800 ml-4">
@@ -44,6 +45,7 @@
       "
       (click)="logout()"
     >
+      <mat-icon class="text-sm pr-1">logout</mat-icon>
       Log out
     </button>
   </div>

@@ -13,8 +13,14 @@ body {
 }
 
 // Angular Material overrides
-.mat-menu-content {
-  width: auto !important;
+.mat-menu {
+  &-panel {
+    min-height: auto !important;
+  }
+
+  &-content {
+    width: auto !important;
+  }
 }
 
 .mat-bottom-sheet-container {
