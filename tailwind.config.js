@@ -23,9 +23,9 @@ module.exports = {
         ft: "fit-content",
       },
     },
-    fontSize: {
-      landing: "20rem",
-    },
+    // fontSize: {
+    //   landing: "20rem",
+    // },
   },
   variants: {
     extend: {

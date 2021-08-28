@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
 })
 export class LandingComponent implements OnInit {
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService, private router: Router) {}
 
   login(): void {
-    this.auth.loginWithRedirect({
-      redirect_uri: 'http://localhost:4200/tasks',
-    });
+    this.auth.loginWithRedirect();
   }
 
   ngOnInit(): void {
-    
+    if (this.auth.isAuthenticated$) {
+      this.router.navigate(['/tasks']);
+    }
   }
 }
