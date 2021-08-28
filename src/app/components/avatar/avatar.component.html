@@ -1,4 +1,7 @@
-<div class="flex hover:bg-gray-700 pt-1 cursor-default">
+<div
+  class="flex hover:bg-gray-700 pt-1 cursor-default"
+  [matMenuTriggerFor]="profileMenu"
+>
   <!-- Placeholder initials -->
   <div
     class="
@@ -19,9 +22,29 @@
     <span class="text-gray-300">Firstname Lastname</span>
     <span class="text-gray-500"
       >example@example.com
-      <mat-icon aria-hidden="false" aria-label="Unfold more icon" class="text-sm"
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Unfold more icon"
+        class="text-sm"
         >unfold_more</mat-icon
       ></span
     >
   </div>
 </div>
+<!-- Menu for the user profile -->
+<mat-menu #profileMenu="matMenu" class="text-gray-300 bg-gray-800 ml-4">
+  <div class="text-sm flex flex-col px-2">
+    <button
+      class="
+        hover:bg-gray-700
+        border-l-2 border-transparent
+        hover:border-gray-500
+        flex
+        items-center
+      "
+      (click)="logout()"
+    >
+      Log out
+    </button>
+  </div>
+</mat-menu>
