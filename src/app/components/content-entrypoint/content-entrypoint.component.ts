@@ -3,6 +3,8 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { themeApiArray } from '@api/themeApi';
 import { MobileBottomMainNavComponent } from '@components/mobile-bottom-main-nav/mobile-bottom-main-nav.component';
 import { MobileBottomSuggestionsComponent } from '@components/mobile-bottom-suggestions/mobile-bottom-suggestions.component';
+import { AuthService } from '@auth0/auth0-angular';
+import { UserServicesService } from '@services/userServices/user-services.service';
 
 @Component({
   selector: 'app-content-entrypoint',
@@ -19,7 +21,11 @@ export class ContentEntrypointComponent implements OnInit {
   // Set the screen width to a variable
   innerWidth!: number;
   userSelectedTheme: string = '';
-  constructor(private _bottomMainNavSheet: MatBottomSheet) {}
+  constructor(
+    private _bottomMainNavSheet: MatBottomSheet,
+    public auth: AuthService,
+    private userService: UserServicesService
+  ) {}
 
   setBackgroundTheme(theme: string): any {
     // Sets the user selected background theme
@@ -56,5 +62,28 @@ export class ContentEntrypointComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  checkIfAuth0UserExists(): void {
+    try {
+      this.auth.isLoading$.subscribe((isLoading) => {
+        if (!isLoading) {
+          this.auth.user$.subscribe(async (user) => {
+            console.log(user);
+            if (user && user.email) {
+              await this.userService.checkUserUponLogin(user.email)
+            } else {
+              console.error('No user object exists.')
+            }
+          });
+        } else {
+          console.log('loading..');
+        }
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  ngOnInit(): void {
+    this.checkIfAuth0UserExists();
+  }
 }

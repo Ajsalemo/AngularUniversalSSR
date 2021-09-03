@@ -204,9 +204,9 @@ export function app(): express.Express {
 
   // TODO - add a function to check if the user ID exists - if it doesnt add it to the database
   // Add a user
-  server.get('/api/user/:id', async (req, res) => {
+  server.get('/api/user/get/:email', async (req, res) => {
     try {
-      console.log(req.params.id)
+      console.log(req.params.email)
       res.sendStatus(200);
     } catch (err) {
       console.log(err)

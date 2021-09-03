@@ -3,6 +3,8 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormServicesService } from '@services/formServices/form-services.service';
 import { differenceInCalendarDays, format, parseISO } from 'date-fns';
+import { AuthService } from '@auth0/auth0-angular';
+
 @Component({
   selector: 'app-main-task-form',
   templateUrl: './main-task-form.component.html',
@@ -14,7 +16,8 @@ export class MainTaskFormComponent implements OnInit {
   isCompletedTask!: boolean;
   constructor(
     private formServicesService: FormServicesService,
-    @Inject(PLATFORM_ID) platformId: string
+    @Inject(PLATFORM_ID) platformId: string,
+    public auth: AuthService
   ) {
     this.testBrowser = isPlatformBrowser(platformId);
   }

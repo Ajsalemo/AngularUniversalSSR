@@ -9,7 +9,11 @@ export class LandingComponent implements OnInit {
   constructor(public auth: AuthService, private router: Router) {}
 
   login(): void {
-    this.auth.loginWithRedirect();
+    try {
+      this.auth.loginWithRedirect();
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   ngOnInit(): void {
