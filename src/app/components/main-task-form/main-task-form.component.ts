@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormServicesService } from '@services/formServices/form-services.service';
 import { differenceInCalendarDays, format, parseISO } from 'date-fns';
 import { AuthService } from '@auth0/auth0-angular';
+import { UserServicesService } from '@services/userServices/user-services.service';
 
 @Component({
   selector: 'app-main-task-form',
@@ -17,7 +18,8 @@ export class MainTaskFormComponent implements OnInit {
   constructor(
     private formServicesService: FormServicesService,
     @Inject(PLATFORM_ID) platformId: string,
-    public auth: AuthService
+    public auth: AuthService,
+    private userService: UserServicesService
   ) {
     this.testBrowser = isPlatformBrowser(platformId);
   }
@@ -33,8 +35,11 @@ export class MainTaskFormComponent implements OnInit {
 
   // This checks the calendar day difference in between now and the selected target date for the task
   setFormatTaskDueDateBoolean(date: any) {
-    const todayDueDateBoolean = new Date()
-    const todayDateDiffBool = differenceInCalendarDays(parseISO(date), todayDueDateBoolean)
+    const todayDueDateBoolean = new Date();
+    const todayDateDiffBool = differenceInCalendarDays(
+      parseISO(date),
+      todayDueDateBoolean
+    );
     if (todayDateDiffBool === 0) {
       return true;
     } else if (todayDateDiffBool === 1) {
@@ -49,8 +54,11 @@ export class MainTaskFormComponent implements OnInit {
   // Logic to check the current date
   formatTaskDueDate(date: any) {
     if (!date) return;
-    const todayDueDate = new Date()
-    const todayDateDiff = differenceInCalendarDays(parseISO(date), todayDueDate)
+    const todayDueDate = new Date();
+    const todayDateDiff = differenceInCalendarDays(
+      parseISO(date),
+      todayDueDate
+    );
     if (todayDateDiff === 0) {
       return 'Due today';
     } else if (todayDateDiff === 1) {
@@ -69,7 +77,7 @@ export class MainTaskFormComponent implements OnInit {
       const tasks = await this.formServicesService.mainTaskFormGetAllTodos();
       this.mainTasksToDisplay = tasks;
       this.isLoading = false;
-      console.log(tasks);
+      console.log('retrieveAllTasks function executed');
     } catch (error) {
       console.error(error);
     }
@@ -144,7 +152,6 @@ export class MainTaskFormComponent implements OnInit {
   async setTaskDueDateToTomorrow(id: number): Promise<void> {
     const tomorrow = new Date();
     const tomorrowDate = tomorrow.setDate(tomorrow.getDate() + 1);
-    console.log(tomorrowDate)
     await this.formServicesService.mainTaskFormSetDueDateToday(
       id,
       tomorrowDate
@@ -158,10 +165,33 @@ export class MainTaskFormComponent implements OnInit {
     return await this.retrieveAllTasks();
   }
 
+  checkIfAuth0UserExists(): void {
+    try {
+      this.auth.isLoading$.subscribe((isLoading) => {
+        if (!isLoading) {
+          this.auth.user$.subscribe(async (user) => {
+            console.log(user);
+            if (user && user.email) {
+              await this.userService.checkUserUponLogin(user.email);
+              await this.retrieveAllTasks();
+            } else {
+              console.error('No user object exists.');
+            }
+          });
+        } else {
+          this.isLoading = true;
+          console.log('loading..');
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   ngOnInit(): void {
     // This prevents an 'NetworkError' when trying to run these functions onInit
     if (this.testBrowser) {
-      this.retrieveAllTasks();
+      this.checkIfAuth0UserExists();
     }
   }
 }
