@@ -34,7 +34,10 @@ export function app(): express.Express {
   server.post('/api/task/submit', async (req, res) => {
     try {
       const { body } = req;
-      if (!body.task || body.task === null) {
+      if (
+        !body.task ||
+        body.task === null
+      ) {
         console.error('Error: Form data must contain a value');
         res.status(500).send({ error: 'Form data must contain a value' });
       } else if (body.task.length < 2) {
@@ -81,12 +84,12 @@ export function app(): express.Express {
           res.status(404).send({ error: 'Task not found' });
         }
       } else {
-        res.status(500).send({ error: `Bad parameter provided` });
+        res.status(500).send({ error: 'Bad parameter provided' });
       }
     } catch (e) {
       res.status(500).send({ error: `An error has occurred: ${e}` });
     }
-  })
+  });
 
   // Delete a task
   server.delete('/api/task/delete/:id', async (req, res) => {
@@ -149,7 +152,7 @@ export function app(): express.Express {
           res.status(404).send({ error: 'Task not found' });
         }
       } else {
-        res.status(500).send({ error: `Bad parameter provided` });
+        res.status(500).send({ error: 'Bad parameter provided' });
       }
     } catch (e) {
       res.status(500).send({ error: `An error has occurred: ${e}` });
@@ -185,7 +188,7 @@ export function app(): express.Express {
           res.status(404).send({ error: 'Task not found' });
         }
       } else {
-        res.status(500).send({ error: `Bad parameter provided` });
+        res.status(500).send({ error: 'Bad parameter provided' });
       }
     } catch (e) {
       res.status(500).send({ error: `An error has occurred: ${e}` });
@@ -206,12 +209,33 @@ export function app(): express.Express {
   // Add a user
   server.get('/api/user/get/:email', async (req, res) => {
     try {
-      console.log(req.params.email)
-      res.sendStatus(200);
-    } catch (err) {
-      console.log(err)
+      const { email } = req.params;
+      console.log(req.params.email);
+      if (email) {
+        const findUser = await db.Users.findOne({
+          where: {
+            email: req.params.email,
+          },
+        });
+        console.log("User found: " + findUser);
+        if (!findUser) {
+          const addUser = await db.Users.create({
+            email,
+          });
+          console.log(addUser);
+          res.status(200).send({ message: 'User added' });
+        } else {
+          res.status(200).send({ message: 'User exists' });
+        }
+      } else {
+        console.error('No email provided');
+        res.status(500).send({ error: 'Bad parameter provided' });
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(500).send({ error: `An error has occurred: ${e}` });
     }
-  })
+  });
 
   // Serve static files from /browser
   server.get(
@@ -232,12 +256,24 @@ export function app(): express.Express {
   return server;
 }
 
+// Sync the database depending on the current environment
+function syncDatabaseIfDevelopment(): boolean {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`Current environment is: ${process.env.NODE_ENV}`);
+    return true;
+  } else {
+    console.log(`Current development environment is: ${process.env.NODE_ENV}`);
+    return false;
+  }
+}
+
 function run(): void {
   const port = process.env.PORT || 4000;
   const server = app();
   try {
     db.sequelize
-      .sync()
+      // Sync the database depending on the current environment
+      .sync({ force: syncDatabaseIfDevelopment() })
       .then(() => {
         console.log('Successfully connected to MySQL');
         // Start up the Node server
@@ -268,4 +304,3 @@ if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
 }
 
 export * from './src/main.server';
-

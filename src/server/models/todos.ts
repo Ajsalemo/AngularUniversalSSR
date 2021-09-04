@@ -2,7 +2,8 @@ import * as Sequelize from 'sequelize';
 
 interface TodoAttributes {
   id?: string;
-  todo: string;
+  userId?: string;
+  todo?: string;
   completed?: boolean;
   important?: boolean;
   dueBy?: number;
@@ -18,6 +19,9 @@ export default (sequalize: Sequelize.Sequelize) => {
       type: Sequelize.UUID,
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4,
+    },
+    userId: {
+      type: Sequelize.UUID,
     },
     todo: { type: Sequelize.STRING, allowNull: false },
     completed: {

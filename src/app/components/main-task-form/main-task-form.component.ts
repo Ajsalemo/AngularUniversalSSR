@@ -14,7 +14,10 @@ export class MainTaskFormComponent implements OnInit {
   mainTasksToDisplay: any;
   testBrowser!: boolean;
   isLoading: boolean = false;
+  isError: boolean = false;
   isCompletedTask!: boolean;
+  catchError!: string;
+  userEmail!: string;
   constructor(
     private formServicesService: FormServicesService,
     @Inject(PLATFORM_ID) platformId: string,
@@ -73,13 +76,18 @@ export class MainTaskFormComponent implements OnInit {
   // Retrieve all stored tasks
   async retrieveAllTasks(): Promise<void> {
     this.isLoading = true;
+    this.isError = false;
     try {
       const tasks = await this.formServicesService.mainTaskFormGetAllTodos();
       this.mainTasksToDisplay = tasks;
       this.isLoading = false;
+      this.isError = false;
       console.log('retrieveAllTasks function executed');
     } catch (error) {
       console.error(error);
+      this.catchError = "An error has occurred. Please try again."
+      this.isLoading = false;
+      this.isError = true;
     }
   }
 
@@ -87,8 +95,9 @@ export class MainTaskFormComponent implements OnInit {
   async submitMainTaskForm(data: any): Promise<void> {
     try {
       // Automatically return if the form isn't valid
-      if (!this.mainTaskForm.valid) return;
+      if (!this.mainTaskForm.valid || (!this.userEmail || this.userEmail === '')) return;
       this.isLoading = true;
+      this.isError = false;
       const submitForm = await this.formServicesService.mainTaskFormSubmitTodo(
         data.value
       );
@@ -96,10 +105,14 @@ export class MainTaskFormComponent implements OnInit {
       // If the submit occurred successfully then retrieve tasks
       if (submitForm && submitForm.task) {
         await this.retrieveAllTasks();
+        this.isError = false;
         this.isLoading = false;
       }
     } catch (error) {
       console.error(error);
+      this.catchError = "An error has occurred. Please try again."
+      this.isLoading = false;
+      this.isError = true;
     }
   }
 
@@ -107,15 +120,20 @@ export class MainTaskFormComponent implements OnInit {
   async deleteTask(id: number): Promise<void> {
     try {
       this.isLoading = true;
+      this.isError = false;
       const { message } = await this.formServicesService.mainTaskFormDeleteTodo(
         id
       );
       if (message) {
         this.isLoading = false;
+        this.isError = false;
         await this.retrieveAllTasks();
       }
     } catch (error) {
       console.error(error);
+      this.catchError = "An error has occurred. Please try again."
+      this.isLoading = false;
+      this.isError = true;
     }
   }
 
@@ -167,24 +185,31 @@ export class MainTaskFormComponent implements OnInit {
 
   checkIfAuth0UserExists(): void {
     try {
+      this.isError = false;
       this.auth.isLoading$.subscribe((isLoading) => {
         if (!isLoading) {
           this.auth.user$.subscribe(async (user) => {
             console.log(user);
             if (user && user.email) {
+              this.userEmail = user.email;
               await this.userService.checkUserUponLogin(user.email);
               await this.retrieveAllTasks();
             } else {
+              this.isLoading = false;
               console.error('No user object exists.');
             }
           });
         } else {
           this.isLoading = true;
+          this.isError = false;
           console.log('loading..');
         }
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error(error);
+      this.catchError = "An error has occurred. Please try again."
+      this.isLoading = false;
+      this.isError = true;
     }
   }
 

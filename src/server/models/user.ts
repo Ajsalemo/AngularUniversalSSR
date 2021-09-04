@@ -7,7 +7,7 @@ interface UserAttributes {
   updatedAt?: string;
 }
 
-type TodoInstance = Sequelize.Model<UserAttributes> & UserAttributes;
+type UserInstance = Sequelize.Model<UserAttributes> & UserAttributes;
 
 export default (sequalize: Sequelize.Sequelize) => {
   const attributes: SequelizeAttributes<UserAttributes> = {
@@ -26,5 +26,6 @@ export default (sequalize: Sequelize.Sequelize) => {
       allowNull: false,
     },
   };
-  return sequalize.define<TodoInstance, UserAttributes>('users', attributes);
+  return sequalize.define<UserInstance, UserAttributes>('users', attributes);
 };
+

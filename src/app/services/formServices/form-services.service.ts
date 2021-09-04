@@ -8,7 +8,9 @@ export class FormServicesService {
   constructor(private http: HttpClient) {}
 
   async mainTaskFormSubmitTodo(data: any): Promise<any> {
-    return await this.http.post('/api/task/submit', data).toPromise();
+    return await this.http
+      .post('/api/task/submit', data)
+      .toPromise();
   }
 
   async mainTaskFormGetAllTodos(): Promise<any> {
@@ -45,16 +47,9 @@ export class FormServicesService {
       .toPromise();
   }
 
-  async mainTaskFormSetDueDateToday(
-    id: number,
-    isDueBy: any
-  ): Promise<Object> {
+  async mainTaskFormSetDueDateToday(id: number, isDueBy: any): Promise<Object> {
     return await this.http
-      .put(
-        `/api/task/due/${id}`,
-        { isDueBy },
-        { responseType: 'text' }
-      )
+      .put(`/api/task/due/${id}`, { isDueBy }, { responseType: 'text' })
       .toPromise();
   }
 }

@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 import * as mysql2 from 'mysql2';
-import todoWrapper from './todos'
+import todoWrapper from './todos';
+import userWrapper from './user';
 
 const sequelize = new Sequelize(
   // Database
@@ -31,8 +32,21 @@ const sequelize = new Sequelize(
 const db = {
   sequelize,
   Sequelize,
-  Todos: todoWrapper(sequelize)
+  Todos: todoWrapper(sequelize),
+  Users: userWrapper(sequelize),
 };
+
+// Need to update TypeScript associations in user.ts/todos.ts so it can create usable association methods
+db.Users.hasMany(db.Todos, {
+  sourceKey: 'id',
+  foreignKey: 'userId',
+  as: 'todos'
+})
+
+db.Todos.belongsTo(db.Users, {
+  foreignKey: 'userId',
+  as: 'user'
+})
 
 Object.values(db).forEach((model: any) => {
   if (model.associate) {

@@ -17,4 +17,4 @@ CREATE TABLE users(
     dueBy DATE DEFAULT NULL,
     createdAt VARCHAR(255) NOT NULL,
     updatedAt VARCHAR(255) NOT NULL
-)
+);
