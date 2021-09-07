@@ -81,14 +81,16 @@ export class MainTaskFormComponent implements OnInit {
     this.isError = false;
     try {
       if (this.userEmail && this.userEmail !== '') {
-        const tasks = await this.formServicesService.mainTaskFormGetAllTodos(this.userEmail);
+        const tasks = await this.formServicesService.mainTaskFormGetAllTodos(
+          this.userEmail
+        );
         this.mainTasksToDisplay = tasks;
         this.isLoading = false;
         this.isError = false;
       } else {
         this.isLoading = false;
         this.isError = true;
-        return
+        return;
       }
       console.log('retrieveAllTasks function executed');
     } catch (error) {
@@ -103,8 +105,7 @@ export class MainTaskFormComponent implements OnInit {
   async submitMainTaskForm(data: any): Promise<void> {
     try {
       // Automatically return if the form isn't valid
-      if (!this.mainTaskForm.valid || !this.userEmail || this.userEmail === '')
-        return;
+      if (!this.mainTaskForm.valid) return;
       this.isLoading = true;
       this.isError = false;
       const submitForm = await this.formServicesService.mainTaskFormSubmitTodo(
@@ -160,12 +161,31 @@ export class MainTaskFormComponent implements OnInit {
 
   // Update tasks to be important
   async makeTaskImportant(id: number, important: boolean): Promise<void> {
-    if (important === true) {
-      await this.formServicesService.mainTaskFormSetImportantTodo(id, false);
-      return await this.retrieveAllTasks();
-    } else {
-      await this.formServicesService.mainTaskFormSetImportantTodo(id, true);
-      return await this.retrieveAllTasks();
+    try {
+      this.isLoading = true;
+      this.isError = false;
+      if (important === true) {
+        await this.formServicesService.mainTaskFormSetImportantTodo(
+          id,
+          false,
+          this.userEmail
+        );
+        this.isLoading = true;
+        return await this.retrieveAllTasks();
+      } else {
+        await this.formServicesService.mainTaskFormSetImportantTodo(
+          id,
+          true,
+          this.userEmail
+        );
+        this.isLoading = true;
+        return await this.retrieveAllTasks();
+      }
+    } catch (e) {
+      console.error(e);
+      this.catchError = 'An error has occurred. Please try again.';
+      this.isLoading = false;
+      this.isError = true;
     }
   }
 
