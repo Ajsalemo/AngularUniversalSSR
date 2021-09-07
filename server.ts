@@ -201,16 +201,28 @@ export function app(): express.Express {
   // });
 
   // Find all tasks
-  server.get('/api/task/get', async (_, res) => {
+  server.get('/api/task/get/:email', async (req, res) => {
     try {
-      const getAllTasks = await db.Todos.findAll();
-      res.json(getAllTasks);
+      const { email } = req.params
+
+      if (email && email !== '') {
+        const findUserToGetTasks = await db.Users.findOne({
+          where: {
+            email: req.params.email,
+          },
+          include: [db.Users.associations.todos]
+        });
+
+        const getAllTasks = await findUserToGetTasks?.getTodos()
+        res.json(getAllTasks);
+      } else {
+        res.status(500).send({ error: 'Bad parameter provided' });
+      }
     } catch (e) {
       res.status(500).send({ error: `An error has occurred: ${e}` });
     }
   });
 
-  // TODO - add a function to check if the user ID exists - if it doesnt add it to the database
   // Add a user
   server.get('/api/user/get/:email', async (req, res) => {
     try {

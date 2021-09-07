@@ -80,10 +80,16 @@ export class MainTaskFormComponent implements OnInit {
     this.isLoading = true;
     this.isError = false;
     try {
-      const tasks = await this.formServicesService.mainTaskFormGetAllTodos();
-      this.mainTasksToDisplay = tasks;
-      this.isLoading = false;
-      this.isError = false;
+      if (this.userEmail && this.userEmail !== '') {
+        const tasks = await this.formServicesService.mainTaskFormGetAllTodos(this.userEmail);
+        this.mainTasksToDisplay = tasks;
+        this.isLoading = false;
+        this.isError = false;
+      } else {
+        this.isLoading = false;
+        this.isError = true;
+        return
+      }
       console.log('retrieveAllTasks function executed');
     } catch (error) {
       console.error(error);

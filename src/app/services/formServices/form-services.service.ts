@@ -8,14 +8,13 @@ export class FormServicesService {
   constructor(private http: HttpClient) {}
 
   async mainTaskFormSubmitTodo(data: any, email: string): Promise<any> {
-    console.log("mainTaskFormSubmitTodo:" + email)
     return await this.http
       .post('/api/task/submit', { data, email })
       .toPromise();
   }
 
-  async mainTaskFormGetAllTodos(): Promise<any> {
-    return await this.http.get('/api/task/get').toPromise();
+  async mainTaskFormGetAllTodos(email: string): Promise<any> {
+    return await this.http.get(`/api/task/get/${email}`).toPromise();
   }
 
   async mainTaskFormDeleteTodo(id: number): Promise<any> {
