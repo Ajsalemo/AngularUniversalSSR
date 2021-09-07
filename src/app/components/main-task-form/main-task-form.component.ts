@@ -5,6 +5,7 @@ import { FormServicesService } from '@services/formServices/form-services.servic
 import { differenceInCalendarDays, format, parseISO } from 'date-fns';
 import { AuthService } from '@auth0/auth0-angular';
 import { UserServicesService } from '@services/userServices/user-services.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-task-form',
@@ -22,7 +23,8 @@ export class MainTaskFormComponent implements OnInit {
     private formServicesService: FormServicesService,
     @Inject(PLATFORM_ID) platformId: string,
     public auth: AuthService,
-    private userService: UserServicesService
+    private userService: UserServicesService,
+    private router: Router
   ) {
     this.testBrowser = isPlatformBrowser(platformId);
   }
@@ -85,7 +87,7 @@ export class MainTaskFormComponent implements OnInit {
       console.log('retrieveAllTasks function executed');
     } catch (error) {
       console.error(error);
-      this.catchError = "An error has occurred. Please try again."
+      this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
     }
@@ -95,11 +97,13 @@ export class MainTaskFormComponent implements OnInit {
   async submitMainTaskForm(data: any): Promise<void> {
     try {
       // Automatically return if the form isn't valid
-      if (!this.mainTaskForm.valid || (!this.userEmail || this.userEmail === '')) return;
+      if (!this.mainTaskForm.valid || !this.userEmail || this.userEmail === '')
+        return;
       this.isLoading = true;
       this.isError = false;
       const submitForm = await this.formServicesService.mainTaskFormSubmitTodo(
-        data.value
+        data.value,
+        this.userEmail
       );
       this.mainTaskForm.reset();
       // If the submit occurred successfully then retrieve tasks
@@ -110,7 +114,7 @@ export class MainTaskFormComponent implements OnInit {
       }
     } catch (error) {
       console.error(error);
-      this.catchError = "An error has occurred. Please try again."
+      this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
     }
@@ -131,7 +135,7 @@ export class MainTaskFormComponent implements OnInit {
       }
     } catch (error) {
       console.error(error);
-      this.catchError = "An error has occurred. Please try again."
+      this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
     }
@@ -197,6 +201,7 @@ export class MainTaskFormComponent implements OnInit {
             } else {
               this.isLoading = false;
               console.error('No user object exists.');
+              this.router.navigate(['']);
             }
           });
         } else {
@@ -207,7 +212,7 @@ export class MainTaskFormComponent implements OnInit {
       });
     } catch (error) {
       console.error(error);
-      this.catchError = "An error has occurred. Please try again."
+      this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
     }

@@ -36,7 +36,6 @@ const db = {
   Users: userWrapper(sequelize),
 };
 
-// Need to update TypeScript associations in user.ts/todos.ts so it can create usable association methods
 db.Users.hasMany(db.Todos, {
   sourceKey: 'id',
   foreignKey: 'userId',

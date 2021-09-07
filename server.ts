@@ -33,22 +33,27 @@ export function app(): express.Express {
   // Add a task
   server.post('/api/task/submit', async (req, res) => {
     try {
-      const { body } = req;
-      if (
-        !body.task ||
-        body.task === null
-      ) {
-        console.error('Error: Form data must contain a value');
-        res.status(500).send({ error: 'Form data must contain a value' });
-      } else if (body.task.length < 2) {
+      const { data: { task }, email } = req.body;
+      const { body: { data } } = req;
+
+      if ((task && email) && (task !== '' && email !== '')) {
+        const findUserToCreateTodo = await db.Users.findOne({
+          where: {
+            email: email,
+          },
+        });
+
+        await findUserToCreateTodo!.createTodo({
+          todo: task,
+        });
+
+        res.json(data);
+      } else if (task.length < 2) {
         console.error('Error: Value must be 2 or greater');
         res.status(500).send({ error: 'Value must be 2 or greater' });
       } else {
-        // Change this to return the actual database value
-        const submitTask = await db.Todos.create({
-          todo: body.task,
-        });
-        res.json(body);
+        console.error('Error: Form data must contain a value');
+        res.status(500).send({ error: 'Form data must contain a value' });
       }
     } catch (e) {
       res.status(500).send({ error: `An error has occurred: ${e}` });
@@ -56,144 +61,144 @@ export function app(): express.Express {
   });
 
   // Update a task with a due date
-  server.put('/api/task/due/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { isDueBy } = req.body;
-      const dueDate_id = parseInt(id);
-      if (dueDate_id && dueDate_id > 0) {
-        const findDueDateTask = await db.Todos.findOne({
-          where: {
-            id: dueDate_id,
-          },
-        });
+  // server.put('/api/task/due/:id', async (req, res) => {
+  //   try {
+  //     const { id } = req.params;
+  //     const { isDueBy } = req.body;
+  //     const dueDate_id = parseInt(id);
+  //     if (dueDate_id && dueDate_id > 0) {
+  //       const findDueDateTask = await db.Todos.findOne({
+  //         where: {
+  //           id: dueDate_id,
+  //         },
+  //       });
 
-        if (findDueDateTask?.id) {
-          await db.Todos.update(
-            {
-              dueBy: isDueBy,
-            },
-            {
-              where: {
-                id: findDueDateTask?.id,
-              },
-            }
-          );
-          res.status(200).send({ message: 'Task updated' });
-        } else {
-          res.status(404).send({ error: 'Task not found' });
-        }
-      } else {
-        res.status(500).send({ error: 'Bad parameter provided' });
-      }
-    } catch (e) {
-      res.status(500).send({ error: `An error has occurred: ${e}` });
-    }
-  });
+  //       if (findDueDateTask?.id) {
+  //         await db.Todos.update(
+  //           {
+  //             dueBy: isDueBy,
+  //           },
+  //           {
+  //             where: {
+  //               id: findDueDateTask?.id,
+  //             },
+  //           }
+  //         );
+  //         res.status(200).send({ message: 'Task updated' });
+  //       } else {
+  //         res.status(404).send({ error: 'Task not found' });
+  //       }
+  //     } else {
+  //       res.status(500).send({ error: 'Bad parameter provided' });
+  //     }
+  //   } catch (e) {
+  //     res.status(500).send({ error: `An error has occurred: ${e}` });
+  //   }
+  // });
 
   // Delete a task
-  server.delete('/api/task/delete/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
-      const num_id = parseInt(id);
-      // Check if the parameter exists and if it's greater than 0
-      if (num_id && num_id > 0) {
-        const findTask = await db.Todos.findOne({
-          where: {
-            id: num_id,
-          },
-        });
+  // server.delete('/api/task/delete/:id', async (req, res) => {
+  //   try {
+  //     const { id } = req.params;
+  //     const num_id = parseInt(id);
+  //     // Check if the parameter exists and if it's greater than 0
+  //     if (num_id && num_id > 0) {
+  //       const findTask = await db.Todos.findOne({
+  //         where: {
+  //           id: num_id,
+  //         },
+  //       });
 
-        // Check if we're able to return a valid Task ID from findTask
-        if (findTask?.id) {
-          const deleteTodo = await db.Todos.destroy({
-            where: {
-              id: findTask?.id,
-            },
-          });
-          res.status(200).send({ message: 'Task deleted' });
-        } else {
-          res.status(404).send({ error: 'Task not found' });
-        }
-      } else {
-        res.status(500).send({ error: 'Bad parameter provided' });
-      }
-    } catch (e) {
-      res.status(500).send({ error: `An error has occurred: ${e}` });
-    }
-  });
+  //       // Check if we're able to return a valid Task ID from findTask
+  //       if (findTask?.id) {
+  //         const deleteTodo = await db.Todos.destroy({
+  //           where: {
+  //             id: findTask?.id,
+  //           },
+  //         });
+  //         res.status(200).send({ message: 'Task deleted' });
+  //       } else {
+  //         res.status(404).send({ error: 'Task not found' });
+  //       }
+  //     } else {
+  //       res.status(500).send({ error: 'Bad parameter provided' });
+  //     }
+  //   } catch (e) {
+  //     res.status(500).send({ error: `An error has occurred: ${e}` });
+  //   }
+  // });
 
   // Update a task to be completed/incomplete
-  server.put('/api/task/complete/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { isCompleted } = req.body;
-      const task_id = parseInt(id);
-      if (task_id && task_id > 0) {
-        const findTask = await db.Todos.findOne({
-          where: {
-            id: task_id,
-          },
-        });
+  // server.put('/api/task/complete/:id', async (req, res) => {
+  //   try {
+  //     const { id } = req.params;
+  //     const { isCompleted } = req.body;
+  //     const task_id = parseInt(id);
+  //     if (task_id && task_id > 0) {
+  //       const findTask = await db.Todos.findOne({
+  //         where: {
+  //           id: task_id,
+  //         },
+  //       });
 
-        if (findTask?.id) {
-          await db.Todos.update(
-            {
-              completed: isCompleted,
-            },
-            {
-              where: {
-                id: findTask?.id,
-              },
-            }
-          );
-          res.status(200).send({ message: 'Task updated' });
-        } else {
-          res.status(404).send({ error: 'Task not found' });
-        }
-      } else {
-        res.status(500).send({ error: 'Bad parameter provided' });
-      }
-    } catch (e) {
-      res.status(500).send({ error: `An error has occurred: ${e}` });
-    }
-  });
+  //       if (findTask?.id) {
+  //         await db.Todos.update(
+  //           {
+  //             completed: isCompleted,
+  //           },
+  //           {
+  //             where: {
+  //               id: findTask?.id,
+  //             },
+  //           }
+  //         );
+  //         res.status(200).send({ message: 'Task updated' });
+  //       } else {
+  //         res.status(404).send({ error: 'Task not found' });
+  //       }
+  //     } else {
+  //       res.status(500).send({ error: 'Bad parameter provided' });
+  //     }
+  //   } catch (e) {
+  //     res.status(500).send({ error: `An error has occurred: ${e}` });
+  //   }
+  // });
 
   // Update a task to be important/unimportant
-  server.put('/api/task/important/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { isImportant } = req.body;
-      const important_id = parseInt(id);
-      if (important_id && important_id > 0) {
-        const findTask = await db.Todos.findOne({
-          where: {
-            id: important_id,
-          },
-        });
+  // server.put('/api/task/important/:id', async (req, res) => {
+  //   try {
+  //     const { id } = req.params;
+  //     const { isImportant } = req.body;
+  //     const important_id = parseInt(id);
+  //     if (important_id && important_id > 0) {
+  //       const findTask = await db.Todos.findOne({
+  //         where: {
+  //           id: important_id,
+  //         },
+  //       });
 
-        if (findTask?.id) {
-          await db.Todos.update(
-            {
-              important: isImportant,
-            },
-            {
-              where: {
-                id: findTask?.id,
-              },
-            }
-          );
-          res.status(200).send({ message: 'Task updated' });
-        } else {
-          res.status(404).send({ error: 'Task not found' });
-        }
-      } else {
-        res.status(500).send({ error: 'Bad parameter provided' });
-      }
-    } catch (e) {
-      res.status(500).send({ error: `An error has occurred: ${e}` });
-    }
-  });
+  //       if (findTask?.id) {
+  //         await db.Todos.update(
+  //           {
+  //             important: isImportant,
+  //           },
+  //           {
+  //             where: {
+  //               id: findTask?.id,
+  //             },
+  //           }
+  //         );
+  //         res.status(200).send({ message: 'Task updated' });
+  //       } else {
+  //         res.status(404).send({ error: 'Task not found' });
+  //       }
+  //     } else {
+  //       res.status(500).send({ error: 'Bad parameter provided' });
+  //     }
+  //   } catch (e) {
+  //     res.status(500).send({ error: `An error has occurred: ${e}` });
+  //   }
+  // });
 
   // Find all tasks
   server.get('/api/task/get', async (_, res) => {
@@ -210,21 +215,20 @@ export function app(): express.Express {
   server.get('/api/user/get/:email', async (req, res) => {
     try {
       const { email } = req.params;
-      console.log(req.params.email);
+
       if (email) {
         const findUser = await db.Users.findOne({
           where: {
             email: req.params.email,
           },
         });
-        console.log("User found: " + findUser);
         if (!findUser) {
-          const addUser = await db.Users.create({
+          const createNonExistentUser = await db.Users.create({
             email,
           });
-          console.log(addUser);
-          res.status(200).send({ message: 'User added' });
+          res.status(200).send({ message: `User added: ${createNonExistentUser?.email}` });
         } else {
+          console.log('User found: ' + findUser?.email);
           res.status(200).send({ message: 'User exists' });
         }
       } else {
@@ -290,8 +294,6 @@ function run(): void {
     console.log(`An error has occurred: ${error}`);
   }
 }
-
-// Ignore plugins
 
 // Webpack will replace 'require' with '__webpack_require__'
 // '__non_webpack_require__' is a proxy to Node 'require'

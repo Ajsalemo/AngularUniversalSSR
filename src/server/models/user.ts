@@ -1,31 +1,69 @@
 import * as Sequelize from 'sequelize';
+import {
+  Association, HasManyCreateAssociationMixin,
+  HasManyGetAssociationsMixin,
+  HasManyRemoveAssociationMixin,
+  HasManySetAssociationsMixin,
+  Model,
+  Optional
+} from 'sequelize';
+import { Todo, TodoCreationAttributes } from './todos';
 
+// Reference: https://sequelize.org/master/manual/typescript.html
 interface UserAttributes {
-  id?: string;
+  id: number;
   email: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-type UserInstance = Sequelize.Model<UserAttributes> & UserAttributes;
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
-export default (sequalize: Sequelize.Sequelize) => {
-  const attributes: SequelizeAttributes<UserAttributes> = {
-    id: {
-      type: Sequelize.UUID,
-      primaryKey: true,
-      defaultValue: Sequelize.UUIDV4,
-    },
-    email: { type: Sequelize.STRING, allowNull: false },
-    createdAt: {
-      type: Sequelize.DATE,
-      allowNull: false,
-    },
-    updatedAt: {
-      type: Sequelize.DATE,
-      allowNull: false,
-    },
+class User
+  extends Model<UserAttributes, UserCreationAttributes>
+  implements UserAttributes
+{
+  public id!: number;
+  public email!: string;
+
+  // Time stamps
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  // Methods to implement calls using association
+  public getTodos!: HasManyGetAssociationsMixin<TodoCreationAttributes>;
+  public createTodo!: HasManyCreateAssociationMixin<TodoCreationAttributes>;
+  public deleteTodo!: HasManyRemoveAssociationMixin<TodoCreationAttributes, number>;
+  public updateTodo!: HasManySetAssociationsMixin<TodoCreationAttributes, number>;
+
+  public readonly todos?: Todo[];
+
+  public static associations: {
+    todos: Association<User, Todo>;
   };
-  return sequalize.define<UserInstance, UserAttributes>('users', attributes);
-};
+}
 
+export default (sequelize: Sequelize.Sequelize) => {
+  return User.init(
+    {
+      id: {
+        type: Sequelize.UUID,
+        primaryKey: true,
+        defaultValue: Sequelize.UUIDV4,
+      },
+      email: { type: Sequelize.STRING, allowNull: false },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+    },
+    {
+      tableName: 'users',
+      sequelize,
+    }
+  );
+};

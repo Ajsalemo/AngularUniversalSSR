@@ -7,9 +7,10 @@ import { Injectable } from '@angular/core';
 export class FormServicesService {
   constructor(private http: HttpClient) {}
 
-  async mainTaskFormSubmitTodo(data: any): Promise<any> {
+  async mainTaskFormSubmitTodo(data: any, email: string): Promise<any> {
+    console.log("mainTaskFormSubmitTodo:" + email)
     return await this.http
-      .post('/api/task/submit', data)
+      .post('/api/task/submit', { data, email })
       .toPromise();
   }
 
