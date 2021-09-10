@@ -1,11 +1,12 @@
 import * as Sequelize from 'sequelize';
 import {
-  Association, HasManyCreateAssociationMixin,
+  Association,
+  HasManyCreateAssociationMixin,
   HasManyGetAssociationsMixin,
   HasManyRemoveAssociationMixin,
   HasManySetAssociationsMixin,
   Model,
-  Optional
+  Optional,
 } from 'sequelize';
 import { Todo, TodoCreationAttributes } from './todos';
 
@@ -33,8 +34,14 @@ class User
   // Methods to implement calls using association
   public getTodos!: HasManyGetAssociationsMixin<TodoCreationAttributes>;
   public createTodo!: HasManyCreateAssociationMixin<TodoCreationAttributes>;
-  public deleteTodo!: HasManyRemoveAssociationMixin<TodoCreationAttributes, number>;
-  public updateTodo!: HasManySetAssociationsMixin<TodoCreationAttributes, number>;
+  public deleteTodo!: HasManyRemoveAssociationMixin<
+    TodoCreationAttributes,
+    number
+  >;
+  public updateTodo!: HasManySetAssociationsMixin<
+    TodoCreationAttributes,
+    number
+  >;
 
   public readonly todos?: Todo[];
 
@@ -51,7 +58,17 @@ export default (sequelize: Sequelize.Sequelize) => {
         primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
       },
-      email: { type: Sequelize.STRING, allowNull: false },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: true,
+        },
+        unique: {
+          name: 'email',
+          msg: 'Email address is already taken',
+        },
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

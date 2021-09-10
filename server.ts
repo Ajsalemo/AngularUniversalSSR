@@ -33,10 +33,15 @@ export function app(): express.Express {
   // Add a task
   server.post('/api/task/submit', async (req, res) => {
     try {
-      const { data: { task }, email } = req.body;
-      const { body: { data } } = req;
+      const {
+        data: { task },
+        email,
+      } = req.body;
+      const {
+        body: { data },
+      } = req;
 
-      if ((task && email) && (task !== '' && email !== '')) {
+      if (task && email && task !== '' && email !== '') {
         const findUserToCreateTodo = await db.Users.findOne({
           where: {
             email: email,
@@ -168,27 +173,29 @@ export function app(): express.Express {
   server.put('/api/task/important/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      // TODO - use this email to find the current user
       const { isImportant, email } = req.body;
-
-      if (id) {
-        const findTask = await db.Todos.findOne({
+      // Check if the todo ID and email are both not null and not empty
+      if (id && email && id !== '' && email !== '') {
+        const findImportantUser = await db.Users.findOne({
           where: {
-            id: id,
+            email: email,
           },
+          include: [db.Users.associations.todos],
         });
-
-        if (findTask?.id) {
+        // If the user is found and the user ID exists use this to include in the where clause for the task
+        if (findImportantUser && findImportantUser?.id) {
           await db.Todos.update(
             {
               important: isImportant,
             },
+            // Update by specifying the task/todo ID and the userID associated with the task
             {
               where: {
-                id: findTask?.id,
+                id: id,
+                userId: findImportantUser?.id,
               },
             }
-          );
+          ).catch((e) => res.status(500).send({ error: e }));
           res.status(200).send({ message: 'Task updated' });
         } else {
           res.status(404).send({ error: 'Task not found' });
@@ -204,17 +211,18 @@ export function app(): express.Express {
   // Find all tasks
   server.get('/api/task/get/:email', async (req, res) => {
     try {
-      const { email } = req.params
-
+      const { email } = req.params;
+      // If the email parameter exists and isn't emptry search for the user
       if (email && email !== '') {
         const findUserToGetTasks = await db.Users.findOne({
           where: {
             email: req.params.email,
           },
-          include: [db.Users.associations.todos]
+          include: [db.Users.associations.todos],
         });
-
-        const getAllTasks = await findUserToGetTasks?.getTodos()
+        // Find all tasks with the getTodos() method off of the User class
+        // Return all found tasks back to the client
+        const getAllTasks = await findUserToGetTasks?.getTodos();
         res.json(getAllTasks);
       } else {
         res.status(500).send({ error: 'Bad parameter provided' });
@@ -228,19 +236,24 @@ export function app(): express.Express {
   server.get('/api/user/get/:email', async (req, res) => {
     try {
       const { email } = req.params;
-
-      if (email) {
+      // If the email parameter exists and isn't emptry search for the user
+      if (email && email !== "") {
         const findUser = await db.Users.findOne({
           where: {
             email: req.params.email,
           },
         });
+        // If the user doesn't create it after logging in create the user
+        // This would indicate the user is new
         if (!findUser) {
           const createNonExistentUser = await db.Users.create({
             email,
           });
-          res.status(200).send({ message: `User added: ${createNonExistentUser?.email}` });
+          res
+            .status(200)
+            .send({ message: `User added: ${createNonExistentUser?.email}` });
         } else {
+          // Else the user already exists and skip creation
           console.log('User found: ' + findUser?.email);
           res.status(200).send({ message: 'User exists' });
         }
@@ -290,7 +303,7 @@ function run(): void {
   try {
     db.sequelize
       // Sync the database depending on the current environment
-      .sync({ force: syncDatabaseIfDevelopment() })
+      .sync({ force: false })
       .then(() => {
         console.log('Successfully connected to MySQL');
         // Start up the Node server
