@@ -82,72 +82,101 @@ export function app(): express.Express {
   });
 
   // Update a task with a due date
-  // server.put('/api/task/due/:id', async (req, res) => {
-  //   try {
-  //     const { id } = req.params;
-  //     const { isDueBy } = req.body;
-  //     const dueDate_id = parseInt(id);
-  //     if (dueDate_id && dueDate_id > 0) {
-  //       const findDueDateTask = await db.Todos.findOne({
-  //         where: {
-  //           id: dueDate_id,
-  //         },
-  //       });
-
-  //       if (findDueDateTask?.id) {
-  //         await db.Todos.update(
-  //           {
-  //             dueBy: isDueBy,
-  //           },
-  //           {
-  //             where: {
-  //               id: findDueDateTask?.id,
-  //             },
-  //           }
-  //         );
-  //         res.status(200).send({ message: 'Task updated' });
-  //       } else {
-  //         res.status(404).send({ error: 'Task not found' });
-  //       }
-  //     } else {
-  //       res.status(500).send({ error: 'Required parameters are either empty or invalid' });
-  //     }
-  //   } catch (e) {
-  //     res.status(500).send({ error: `An error has occurred: ${e}` });
-  //   }
-  // });
+  server.put('/api/task/due/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { isDueBy, email } = req.body;
+      // Check if the todo ID and email are both not null and not empty
+      if (id && email && id !== '' && email !== '') {
+        const findUserDueDateTask = await db.Users.findOne({
+          where: {
+            email: email,
+          },
+        });
+        // If the user is found and the user ID exists use this to include in the where clause for the task
+        if (findUserDueDateTask && findUserDueDateTask?.id) {
+          await db.Todos.update(
+            {
+              dueBy: isDueBy,
+            },
+            {
+              where: {
+                id: id,
+                userId: findUserDueDateTask?.id,
+              },
+            }
+          ).catch((e) => res.status(500).send({ error: e }));
+          res.status(200).send({ message: 'Task updated' });
+        } else {
+          // Logging the error to the console for more visibility
+          console.error(`User not found with ID: ${findUserDueDateTask?.id}`);
+          // Return a HTTP 404 if the user isn't found or doesn't exist
+          res.status(404).send({
+            error: `User not found with ID: ${findUserDueDateTask?.id}`,
+          });
+        }
+      } else {
+        // Logging the error to the console for more visibility
+        console.error('Required parameters are either empty or invalid');
+        // Return a HTTP 500 if the required parameters are not provided or valid
+        res
+          .status(500)
+          .send({ error: 'Required parameters are either empty or invalid' });
+      }
+    } catch (e) {
+      // Logging the error to the console for more visibility
+      console.error(e);
+      // Return a HTTP 500 in the case of a SequelizeError or otherwise
+      res.status(500).send({ error: `An error has occurred: ${e}` });
+    }
+  });
 
   // Delete a task
-  // server.delete('/api/task/delete/:id', async (req, res) => {
-  //   try {
-  //     const { id } = req.params;
-  //     const num_id = parseInt(id);
-  //     // Check if the parameter exists and if it's greater than 0
-  //     if (num_id && num_id > 0) {
-  //       const findTask = await db.Todos.findOne({
-  //         where: {
-  //           id: num_id,
-  //         },
-  //       });
+  server.delete('/api/task/delete/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { email } = req.body;
+      console.log(email);
+      // Check if the todo ID and email are both not null and not empty
+      if (id && email && id !== '' && email !== '') {
+        const findUserToDeleteTask = await db.Users.findOne({
+          where: {
+            email: email,
+          },
+        });
 
-  //       // Check if we're able to return a valid Task ID from findTask
-  //       if (findTask?.id) {
-  //         const deleteTodo = await db.Todos.destroy({
-  //           where: {
-  //             id: findTask?.id,
-  //           },
-  //         });
-  //         res.status(200).send({ message: 'Task deleted' });
-  //       } else {
-  //         res.status(404).send({ error: 'Task not found' });
-  //       }
-  //     } else {
-  //       res.status(500).send({ error: 'Required parameters are either empty or invalid' });
-  //     }
-  //   } catch (e) {
-  //     res.status(500).send({ error: `An error has occurred: ${e}` });
-  //   }
-  // });
+        // If the user is found and the user ID exists use this to include in the where clause for the task
+        if (findUserToDeleteTask && findUserToDeleteTask?.id) {
+          await db.Todos.destroy({
+            where: {
+              id: id,
+              userId: findUserToDeleteTask?.id,
+            },
+          }).catch((e) => res.status(500).send({ error: e }));
+          res.status(200).send({ message: 'Task deleted' });
+        } else {
+          // Logging the error to the console for more visibility
+          console.error(`User not found with ID: ${findUserToDeleteTask?.id}`);
+          // Return a HTTP 404 if the user isn't found or doesn't exist
+          res.status(404).send({
+            error: `User not found with ID: ${findUserToDeleteTask?.id}`,
+          });
+        }
+      } else {
+        // Logging the error to the console for more visibility
+        console.error('Required parameters are either empty or invalid');
+        // Return a HTTP 500 if the required parameters are not provided or valid
+        res
+          .status(500)
+          .send({ error: 'Required parameters are either empty or invalid' });
+      }
+    } catch (e) {
+      // Logging the error to the console for more visibility
+      console.error(e);
+      // Return a HTTP 500 in the case of a SequelizeError or otherwise
+      res.status(500).send({ error: `An error has occurred: ${e}` });
+    }
+  });
 
   // Update a task to be completed/incomplete
   server.put('/api/task/complete/:id', async (req, res) => {

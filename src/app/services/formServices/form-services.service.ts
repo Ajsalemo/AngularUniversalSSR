@@ -17,8 +17,10 @@ export class FormServicesService {
     return await this.http.get(`/api/task/get/${email}`).toPromise();
   }
 
-  async mainTaskFormDeleteTodo(id: number): Promise<any> {
-    return await this.http.delete(`/api/task/delete/${id}`).toPromise();
+  async mainTaskFormDeleteTodo(id: number, email: string): Promise<any> {
+    return await this.http
+      .delete(`/api/task/delete/${id}`, { body: { email } })
+      .toPromise();
   }
 
   async mainTaskFormCompleteTodo(
@@ -49,9 +51,13 @@ export class FormServicesService {
       .toPromise();
   }
 
-  async mainTaskFormSetDueDateToday(id: number, isDueBy: any): Promise<Object> {
+  async mainTaskFormSetDueDateToday(
+    id: number,
+    isDueBy: any,
+    email: string
+  ): Promise<Object> {
     return await this.http
-      .put(`/api/task/due/${id}`, { isDueBy }, { responseType: 'text' })
+      .put(`/api/task/due/${id}`, { isDueBy, email }, { responseType: 'text' })
       .toPromise();
   }
 }

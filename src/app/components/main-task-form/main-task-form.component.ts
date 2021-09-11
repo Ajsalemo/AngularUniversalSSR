@@ -75,7 +75,7 @@ export class MainTaskFormComponent implements OnInit {
     }
   }
 
-  // Retrieve all stored tasks
+  // Retrieve all stored tasks from the current logged in user
   async retrieveAllTasks(): Promise<void> {
     this.isLoading = true;
     this.isError = false;
@@ -132,7 +132,8 @@ export class MainTaskFormComponent implements OnInit {
       this.isLoading = true;
       this.isError = false;
       const { message } = await this.formServicesService.mainTaskFormDeleteTodo(
-        id
+        id,
+        this.userEmail
       );
       if (message) {
         this.isLoading = false;
@@ -147,27 +148,35 @@ export class MainTaskFormComponent implements OnInit {
     }
   }
 
-  // Update tasks to a completed status
+  // Update tasks to a completed or incomplete status
   async completeTask(id: number, completed: boolean): Promise<void> {
     try {
       this.isLoading = true;
       this.isError = false;
       if (completed === true) {
-        await this.formServicesService.mainTaskFormCompleteTodo(id, false, this.userEmail);
+        await this.formServicesService.mainTaskFormCompleteTodo(
+          id,
+          false,
+          this.userEmail
+        );
         return await this.retrieveAllTasks();
       } else {
-        await this.formServicesService.mainTaskFormCompleteTodo(id, true, this.userEmail);
+        await this.formServicesService.mainTaskFormCompleteTodo(
+          id,
+          true,
+          this.userEmail
+        );
         return await this.retrieveAllTasks();
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
       this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
     }
   }
 
-  // Update tasks to be important
+  // Update tasks to be important or unimportant
   async makeTaskImportant(id: number, important: boolean): Promise<void> {
     try {
       this.isLoading = true;
@@ -190,7 +199,7 @@ export class MainTaskFormComponent implements OnInit {
         return await this.retrieveAllTasks();
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
       this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
@@ -200,34 +209,57 @@ export class MainTaskFormComponent implements OnInit {
   // Set a tasks due date
   async setTaskDueDateToToday(id: number): Promise<void> {
     const date = new Date();
-    await this.formServicesService.mainTaskFormSetDueDateToday(id, date);
-    return await this.retrieveAllTasks();
-  }
-
-  // Set a tasks due date to one day ahead
-  async setTaskDueDateToTomorrow(id: number): Promise<void> {
-    const tomorrow = new Date();
-    const tomorrowDate = tomorrow.setDate(tomorrow.getDate() + 1);
     await this.formServicesService.mainTaskFormSetDueDateToday(
       id,
-      tomorrowDate
+      date,
+      this.userEmail
     );
     return await this.retrieveAllTasks();
   }
 
-  // Remove a task's due date
-  async removeTaskDueDate(id: number): Promise<void> {
-    await this.formServicesService.mainTaskFormSetDueDateToday(id, null);
-    return await this.retrieveAllTasks();
+  // Set a tasks due date to one day ahead (tomorrow)
+  async setTaskDueDateToTomorrow(id: number): Promise<void> {
+    try {
+      const tomorrow = new Date();
+      const tomorrowDate = tomorrow.setDate(tomorrow.getDate() + 1);
+      await this.formServicesService.mainTaskFormSetDueDateToday(
+        id,
+        tomorrowDate,
+        this.userEmail
+      );
+      return await this.retrieveAllTasks();
+    } catch (e) {
+      console.error(e);
+      this.catchError = 'An error has occurred. Please try again.';
+      this.isLoading = false;
+      this.isError = true;
+    }
   }
 
+  // Remove a task's due date
+  async removeTaskDueDate(id: number): Promise<void> {
+    try {
+      await this.formServicesService.mainTaskFormSetDueDateToday(
+        id,
+        null,
+        this.userEmail
+      );
+      return await this.retrieveAllTasks();
+    } catch (e) {
+      console.error(e);
+      this.catchError = 'An error has occurred. Please try again.';
+      this.isLoading = false;
+      this.isError = true;
+    }
+  }
+
+  // Check if the user logging in from Auth0 exists or not
   checkIfAuth0UserExists(): void {
     try {
       this.isError = false;
       this.auth.isLoading$.subscribe((isLoading) => {
         if (!isLoading) {
           this.auth.user$.subscribe(async (user) => {
-            console.log(user);
             if (user && user.email) {
               this.userEmail = user.email;
               await this.userService.checkUserUponLogin(user.email);
@@ -241,11 +273,10 @@ export class MainTaskFormComponent implements OnInit {
         } else {
           this.isLoading = true;
           this.isError = false;
-          console.log('loading..');
         }
       });
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      console.error(e);
       this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
