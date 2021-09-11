@@ -136,7 +136,6 @@ export function app(): express.Express {
     try {
       const { id } = req.params;
       const { email } = req.body;
-      console.log(email);
       // Check if the todo ID and email are both not null and not empty
       if (id && email && id !== '' && email !== '') {
         const findUserToDeleteTask = await db.Users.findOne({

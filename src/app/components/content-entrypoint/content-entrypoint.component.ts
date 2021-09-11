@@ -45,7 +45,7 @@ export class ContentEntrypointComponent implements OnInit {
   onResize(): void {
     this.innerWidth = window.innerWidth;
 
-    if (this.innerWidth < 768) {
+    if (this.innerWidth < 1176) {
       this.isLeftHandSideNavOpen = false;
       this.isRightSideNavOpen = false;
       this.hideLeftHandSideNavToggle = false;
