@@ -21,11 +21,33 @@ export class ContentEntrypointComponent implements OnInit {
   userSelectedTheme: string = '';
   // Boolean to filter only important tasks
   isImportantFilter: boolean = false;
+  // Boolean to filter only planned tasks
+  isPlannedFilter: boolean = false;
+  // Boolean to filter general tasks
+  isTasksFilter: boolean = false;
   constructor(private _bottomMainNavSheet: MatBottomSheet) {}
 
   setBackgroundTheme(theme: string): any {
     // Sets the user selected background theme
     this.userSelectedTheme = theme;
+  }
+
+  // Function to filter for important tasks
+  setIsImportantFilter(): void {
+    console.log(this.isImportantFilter);
+    this.isImportantFilter = !this.isImportantFilter;
+  }
+
+  // Function to filter for planned tasks
+  setIsPlannedFilter(): void {
+    console.log(this.isPlannedFilter);
+    this.isPlannedFilter = !this.isPlannedFilter;
+  }
+
+  // Function to filter general tasks
+  setIsTasksFilter(): void {
+    console.log(this.isTasksFilter);
+    this.isTasksFilter = !this.isTasksFilter;
   }
 
   // Opens the left-sidenav bottom sheet component (mobile viewing)

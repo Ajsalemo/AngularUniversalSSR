@@ -6,7 +6,11 @@
     [(opened)]="isLeftHandSideNavOpen"
     ><div class="text-gray-400 p-2 mb-2">To Do</div>
     <app-avatar></app-avatar>
-    <app-left-sidenav-options></app-left-sidenav-options>
+    <app-left-sidenav-options
+      [setIsImportantFilter]="setIsImportantFilter"
+      [setIsPlannedFilter]="setIsPlannedFilter"
+      [setIsTasksFilter]="setIsTasksFilter"
+    ></app-left-sidenav-options>
     <div class="h-10 w-5/6 border-b-2 border-gray-500 mx-auto"></div>
   </mat-sidenav>
   <mat-sidenav-content
