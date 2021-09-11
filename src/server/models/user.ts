@@ -3,10 +3,8 @@ import {
   Association,
   HasManyCreateAssociationMixin,
   HasManyGetAssociationsMixin,
-  HasManyRemoveAssociationMixin,
-  HasManySetAssociationsMixin,
-  Model,
-  Optional,
+  HasManyRemoveAssociationMixin, Model,
+  Optional
 } from 'sequelize';
 import { Todo, TodoCreationAttributes } from './todos';
 
@@ -35,10 +33,6 @@ class User
   public getTodos!: HasManyGetAssociationsMixin<TodoCreationAttributes>;
   public createTodo!: HasManyCreateAssociationMixin<TodoCreationAttributes>;
   public deleteTodo!: HasManyRemoveAssociationMixin<
-    TodoCreationAttributes,
-    number
-  >;
-  public updateTodo!: HasManySetAssociationsMixin<
     TodoCreationAttributes,
     number
   >;
