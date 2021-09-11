@@ -134,40 +134,42 @@ export function app(): express.Express {
   // });
 
   // Update a task to be completed/incomplete
-  // server.put('/api/task/complete/:id', async (req, res) => {
-  //   try {
-  //     const { id } = req.params;
-  //     const { isCompleted } = req.body;
-  //     const task_id = parseInt(id);
-  //     if (task_id && task_id > 0) {
-  //       const findTask = await db.Todos.findOne({
-  //         where: {
-  //           id: task_id,
-  //         },
-  //       });
+  server.put('/api/task/complete/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { isCompleted, email } = req.body;
+      // Check if the todo ID and email are both not null and not empty
+      if (id && email && id !== '' && email !== '') {
+        const findUserForTaskToComplete = await db.Users.findOne({
+          where: {
+            email: email,
+          },
+          include: [db.Users.associations.todos],
+        });
 
-  //       if (findTask?.id) {
-  //         await db.Todos.update(
-  //           {
-  //             completed: isCompleted,
-  //           },
-  //           {
-  //             where: {
-  //               id: findTask?.id,
-  //             },
-  //           }
-  //         );
-  //         res.status(200).send({ message: 'Task updated' });
-  //       } else {
-  //         res.status(404).send({ error: 'Task not found' });
-  //       }
-  //     } else {
-  //       res.status(500).send({ error: 'Bad parameter provided' });
-  //     }
-  //   } catch (e) {
-  //     res.status(500).send({ error: `An error has occurred: ${e}` });
-  //   }
-  // });
+        if (findUserForTaskToComplete?.id) {
+          await db.Todos.update(
+            {
+              completed: isCompleted,
+            },
+            {
+              where: {
+                id: id,
+                userId: findUserForTaskToComplete?.id,
+              },
+            }
+          ).catch((e) => res.status(500).send({ error: e }));
+          res.status(200).send({ message: 'Task updated' });
+        } else {
+          res.status(404).send({ error: 'Task not found' });
+        }
+      } else {
+        res.status(500).send({ error: 'Bad parameter provided' });
+      }
+    } catch (e) {
+      res.status(500).send({ error: `An error has occurred: ${e}` });
+    }
+  });
 
   // Update a task to be important/unimportant
   server.put('/api/task/important/:id', async (req, res) => {
@@ -237,7 +239,7 @@ export function app(): express.Express {
     try {
       const { email } = req.params;
       // If the email parameter exists and isn't emptry search for the user
-      if (email && email !== "") {
+      if (email && email !== '') {
         const findUser = await db.Users.findOne({
           where: {
             email: req.params.email,

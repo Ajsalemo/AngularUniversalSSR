@@ -23,12 +23,13 @@ export class FormServicesService {
 
   async mainTaskFormCompleteTodo(
     id: number,
-    isCompleted: boolean
+    isCompleted: boolean,
+    email: string
   ): Promise<Object> {
     return await this.http
       .put(
         `/api/task/complete/${id}`,
-        { isCompleted },
+        { isCompleted, email },
         { responseType: 'text' }
       )
       .toPromise();

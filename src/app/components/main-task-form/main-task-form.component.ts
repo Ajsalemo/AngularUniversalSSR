@@ -92,9 +92,8 @@ export class MainTaskFormComponent implements OnInit {
         this.isError = true;
         return;
       }
-      console.log('retrieveAllTasks function executed');
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      console.error(e);
       this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
@@ -119,8 +118,8 @@ export class MainTaskFormComponent implements OnInit {
         this.isError = false;
         this.isLoading = false;
       }
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      console.error(e);
       this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
@@ -140,8 +139,8 @@ export class MainTaskFormComponent implements OnInit {
         this.isError = false;
         await this.retrieveAllTasks();
       }
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      console.error(e);
       this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
@@ -150,12 +149,21 @@ export class MainTaskFormComponent implements OnInit {
 
   // Update tasks to a completed status
   async completeTask(id: number, completed: boolean): Promise<void> {
-    if (completed === true) {
-      await this.formServicesService.mainTaskFormCompleteTodo(id, false);
-      return await this.retrieveAllTasks();
-    } else {
-      await this.formServicesService.mainTaskFormCompleteTodo(id, true);
-      return await this.retrieveAllTasks();
+    try {
+      this.isLoading = true;
+      this.isError = false;
+      if (completed === true) {
+        await this.formServicesService.mainTaskFormCompleteTodo(id, false, this.userEmail);
+        return await this.retrieveAllTasks();
+      } else {
+        await this.formServicesService.mainTaskFormCompleteTodo(id, true, this.userEmail);
+        return await this.retrieveAllTasks();
+      }
+    } catch (e) {
+      console.error(e)
+      this.catchError = 'An error has occurred. Please try again.';
+      this.isLoading = false;
+      this.isError = true;
     }
   }
 
@@ -182,7 +190,7 @@ export class MainTaskFormComponent implements OnInit {
         return await this.retrieveAllTasks();
       }
     } catch (e) {
-      console.error(e);
+      console.error(e)
       this.catchError = 'An error has occurred. Please try again.';
       this.isLoading = false;
       this.isError = true;
