@@ -7,8 +7,8 @@ interface TodoAttributes {
   id: number;
   userId: number;
   todo: string;
-  completed?: boolean;
-  important?: boolean;
+  completed: boolean;
+  important: boolean;
   dueBy: number;
   createdAt: Date;
   updatedAt: Date;

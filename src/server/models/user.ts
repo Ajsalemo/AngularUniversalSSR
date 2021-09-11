@@ -32,10 +32,6 @@ class User
   // Methods to implement calls using association
   public getTodos!: HasManyGetAssociationsMixin<TodoCreationAttributes>;
   public createTodo!: HasManyCreateAssociationMixin<TodoCreationAttributes>;
-  public deleteTodo!: HasManyRemoveAssociationMixin<
-    TodoCreationAttributes,
-    number
-  >;
 
   public readonly todos?: Todo[];
 

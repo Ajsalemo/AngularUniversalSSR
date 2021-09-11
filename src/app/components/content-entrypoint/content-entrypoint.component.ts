@@ -19,6 +19,8 @@ export class ContentEntrypointComponent implements OnInit {
   // Set the screen width to a variable
   innerWidth!: number;
   userSelectedTheme: string = '';
+  // Boolean to filter only important tasks
+  isImportantFilter: boolean = false;
   constructor(private _bottomMainNavSheet: MatBottomSheet) {}
 
   setBackgroundTheme(theme: string): any {
