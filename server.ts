@@ -40,27 +40,43 @@ export function app(): express.Express {
       const {
         body: { data },
       } = req;
-
+      // Check if the task and email are both not null and not empty
       if (task && email && task !== '' && email !== '') {
         const findUserToCreateTodo = await db.Users.findOne({
           where: {
             email: email,
           },
         });
-
-        await findUserToCreateTodo!.createTodo({
-          todo: task,
-        });
-
-        res.json(data);
+        // Check if the user that we're adding a task for exists and has a user ID
+        if (findUserToCreateTodo && findUserToCreateTodo?.id) {
+          await findUserToCreateTodo!.createTodo({
+            todo: task,
+          });
+          // Send the request body back since it's fully validated
+          res.json(data);
+        } else {
+          // Logging the error to the console for more visibility
+          console.error(`User not found with ID: ${findUserToCreateTodo?.id}`);
+          // Return a HTTP 404 if the user isn't found or doesn't exist
+          res.status(404).send({
+            error: `User not found with ID: ${findUserToCreateTodo?.id}`,
+          });
+        }
       } else if (task.length < 2) {
+        // Logging the error to the console for more visibility
+        // Send a HTTP 500 back if the task in the request body is less than 2 characters
         console.error('Error: Value must be 2 or greater');
         res.status(500).send({ error: 'Value must be 2 or greater' });
       } else {
+        // Logging the error to the console for more visibility
         console.error('Error: Form data must contain a value');
+        // Send a HTTP 500 back if the task in the request body is null
         res.status(500).send({ error: 'Form data must contain a value' });
       }
     } catch (e) {
+      // Logging the error to the console for more visibility
+      console.error(e);
+      // Return a HTTP 500 in the case of a SequelizeError or otherwise
       res.status(500).send({ error: `An error has occurred: ${e}` });
     }
   });
@@ -94,7 +110,7 @@ export function app(): express.Express {
   //         res.status(404).send({ error: 'Task not found' });
   //       }
   //     } else {
-  //       res.status(500).send({ error: 'Bad parameter provided' });
+  //       res.status(500).send({ error: 'Required parameters are either empty or invalid' });
   //     }
   //   } catch (e) {
   //     res.status(500).send({ error: `An error has occurred: ${e}` });
@@ -126,7 +142,7 @@ export function app(): express.Express {
   //         res.status(404).send({ error: 'Task not found' });
   //       }
   //     } else {
-  //       res.status(500).send({ error: 'Bad parameter provided' });
+  //       res.status(500).send({ error: 'Required parameters are either empty or invalid' });
   //     }
   //   } catch (e) {
   //     res.status(500).send({ error: `An error has occurred: ${e}` });
@@ -146,8 +162,8 @@ export function app(): express.Express {
           },
           include: [db.Users.associations.todos],
         });
-
-        if (findUserForTaskToComplete?.id) {
+        // If the user is found and the user ID exists use this to include in the where clause for the task
+        if (findUserForTaskToComplete && findUserForTaskToComplete?.id) {
           await db.Todos.update(
             {
               completed: isCompleted,
@@ -161,12 +177,27 @@ export function app(): express.Express {
           ).catch((e) => res.status(500).send({ error: e }));
           res.status(200).send({ message: 'Task updated' });
         } else {
-          res.status(404).send({ error: 'Task not found' });
+          // Logging the error to the console for more visibility
+          console.error(
+            `User not found with ID: ${findUserForTaskToComplete?.id}`
+          );
+          // Return a HTTP 404 if the user isn't found or doesn't exist
+          res.status(404).send({
+            error: `User not found with ID: ${findUserForTaskToComplete?.id}`,
+          });
         }
       } else {
-        res.status(500).send({ error: 'Bad parameter provided' });
+        // Logging the error to the console for more visibility
+        console.error('Required parameters are either empty or invalid');
+        // Return a HTTP 500 if the required parameters are not provided or valid
+        res
+          .status(500)
+          .send({ error: 'Required parameters are either empty or invalid' });
       }
     } catch (e) {
+      // Logging the error to the console for more visibility
+      console.error(e);
+      // Return a HTTP 500 in the case of a SequelizeError or otherwise
       res.status(500).send({ error: `An error has occurred: ${e}` });
     }
   });
@@ -200,12 +231,25 @@ export function app(): express.Express {
           ).catch((e) => res.status(500).send({ error: e }));
           res.status(200).send({ message: 'Task updated' });
         } else {
-          res.status(404).send({ error: 'Task not found' });
+          // Logging the error to the console for more visibility
+          console.error(`User not found with ID: ${findImportantUser?.id}`);
+          // Return a HTTP 404 if the user isn't found or doesn't exist
+          res.status(404).send({
+            error: `User not found with ID: ${findImportantUser?.id}`,
+          });
         }
       } else {
-        res.status(500).send({ error: 'Bad parameter provided' });
+        // Logging the error to the console for more visibility
+        console.error('Required parameters are either empty or invalid');
+        // Return a HTTP 500 if the required parameters are not provided or valid
+        res
+          .status(500)
+          .send({ error: 'Required parameters are either empty or invalid' });
       }
     } catch (e) {
+      // Logging the error to the console for more visibility
+      console.error(e);
+      // Return a HTTP 500 in the case of a SequelizeError or otherwise
       res.status(500).send({ error: `An error has occurred: ${e}` });
     }
   });
@@ -222,14 +266,32 @@ export function app(): express.Express {
           },
           include: [db.Users.associations.todos],
         });
-        // Find all tasks with the getTodos() method off of the User class
-        // Return all found tasks back to the client
-        const getAllTasks = await findUserToGetTasks?.getTodos();
-        res.json(getAllTasks);
+        // Check if the user is not null and the user ID exists
+        if (findUserToGetTasks && findUserToGetTasks?.id) {
+          // Find all tasks with the getTodos() method off of the User class
+          // Return all found tasks back to the client
+          const getAllTasks = await findUserToGetTasks?.getTodos();
+          res.json(getAllTasks);
+        } else {
+          // Logging the error to the console for more visibility
+          console.error(`User not found with ID: ${findUserToGetTasks?.id}`);
+          // Return a HTTP 404 if the user isn't found or doesn't exist
+          res.status(404).send({
+            error: `User not found with ID: ${findUserToGetTasks?.id}`,
+          });
+        }
       } else {
-        res.status(500).send({ error: 'Bad parameter provided' });
+        // Logging the error to the console for more visibility
+        console.error('Required parameters are either empty or invalid');
+        // Return a HTTP 500 if the required parameters are not provided or valid
+        res
+          .status(500)
+          .send({ error: 'Required parameters are either empty or invalid' });
       }
     } catch (e) {
+      // Logging the error to the console for more visibility
+      console.error(e);
+      // Return a HTTP 500 in the case of a SequelizeError or otherwise
       res.status(500).send({ error: `An error has occurred: ${e}` });
     }
   });
@@ -260,11 +322,17 @@ export function app(): express.Express {
           res.status(200).send({ message: 'User exists' });
         }
       } else {
-        console.error('No email provided');
-        res.status(500).send({ error: 'Bad parameter provided' });
+        // Logging the error to the console for more visibility
+        console.error('Required parameters are either empty or invalid');
+        // Return a HTTP 500 if the required parameters are not provided or valid
+        res
+          .status(500)
+          .send({ error: 'Required parameters are either empty or invalid' });
       }
     } catch (e) {
-      console.log(e);
+      // Logging the error to the console for more visibility
+      console.error(e);
+      // Return a HTTP 500 in the case of a SequelizeError or otherwise
       res.status(500).send({ error: `An error has occurred: ${e}` });
     }
   });
