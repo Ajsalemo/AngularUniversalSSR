@@ -5,14 +5,14 @@ import userWrapper from './user';
 
 const sequelize = new Sequelize(
   // Database
-  '',
+  'angularssrtodos',
   // Username
-  '',
+  'mysqldbuser@ansalemo-wordpress-linux-mysqldbserver',
   // Password
-  '',
+  'Dudebug1992',
   {
     // Host
-    host: '',
+    host: 'ansalemo-wordpress-linux-mysqldbserver.mysql.database.azure.com',
     port: 3306,
     dialect: 'mysql',
     /*

@@ -1,53 +1,53 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-left-sidenav-options',
   templateUrl: './left-sidenav-options.component.html',
 })
 export class LeftSidenavOptionsComponent implements OnInit {
-  constructor() {}
   @Input()
-  setIsImportantFilter!: () => void | false;
+  isImportantFilter!: boolean;
   @Input()
   setIsPlannedFilter!: () => void | false;
   @Input()
   setIsTasksFilter!: () => void | false;
+  // To avoid dumb future mistakes, make sure to add a 'Change' suffix to event emitters for 2-way data binding
+  // https://stackoverflow.com/questions/57547337/unsure-how-to-apply-two-way-binding-on-angular-for-a-custom-component
+  @Output() 
+  isImportantFilterChange = new EventEmitter();
+
+  constructor() {}
 
   sidenavOptionLinks: any[] = [
     {
       text: 'My Day',
-      link: 'TBD',
       icon: 'flare',
       ariaLabelText: 'My Day icon',
-      action: () => this.setIsTasksFilter()
+      action: () => this.setIsTasksFilter(),
     },
     {
       text: 'Important',
-      link: 'TBD',
       icon: 'star_border',
       ariaLabelText: 'Important Tasks icon',
-      action: () => this.setIsImportantFilter()
+      action: () => this.isImportantFilterChange.emit(this.isImportantFilter = !this.isImportantFilter),
     },
     {
       text: 'Planned',
-      link: 'TBD',
       icon: 'event',
       ariaLabelText: 'Planned Tasks icon',
-      action: () => this.setIsPlannedFilter()
+      action: () => this.setIsPlannedFilter(),
     },
     {
       text: 'Assigned To You',
-      link: 'TBD',
       icon: 'person_outline',
       ariaLabelText: 'Assigned Tasks icon',
-      action: () => this.setIsImportantFilter()
+      action: () => this.setIsPlannedFilter(),
     },
     {
       text: 'Tasks',
-      link: 'TBD',
       icon: 'home',
       ariaLabelText: 'Normal Tasks icon',
-      action: () => this.setIsTasksFilter()
+      action: () => this.setIsTasksFilter(),
     },
   ];
 

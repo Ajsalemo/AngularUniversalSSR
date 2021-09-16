@@ -7,7 +7,7 @@
     ><div class="text-gray-400 p-2 mb-2">To Do</div>
     <app-avatar></app-avatar>
     <app-left-sidenav-options
-      [setIsImportantFilter]="setIsImportantFilter"
+      [(isImportantFilter)]="isImportantFilter"
       [setIsPlannedFilter]="setIsPlannedFilter"
       [setIsTasksFilter]="setIsTasksFilter"
     ></app-left-sidenav-options>
@@ -78,7 +78,7 @@
         </mat-menu>
       </div>
     </div>
-    <app-main-task-form></app-main-task-form>
+    <app-main-task-form [isImportantFilter]="isImportantFilter"></app-main-task-form>
   </mat-sidenav-content>
   <mat-sidenav
     mode="side"

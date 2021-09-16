@@ -32,12 +32,6 @@ export class ContentEntrypointComponent implements OnInit {
     this.userSelectedTheme = theme;
   }
 
-  // Function to filter for important tasks
-  setIsImportantFilter(): void {
-    console.log(this.isImportantFilter);
-    this.isImportantFilter = !this.isImportantFilter;
-  }
-
   // Function to filter for planned tasks
   setIsPlannedFilter(): void {
     console.log(this.isPlannedFilter);
@@ -67,6 +61,7 @@ export class ContentEntrypointComponent implements OnInit {
   */
   @HostListener('window:resize', ['$event'])
   onResize(): void {
+    console.log(this.isImportantFilter)
     this.innerWidth = window.innerWidth;
 
     if (this.innerWidth < 1176) {

@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormServicesService } from '@services/formServices/form-services.service';
 import { differenceInCalendarDays, format, parseISO } from 'date-fns';
@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
   templateUrl: './main-task-form.component.html',
 })
 export class MainTaskFormComponent implements OnInit {
+  @Input()
+  isImportantFilter!: any;
   mainTasksToDisplay: any;
   testBrowser!: boolean;
   isLoading: boolean = false;
@@ -79,6 +81,7 @@ export class MainTaskFormComponent implements OnInit {
   async retrieveAllTasks(): Promise<void> {
     this.isLoading = true;
     this.isError = false;
+    console.log(this.isImportantFilter)
     try {
       if (this.userEmail && this.userEmail !== '') {
         const tasks = await this.formServicesService.mainTaskFormGetAllTodos(
