@@ -32,18 +32,6 @@ export class ContentEntrypointComponent implements OnInit {
     this.userSelectedTheme = theme;
   }
 
-  // Function to filter for planned tasks
-  setIsPlannedFilter(): void {
-    console.log(this.isPlannedFilter);
-    this.isPlannedFilter = !this.isPlannedFilter;
-  }
-
-  // Function to filter general tasks
-  setIsTasksFilter(): void {
-    console.log(this.isTasksFilter);
-    this.isTasksFilter = !this.isTasksFilter;
-  }
-
   // Opens the left-sidenav bottom sheet component (mobile viewing)
   openBottomMainNavSheet(): void {
     this._bottomMainNavSheet.open(MobileBottomMainNavComponent);
@@ -62,6 +50,8 @@ export class ContentEntrypointComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(): void {
     console.log(this.isImportantFilter)
+    console.log(this.isTasksFilter)
+    console.log(this.isPlannedFilter)
     this.innerWidth = window.innerWidth;
 
     if (this.innerWidth < 1176) {

@@ -38,8 +38,8 @@ import { MaterialModule } from './material.module';
     HttpClientModule,
     FormsModule,
     AuthModule.forRoot({
-      domain: 'reacttwitter.auth0.com',
-      clientId: 'BuheWQDchcUDokSaqoTyyD7p7F1Zri6n',
+      domain: '',
+      clientId: '',
     }),
   ],
   providers: [],

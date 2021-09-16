@@ -5,15 +5,15 @@ import userWrapper from './user';
 
 const sequelize = new Sequelize(
   // Database
-  'angularssrtodos',
+  '',
   // Username
-  'mysqldbuser@ansalemo-wordpress-linux-mysqldbserver',
+  '',
   // Password
-  'Dudebug1992',
+  '',
   {
     // Host
-    host: 'ansalemo-wordpress-linux-mysqldbserver.mysql.database.azure.com',
-    port: 3306,
+    host: '',
+    port: ,
     dialect: 'mysql',
     /*
       See this Github thread for explicit referencing of the mysql2 package for dialectModule
