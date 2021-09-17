@@ -8,7 +8,7 @@ export class LeftSidenavOptionsComponent implements OnInit {
   @Input()
   isImportantFilter!: boolean;
   @Input()
-  isPlannedFilter!: boolean;
+  isCompletedFilter!: boolean;
   @Input()
   isTasksFilter!: boolean;
   // To avoid dumb future mistakes, make sure to add a 'Change' suffix to event emitters for 2-way data binding
@@ -16,7 +16,7 @@ export class LeftSidenavOptionsComponent implements OnInit {
   @Output()
   isImportantFilterChange = new EventEmitter();
   @Output()
-  isPlannedFilterChange = new EventEmitter()
+  isCompletedFilterChange = new EventEmitter()
   @Output()
   isTasksFilterChange = new EventEmitter()
 
@@ -42,12 +42,12 @@ export class LeftSidenavOptionsComponent implements OnInit {
         ),
     },
     {
-      text: 'Planned',
-      icon: 'event',
-      ariaLabelText: 'Planned Tasks icon',
+      text: 'Completed',
+      icon: 'check_circle',
+      ariaLabelText: 'Completed Tasks icon',
       action: () =>
-        this.isPlannedFilterChange.emit(
-          (this.isPlannedFilter = !this.isPlannedFilter)
+        this.isCompletedFilterChange.emit(
+          (this.isCompletedFilter = !this.isCompletedFilter)
         ),
     },
     {
@@ -55,8 +55,8 @@ export class LeftSidenavOptionsComponent implements OnInit {
       icon: 'person_outline',
       ariaLabelText: 'Assigned Tasks icon',
       action: () =>
-        this.isPlannedFilterChange.emit(
-          (this.isPlannedFilter = !this.isPlannedFilter)
+        this.isCompletedFilterChange.emit(
+          (this.isCompletedFilter = !this.isCompletedFilter)
         ),
     },
     {

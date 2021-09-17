@@ -14,6 +14,7 @@
         flex
         justify-between
       "
+      [ngClass]="{'hidden': (isImportantFilter === true && task.important === false) || (isCompletedFilter === true && task.completed === false)}"
     >
       <div class="flex items-center py-1">
         <mat-icon
@@ -23,6 +24,7 @@
             task.completed ? "check_circle" : "check_circle_outline"
           }}</mat-icon
         >
+        <!-- Show only tasks marked as completed -->
         <div *ngIf="task.completed === true; else notCompleted">
           <span>
             <s>{{ task.todo }}</s>

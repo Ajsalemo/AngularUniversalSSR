@@ -21,8 +21,8 @@ export class ContentEntrypointComponent implements OnInit {
   userSelectedTheme: string = '';
   // Boolean to filter only important tasks
   isImportantFilter: boolean = false;
-  // Boolean to filter only planned tasks
-  isPlannedFilter: boolean = false;
+  // Boolean to filter only completed tasks
+  isCompletedFilter: boolean = false;
   // Boolean to filter general tasks
   isTasksFilter: boolean = false;
   constructor(private _bottomMainNavSheet: MatBottomSheet) {}
@@ -49,9 +49,6 @@ export class ContentEntrypointComponent implements OnInit {
   */
   @HostListener('window:resize', ['$event'])
   onResize(): void {
-    console.log(this.isImportantFilter)
-    console.log(this.isTasksFilter)
-    console.log(this.isPlannedFilter)
     this.innerWidth = window.innerWidth;
 
     if (this.innerWidth < 1176) {

@@ -13,7 +13,12 @@ import { Router } from '@angular/router';
 })
 export class MainTaskFormComponent implements OnInit {
   @Input()
-  isImportantFilter!: any;
+  isImportantFilter!: boolean;
+  @Input()
+  isCompletedFilter!: boolean;
+  @Input()
+  isTasksFilter!: boolean;
+
   mainTasksToDisplay: any;
   testBrowser!: boolean;
   isLoading: boolean = false;
@@ -21,6 +26,7 @@ export class MainTaskFormComponent implements OnInit {
   isCompletedTask!: boolean;
   catchError!: string;
   userEmail!: string;
+  
   constructor(
     private formServicesService: FormServicesService,
     @Inject(PLATFORM_ID) platformId: string,
