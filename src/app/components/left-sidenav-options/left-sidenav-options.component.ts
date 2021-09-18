@@ -16,9 +16,37 @@ export class LeftSidenavOptionsComponent implements OnInit {
   @Output()
   isImportantFilterChange = new EventEmitter();
   @Output()
-  isCompletedFilterChange = new EventEmitter()
+  isCompletedFilterChange = new EventEmitter();
   @Output()
-  isTasksFilterChange = new EventEmitter()
+  isTasksFilterChange = new EventEmitter();
+
+  setIsImportantFilterChange(): void {
+    if (this.isImportantFilter === true) {
+      this.isImportantFilter = false;
+      this.isImportantFilterChange.emit(this.isImportantFilter);
+      this.isCompletedFilter = false;
+      this.isCompletedFilterChange.emit(this.isCompletedFilter);
+    } else {
+      this.isImportantFilter = true;
+      this.isImportantFilterChange.emit(this.isImportantFilter);
+      this.isCompletedFilter = false;
+      this.isCompletedFilterChange.emit(this.isCompletedFilter);
+    }
+  }
+
+  setIsCompletedFilterChange(): void {
+    if (this.isCompletedFilter === true) {
+      this.isCompletedFilter = false;
+      this.isCompletedFilterChange.emit(this.isCompletedFilter);
+      this.isImportantFilter = false;
+      this.isImportantFilterChange.emit(this.isImportantFilter);
+    } else {
+      this.isCompletedFilter = true;
+      this.isCompletedFilterChange.emit(this.isCompletedFilter);
+      this.isImportantFilter = false;
+      this.isImportantFilterChange.emit(this.isImportantFilter);
+    }
+  }
 
   constructor() {}
 
@@ -36,19 +64,13 @@ export class LeftSidenavOptionsComponent implements OnInit {
       text: 'Important',
       icon: 'star_border',
       ariaLabelText: 'Important Tasks icon',
-      action: () =>
-        this.isImportantFilterChange.emit(
-          (this.isImportantFilter = !this.isImportantFilter)
-        ),
+      action: () => this.setIsImportantFilterChange(),
     },
     {
       text: 'Completed',
       icon: 'check_circle',
       ariaLabelText: 'Completed Tasks icon',
-      action: () =>
-        this.isCompletedFilterChange.emit(
-          (this.isCompletedFilter = !this.isCompletedFilter)
-        ),
+      action: () => this.setIsCompletedFilterChange(),
     },
     {
       text: 'Assigned To You',

@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
   {
     // Host
     host: '',
-    port: ,
+    port: 3306,
     dialect: 'mysql',
     /*
       See this Github thread for explicit referencing of the mysql2 package for dialectModule
