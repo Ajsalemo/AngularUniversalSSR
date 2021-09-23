@@ -12,7 +12,7 @@ export class LandingComponent implements OnInit {
     try {
       this.auth.loginWithRedirect();
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 

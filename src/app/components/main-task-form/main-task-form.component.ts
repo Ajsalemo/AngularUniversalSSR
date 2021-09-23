@@ -87,7 +87,6 @@ export class MainTaskFormComponent implements OnInit {
   async retrieveAllTasks(): Promise<void> {
     this.isLoading = true;
     this.isError = false;
-    console.log(this.isImportantFilter)
     try {
       if (this.userEmail && this.userEmail !== '') {
         const tasks = await this.formServicesService.mainTaskFormGetAllTodos(

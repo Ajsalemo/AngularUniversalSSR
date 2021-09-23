@@ -13,6 +13,5 @@ export class AvatarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.auth.user$.subscribe((user) => console.log(user)));
   }
 }
