@@ -47,19 +47,19 @@ export class LeftSidenavOptionsComponent implements OnInit {
       this.isImportantFilterChange.emit(this.isImportantFilter);
     }
   }
+  // This sets the view back to a 'default' view of tasks - showing all tasks without any filters
+  setIsTasksFilterChange(): void {
+    if (this.isCompletedFilter === true || this.isImportantFilter === true) {
+      this.isCompletedFilter = false;
+      this.isCompletedFilterChange.emit(this.isCompletedFilter);
+      this.isImportantFilter = false;
+      this.isImportantFilterChange.emit(this.isImportantFilter);
+    }
+  }
 
   constructor() {}
 
   sidenavOptionLinks: any[] = [
-    {
-      text: 'My Day',
-      icon: 'flare',
-      ariaLabelText: 'My Day icon',
-      action: () =>
-        this.isTasksFilterChange.emit(
-          (this.isTasksFilter = !this.isTasksFilter)
-        ),
-    },
     {
       text: 'Important',
       icon: 'star_border',
@@ -73,22 +73,10 @@ export class LeftSidenavOptionsComponent implements OnInit {
       action: () => this.setIsCompletedFilterChange(),
     },
     {
-      text: 'Assigned To You',
-      icon: 'person_outline',
-      ariaLabelText: 'Assigned Tasks icon',
-      action: () =>
-        this.isCompletedFilterChange.emit(
-          (this.isCompletedFilter = !this.isCompletedFilter)
-        ),
-    },
-    {
       text: 'Tasks',
       icon: 'home',
       ariaLabelText: 'Normal Tasks icon',
-      action: () =>
-        this.isTasksFilterChange.emit(
-          (this.isTasksFilter = !this.isTasksFilter)
-        ),
+      action: () => this.setIsTasksFilterChange(),
     },
   ];
 
