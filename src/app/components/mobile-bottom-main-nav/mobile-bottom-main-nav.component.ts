@@ -5,10 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './mobile-bottom-main-nav.component.html',
 })
 export class MobileBottomMainNavComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

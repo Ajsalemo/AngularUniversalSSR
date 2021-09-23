@@ -34,7 +34,12 @@ export class ContentEntrypointComponent implements OnInit {
 
   // Opens the left-sidenav bottom sheet component (mobile viewing)
   openBottomMainNavSheet(): void {
-    this._bottomMainNavSheet.open(MobileBottomMainNavComponent);
+    this._bottomMainNavSheet.open(MobileBottomMainNavComponent, {
+      data: {
+        isCompletedFilter: this.isCompletedFilter,
+        isImportantFilter: this.isImportantFilter
+      }
+    });
   }
 
   // Opens the right-sidenav bottom sheet component (mobile viewing)
@@ -62,5 +67,7 @@ export class ContentEntrypointComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.onResize()
+  }
 }
