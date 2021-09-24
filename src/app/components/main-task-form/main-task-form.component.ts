@@ -1,11 +1,11 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormServicesService } from '@services/formServices/form-services.service';
-import { differenceInCalendarDays, format, parseISO } from 'date-fns';
+import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
+import { FormServicesService } from '@services/formServices/form-services.service';
 import { UserServicesService } from '@services/userServices/user-services.service';
-import { Router } from '@angular/router';
+import { differenceInCalendarDays, format, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-main-task-form',
@@ -18,6 +18,8 @@ export class MainTaskFormComponent implements OnInit {
   isCompletedFilter!: boolean;
   @Input()
   isTasksFilter!: boolean;
+  @Input()
+  isSuggestions!: boolean;
 
   mainTasksToDisplay: any;
   testBrowser!: boolean;
@@ -26,7 +28,8 @@ export class MainTaskFormComponent implements OnInit {
   isCompletedTask!: boolean;
   catchError!: string;
   userEmail!: string;
-  
+  navigationSubscription: any;
+
   constructor(
     private formServicesService: FormServicesService,
     @Inject(PLATFORM_ID) platformId: string,
@@ -95,6 +98,7 @@ export class MainTaskFormComponent implements OnInit {
         this.mainTasksToDisplay = tasks;
         this.isLoading = false;
         this.isError = false;
+        return;
       } else {
         this.isLoading = false;
         this.isError = true;

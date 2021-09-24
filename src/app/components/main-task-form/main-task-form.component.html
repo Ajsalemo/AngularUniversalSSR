@@ -14,7 +14,11 @@
         flex
         justify-between
       "
-      [ngClass]="{'hidden': (isImportantFilter === true && task.important === false) || (isCompletedFilter === true && task.completed === false)}"
+      [ngClass]="{
+        hidden:
+          (isImportantFilter === true && task.important === false) ||
+          (isCompletedFilter === true && task.completed === false)
+      }"
     >
       <div class="flex items-center py-1">
         <mat-icon
@@ -156,7 +160,10 @@
   </ul>
 </div>
 
-<div class="absolute bottom-8 w-full">
+<div
+  class="absolute bottom-8 w-full"
+  [ngClass]="{ hidden: isSuggestions === true }"
+>
   <form
     [formGroup]="mainTaskForm"
     class="flex justify-center"

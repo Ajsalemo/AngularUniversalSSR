@@ -82,6 +82,7 @@
       [isImportantFilter]="isImportantFilter"
       [isCompletedFilter]="isCompletedFilter"
       [isTasksFilter]="isTasksFilter"
+      [isSuggestions]=false
     ></app-main-task-form>
   </mat-sidenav-content>
   <mat-sidenav
@@ -90,6 +91,12 @@
     class="w-1/6 bg-gray-800"
     [(opened)]="isRightSideNavOpen"
     ><app-right-sidenav-title></app-right-sidenav-title>
+    <app-main-task-form
+      [isImportantFilter]="isImportantFilter"
+      [isCompletedFilter]="isCompletedFilter"
+      [isTasksFilter]="isTasksFilter"
+      [isSuggestions]=true
+    ></app-main-task-form>
     <div
       class="
         bg-gray-700

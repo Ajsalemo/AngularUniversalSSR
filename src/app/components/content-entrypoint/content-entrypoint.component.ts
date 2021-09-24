@@ -37,8 +37,8 @@ export class ContentEntrypointComponent implements OnInit {
     this._bottomMainNavSheet.open(MobileBottomMainNavComponent, {
       data: {
         isCompletedFilter: this.isCompletedFilter,
-        isImportantFilter: this.isImportantFilter
-      }
+        isImportantFilter: this.isImportantFilter,
+      },
     });
   }
 
@@ -68,6 +68,6 @@ export class ContentEntrypointComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onResize()
+    this.onResize();
   }
 }
