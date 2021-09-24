@@ -38,6 +38,18 @@ export class MainTaskFormComponent implements OnInit {
     private router: Router
   ) {
     this.testBrowser = isPlatformBrowser(platformId);
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      /* 
+        Note: If it is a NavigationEnd event re-initalise the component
+        In the functions below, we call this.router.navigate['tasks']
+        This reloads the components under the /tasks route instead of recalling 'retrieveAllTasks' after each invocation to pull the updated data from postgres
+        'retrieveAllTasks' now will get called once instead of duplicate calls if done otherwise
+        This is done to reload the view after changes are made via this form in either the 'Suggestions' popout nav or through the main task form
+      */
+      if (e instanceof NavigationEnd) {
+        this.retrieveAllTasks();
+      }
+    });
   }
 
   mainTaskForm = new FormGroup({
@@ -98,11 +110,9 @@ export class MainTaskFormComponent implements OnInit {
         this.mainTasksToDisplay = tasks;
         this.isLoading = false;
         this.isError = false;
-        return;
       } else {
         this.isLoading = false;
         this.isError = true;
-        return;
       }
     } catch (e) {
       console.error(e);
@@ -126,7 +136,7 @@ export class MainTaskFormComponent implements OnInit {
       this.mainTaskForm.reset();
       // If the submit occurred successfully then retrieve tasks
       if (submitForm && submitForm.task) {
-        await this.retrieveAllTasks();
+        this.router.navigate(['tasks']);
         this.isError = false;
         this.isLoading = false;
       }
@@ -150,7 +160,7 @@ export class MainTaskFormComponent implements OnInit {
       if (message) {
         this.isLoading = false;
         this.isError = false;
-        await this.retrieveAllTasks();
+        this.router.navigate(['tasks']);
       }
     } catch (e) {
       console.error(e);
@@ -171,15 +181,16 @@ export class MainTaskFormComponent implements OnInit {
           false,
           this.userEmail
         );
-        return await this.retrieveAllTasks();
+        this.router.navigate(['tasks']);
       } else {
         await this.formServicesService.mainTaskFormCompleteTodo(
           id,
           true,
           this.userEmail
         );
-        return await this.retrieveAllTasks();
+        this.router.navigate(['tasks']);
       }
+      this.router.navigate(['tasks']);
     } catch (e) {
       console.error(e);
       this.catchError = 'An error has occurred. Please try again.';
@@ -200,7 +211,7 @@ export class MainTaskFormComponent implements OnInit {
           this.userEmail
         );
         this.isLoading = true;
-        return await this.retrieveAllTasks();
+        this.router.navigate(['tasks']);
       } else {
         await this.formServicesService.mainTaskFormSetImportantTodo(
           id,
@@ -208,7 +219,7 @@ export class MainTaskFormComponent implements OnInit {
           this.userEmail
         );
         this.isLoading = true;
-        return await this.retrieveAllTasks();
+        this.router.navigate(['tasks']);
       }
     } catch (e) {
       console.error(e);
@@ -226,7 +237,7 @@ export class MainTaskFormComponent implements OnInit {
       date,
       this.userEmail
     );
-    return await this.retrieveAllTasks();
+    this.router.navigate(['tasks']);
   }
 
   // Set a tasks due date to one day ahead (tomorrow)
@@ -239,7 +250,7 @@ export class MainTaskFormComponent implements OnInit {
         tomorrowDate,
         this.userEmail
       );
-      return await this.retrieveAllTasks();
+      this.router.navigate(['tasks']);
     } catch (e) {
       console.error(e);
       this.catchError = 'An error has occurred. Please try again.';
@@ -256,7 +267,7 @@ export class MainTaskFormComponent implements OnInit {
         null,
         this.userEmail
       );
-      return await this.retrieveAllTasks();
+      this.router.navigate(['tasks']);
     } catch (e) {
       console.error(e);
       this.catchError = 'An error has occurred. Please try again.';
@@ -275,7 +286,7 @@ export class MainTaskFormComponent implements OnInit {
             if (user && user.email) {
               this.userEmail = user.email;
               await this.userService.checkUserUponLogin(user.email);
-              await this.retrieveAllTasks();
+              this.router.navigate(['tasks']);
             } else {
               this.isLoading = false;
               console.error('No user object exists.');
@@ -299,6 +310,12 @@ export class MainTaskFormComponent implements OnInit {
     // This prevents an 'NetworkError' when trying to run these functions onInit
     if (this.testBrowser) {
       this.checkIfAuth0UserExists();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
     }
   }
 }
