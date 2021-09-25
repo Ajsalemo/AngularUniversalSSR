@@ -62,7 +62,7 @@ export class MainTaskFormComponent implements OnInit {
   }
 
   // This checks the calendar day difference in between now and the selected target date for the task
-  setFormatTaskDueDateBoolean(date: any) {
+  setFormatTaskDueDateBoolean(date: any): boolean {
     const todayDueDateBoolean = new Date();
     const todayDateDiffBool = differenceInCalendarDays(
       parseISO(date),
@@ -80,7 +80,7 @@ export class MainTaskFormComponent implements OnInit {
   }
 
   // Logic to check the current date
-  formatTaskDueDate(date: any) {
+  formatTaskDueDate(date: any): string | void {
     if (!date) return;
     const todayDueDate = new Date();
     const todayDateDiff = differenceInCalendarDays(
@@ -95,6 +95,25 @@ export class MainTaskFormComponent implements OnInit {
       return `Overdue on ${format(parseISO(date), 'M/d/y')}`;
     } else {
       return `Due on ${format(parseISO(date), 'M/d/y')}`;
+    }
+  }
+
+  /* 
+    A function to check whether or not to hide suggested tasks
+    This only displays tasks that were created 3 or more days ago
+  */
+  showOrHideSuggestedTasks(date: any): boolean | void {
+    if (!date) return;
+    const suggestedTodayDueDate = new Date();
+    const suggestedDateDiff = differenceInCalendarDays(
+      parseISO(date),
+      suggestedTodayDueDate
+    );
+
+    if (suggestedDateDiff > -2) {
+      return true;
+    } else {
+      return false;
     }
   }
 

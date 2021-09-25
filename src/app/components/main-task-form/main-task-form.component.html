@@ -17,7 +17,8 @@
       [ngClass]="{
         hidden:
           (isImportantFilter === true && task.important === false) ||
-          (isCompletedFilter === true && task.completed === false)
+          (isCompletedFilter === true && task.completed === false) ||
+          (isSuggestions === true && showOrHideSuggestedTasks(task.createdAt))
       }"
     >
       <div class="flex items-center py-1">
