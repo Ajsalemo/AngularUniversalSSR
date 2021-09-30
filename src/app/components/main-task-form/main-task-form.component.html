@@ -85,6 +85,9 @@
                 hover:bg-gray-700
                 border-l-2 border-transparent
                 hover:border-gray-500
+                text-left
+                flex
+                items-center
               "
               (click)="completeTask(task.id, task.completed)"
             >
@@ -139,6 +142,26 @@
                   : "Due today"
               }}</span>
             </button>
+            <mat-form-field
+              appearance="fill"
+              class="
+                hover:bg-gray-700
+                border-l-2 border-transparent
+                hover:border-gray-500
+                text-left
+                flex
+                items-center
+              "
+            >
+              <label>Choose a date</label>
+              <input matInput [matDatepicker]="picker" />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+                class="text-white"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
             <div class="h-2 w-full border-b-2 border-gray-500 mx-auto"></div>
             <button
               class="

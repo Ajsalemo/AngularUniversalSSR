@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from '@auth0/auth0-angular';
@@ -41,7 +42,7 @@ import { MaterialModule } from './material.module';
       clientId: '',
     }),
   ],
-  providers: [],
+  providers: [MatNativeDateModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
