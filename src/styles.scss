@@ -40,7 +40,11 @@ body {
   @apply bg-gray-300;
 }
 
-// Placeholder input color override 
+.mat-form-field-infix {
+  width: 7rem !important;
+}
+
+// Placeholder input color override
 ::placeholder {
   color: #d1d5db !important;
 }

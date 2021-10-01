@@ -29,6 +29,8 @@ export class MainTaskFormComponent implements OnInit {
   catchError!: string;
   userEmail!: string;
   navigationSubscription: any;
+  datePickerMinDate: Date;
+  datePickerMaxDate: Date;
 
   constructor(
     private formServicesService: FormServicesService,
@@ -37,6 +39,11 @@ export class MainTaskFormComponent implements OnInit {
     private userService: UserServicesService,
     private router: Router
   ) {
+    const date = new Date();
+    const currentYear = new Date().getFullYear();
+    this.datePickerMinDate = new Date()
+    // This sets the max date range for up to 2 years when using the date picker
+    this.datePickerMaxDate = new Date(currentYear + 2, 11, 31);
     this.testBrowser = isPlatformBrowser(platformId);
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       /* 
