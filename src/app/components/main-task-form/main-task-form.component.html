@@ -142,7 +142,7 @@
                   : "Due today"
               }}</span>
             </button>
-            <div>
+            <form [formGroup]="datePickerForm">
               <mat-form-field
                 appearance="fill"
                 class="
@@ -160,15 +160,19 @@
                   [min]="datePickerMinDate"
                   [max]="datePickerMaxDate"
                   [matDatepicker]="picker"
+                  formControlName="datePicker"
                 />
                 <mat-datepicker-toggle
                   matSuffix
                   [for]="picker"
                   class="text-white"
                 ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <mat-datepicker
+                  #picker
+                  (focusout)="submitDatePickerForm(datePickerForm)"
+                ></mat-datepicker>
               </mat-form-field>
-            </div>
+            </form>
             <div class="h-2 w-full border-b-2 border-gray-500 mx-auto"></div>
             <button
               class="

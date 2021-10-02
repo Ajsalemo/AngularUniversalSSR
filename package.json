@@ -29,7 +29,6 @@
     "@ngneat/tailwind": "^7.0.3",
     "@nguniversal/express-engine": "^12.1.0",
     "date-fns": "^2.23.0",
-    "dotenv": "^10.0.0",
     "express": "^4.15.2",
     "mysql2": "^2.3.0",
     "pg-hstore": "^2.3.4",

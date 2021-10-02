@@ -62,9 +62,17 @@ export class MainTaskFormComponent implements OnInit {
     task: new FormControl('', [Validators.required, Validators.minLength(2)]),
   });
 
+  datePickerForm = new FormGroup({
+    datePicker: new FormControl(''),
+  });
+
   // Field getter
   get getTaskControl() {
     return this.mainTaskForm.controls;
+  }
+
+  get getDatePicketControl() {
+    return this.datePickerForm.controls;
   }
 
   // This checks the calendar day difference in between now and the selected target date for the task
@@ -145,6 +153,10 @@ export class MainTaskFormComponent implements OnInit {
       this.isLoading = false;
       this.isError = true;
     }
+  }
+
+  async submitDatePickerForm(data: any): Promise<void> {
+    console.log(data);
   }
 
   // Function to submit tasks on the main form/input
