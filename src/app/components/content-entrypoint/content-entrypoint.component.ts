@@ -34,17 +34,19 @@ export class ContentEntrypointComponent implements OnInit {
 
   // Opens the left-sidenav bottom sheet component (mobile viewing)
   openBottomMainNavSheet(): void {
-    this._bottomMainNavSheet.open(MobileBottomMainNavComponent, {
-      data: {
-        isCompletedFilter: this.isCompletedFilter,
-        isImportantFilter: this.isImportantFilter,
-      },
-    });
+    this._bottomMainNavSheet.open(MobileBottomMainNavComponent);
   }
 
   // Opens the right-sidenav bottom sheet component (mobile viewing)
+  // We pass the data into the component to act as 2-way binding of sorts
   openBottomSuggestionsSheet(): void {
-    this._bottomMainNavSheet.open(MobileBottomSuggestionsComponent);
+    this._bottomMainNavSheet.open(MobileBottomSuggestionsComponent, {
+      data: {
+        isCompletedFilter: this.isCompletedFilter,
+        isImportantFilter: this.isImportantFilter,
+        isTasksFilter: this.isTasksFilter
+      },
+    });
   }
 
   /* 
