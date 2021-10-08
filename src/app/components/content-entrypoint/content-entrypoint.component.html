@@ -24,20 +24,30 @@
           Else the desktop sidenav is loaded
         -->
         <button
-          (click)="
-            !hideLeftHandSideNavToggle
-              ? openBottomMainNavSheet()
-              : (isLeftHandSideNavOpen = !isLeftHandSideNavOpen)
-          "
           aria-label="Open main navigation"
           [class]="
             hideLeftHandSideNavToggle === true
               ? 'hidden'
               : 'bg-gray-800 h-8 w-8 mt-2 ml-2'
           "
+          [matMenuTriggerFor]="filterMenu"
         >
           <mat-icon class="text-white text-sm">menu</mat-icon>
         </button>
+        <!-- This menu gets displayed on under 768px - since this is tied to the above button -->
+        <mat-menu
+          #filterMenu="matMenu"
+          class="border-gray-700 border-2 bg-gray-800"
+        >
+          <div (click)="$event.stopPropagation()">
+            <app-avatar></app-avatar>
+            <app-left-sidenav-options
+              [(isImportantFilter)]="isImportantFilter"
+              [(isCompletedFilter)]="isCompletedFilter"
+              [(isTasksFilter)]="isTasksFilter"
+            ></app-left-sidenav-options>
+          </div>
+        </mat-menu>
         <app-task-heading
           [userSelectedTheme]="userSelectedTheme"
         ></app-task-heading>
@@ -59,11 +69,14 @@
         <button
           aria-label="Open themes"
           class="p-1 mr-2 my-2 bg-gray-800"
-          [matMenuTriggerFor]="menu"
+          [matMenuTriggerFor]="themeMenu"
         >
           <mat-icon class="text-white text-sm">more_horiz</mat-icon>
         </button>
-        <mat-menu #menu="matMenu" class="border-gray-700 border-2 bg-gray-800">
+        <mat-menu
+          #themeMenu="matMenu"
+          class="border-gray-700 border-2 bg-gray-800"
+        >
           <div class="text-gray-300 ml-2">Theme</div>
           <div class="grid grid-cols-5 gap-4 pl-2 pr-2">
             <div *ngFor="let theme of backgroundTheme">

@@ -31,12 +31,6 @@ export class ContentEntrypointComponent implements OnInit {
     this.userSelectedTheme = theme;
   }
 
-  // Opens the left-sidenav bottom sheet component (mobile viewing)
-  openBottomMainNavSheet(): void {
-    // TODO change this to use a Menu component to properly add 2way binding
-    console.log('TBD')
-  }
-
   // Opens the right-sidenav bottom sheet component (mobile viewing)
   // We pass the data into the component to act as 2-way binding of sorts
   openBottomSuggestionsSheet(): void {
