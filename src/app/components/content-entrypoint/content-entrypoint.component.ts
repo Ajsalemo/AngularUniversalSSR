@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { themeApiArray } from '@api/themeApi';
-import { MobileBottomMainNavComponent } from '@components/mobile-bottom-main-nav/mobile-bottom-main-nav.component';
 import { MobileBottomSuggestionsComponent } from '@components/mobile-bottom-suggestions/mobile-bottom-suggestions.component';
 
 @Component({
@@ -34,7 +33,8 @@ export class ContentEntrypointComponent implements OnInit {
 
   // Opens the left-sidenav bottom sheet component (mobile viewing)
   openBottomMainNavSheet(): void {
-    this._bottomMainNavSheet.open(MobileBottomMainNavComponent);
+    // TODO change this to use a Menu component to properly add 2way binding
+    console.log('TBD')
   }
 
   // Opens the right-sidenav bottom sheet component (mobile viewing)

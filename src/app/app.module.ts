@@ -10,7 +10,6 @@ import { AvatarComponent } from '@components/avatar/avatar.component';
 import { ContentEntrypointComponent } from '@components/content-entrypoint/content-entrypoint.component';
 import { LeftSidenavOptionsComponent } from '@components/left-sidenav-options/left-sidenav-options.component';
 import { MainTaskFormComponent } from '@components/main-task-form/main-task-form.component';
-import { MobileBottomMainNavComponent } from '@components/mobile-bottom-main-nav/mobile-bottom-main-nav.component';
 import { MobileBottomSuggestionsComponent } from '@components/mobile-bottom-suggestions/mobile-bottom-suggestions.component';
 import { RightSidenavTitleComponent } from '@components/right-sidenav-title/right-sidenav-title.component';
 import { TaskHeadingComponent } from '@components/task-heading/task-heading.component';
@@ -26,7 +25,6 @@ import { MaterialModule } from './material.module';
     RightSidenavTitleComponent,
     MainTaskFormComponent,
     TaskHeadingComponent,
-    MobileBottomMainNavComponent,
     MobileBottomSuggestionsComponent,
     LandingComponent,
   ],
