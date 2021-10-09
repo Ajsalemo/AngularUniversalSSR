@@ -13,9 +13,11 @@ import { MainTaskFormComponent } from '@components/main-task-form/main-task-form
 import { MobileBottomSuggestionsComponent } from '@components/mobile-bottom-suggestions/mobile-bottom-suggestions.component';
 import { RightSidenavTitleComponent } from '@components/right-sidenav-title/right-sidenav-title.component';
 import { TaskHeadingComponent } from '@components/task-heading/task-heading.component';
+import { environment } from 'src/environments/environment.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { LandingComponent } from './components/landing/landing.component';
 import { MaterialModule } from './material.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,8 +38,8 @@ import { MaterialModule } from './material.module';
     ReactiveFormsModule,
     HttpClientModule,
     AuthModule.forRoot({
-      domain: '',
-      clientId: '',
+      domain: environment.AUTH0_DOMAIN,
+      clientId: environment.AUTH0_CLIENT_ID,
     }),
   ],
   providers: [MatNativeDateModule],

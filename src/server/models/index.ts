@@ -2,17 +2,18 @@ import { Sequelize } from 'sequelize';
 import * as mysql2 from 'mysql2';
 import todoWrapper from './todos';
 import userWrapper from './user';
+import { environment } from 'src/environments/environment.prod';
 
 const sequelize = new Sequelize(
   // Database
-  '',
+  environment.POSTGRES_DATABASE,
   // Username
-  '',
+  environment.POSTGRES_USERNAME,
   // Password
-  '',
+  environment.POSTGRES_PASSWORD,
   {
     // Host
-    host: '',
+    host: environment.POSTGRES_HOST,
     port: 3306,
     dialect: 'mysql',
     /*

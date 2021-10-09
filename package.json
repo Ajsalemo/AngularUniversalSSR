@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build && ng run AngularUniversalSSR:server",
+    "config": "npx ts-node ./scripts/setenv.ts",
+    "start": "npm run config -- --environment=prod && ng serve",
+    "build": "npm run config -- --environment=prod && ng build && ng run AngularUniversalSSR:server",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "dev:ssr": "ng run AngularUniversalSSR:serve-ssr",
-    "serve:ssr": "node dist/AngularUniversalSSR/server/main.js",
-    "build:ssr": "ng build && ng run AngularUniversalSSR:server",
+    "dev:ssr": "npm run config -- --environment=prod && ng run AngularUniversalSSR:serve-ssr",
+    "serve:ssr": "npm run config -- --environment=prod && node dist/AngularUniversalSSR/server/main.js",
+    "build:ssr": "npm run config -- --environment=prod && ng build && ng run AngularUniversalSSR:server",
     "prerender": "ng run AngularUniversalSSR:prerender"
   },
   "private": true,
@@ -49,6 +50,7 @@
     "@types/mysql2": "github:types/mysql2",
     "@types/node": "^12.20.19",
     "@types/validator": "^13.6.3",
+    "dotenv": "^10.0.0",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -57,6 +59,7 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "sequelize-cli": "^6.2.0",
     "tailwindcss": "2.2.4",
-    "typescript": "~4.3.2"
+    "typescript": "~4.3.2",
+    "yargs": "^17.2.1"
   }
 }
