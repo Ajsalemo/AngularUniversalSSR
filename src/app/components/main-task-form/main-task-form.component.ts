@@ -155,8 +155,20 @@ export class MainTaskFormComponent implements OnInit {
     }
   }
 
-  async submitDatePickerForm(data: any): Promise<void> {
-    console.log(data);
+  async submitDatePickerForm(id: number, data: any): Promise<void> {
+    try {
+      await this.formServicesService.mainTaskFormSetDueDateToday(
+        id,
+        data.value.datePicker,
+        this.userEmail
+      );
+      this.router.navigate(['tasks']);
+    } catch (e) {
+      console.error(e);
+      this.catchError = 'An error has occurred. Please try again.';
+      this.isLoading = false;
+      this.isError = true;
+    }
   }
 
   // Function to submit tasks on the main form/input
@@ -268,13 +280,20 @@ export class MainTaskFormComponent implements OnInit {
 
   // Set a tasks due date
   async setTaskDueDateToToday(id: number): Promise<void> {
-    const date = new Date();
-    await this.formServicesService.mainTaskFormSetDueDateToday(
-      id,
-      date,
-      this.userEmail
-    );
-    this.router.navigate(['tasks']);
+    try {
+      const date = new Date();
+      await this.formServicesService.mainTaskFormSetDueDateToday(
+        id,
+        date,
+        this.userEmail
+      );
+      this.router.navigate(['tasks']);
+    } catch (e) {
+      console.error(e);
+      this.catchError = 'An error has occurred. Please try again.';
+      this.isLoading = false;
+      this.isError = true;
+    }
   }
 
   // Set a tasks due date to one day ahead (tomorrow)

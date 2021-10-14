@@ -169,7 +169,7 @@
                 ></mat-datepicker-toggle>
                 <mat-datepicker
                   #picker
-                  (closed)="submitDatePickerForm(datePickerForm)"
+                  (closed)="submitDatePickerForm(task.id, datePickerForm)"
                 ></mat-datepicker>
               </mat-form-field>
             </form>
