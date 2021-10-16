@@ -48,3 +48,23 @@ body {
 ::placeholder {
   color: #d1d5db !important;
 }
+
+// Custom scrollbar
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  @apply w-3;
+}
+
+*::-webkit-scrollbar-track {
+  @apply bg-gray-700;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-white;
+  @apply rounded-3xl;
+}
