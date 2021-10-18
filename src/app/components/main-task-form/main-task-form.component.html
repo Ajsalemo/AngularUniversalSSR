@@ -1,7 +1,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
-<div class="flex flex-col items-center">
-  <ul class="flex items-left w-5/6" *ngFor="let task of mainTasksToDisplay">
+<div class="flex flex-col items-center min-h-3/4 mb-16">
+  <ul class="flex flex-col items-left w-5/6">
     <li
       class="
         w-full
@@ -20,6 +20,7 @@
           (isCompletedFilter === true && task.completed === false) ||
           (isSuggestions === true && showOrHideSuggestedTasks(task.createdAt))
       }"
+      *ngFor="let task of mainTasksToDisplay"
     >
       <div class="flex items-center py-1">
         <mat-icon

@@ -23,6 +23,9 @@ module.exports = {
         ft: "fit-content",
       },
     },
+    minHeight: {
+      "3/4": "75%",
+    },
   },
   variants: {
     extend: {
