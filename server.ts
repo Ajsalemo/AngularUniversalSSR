@@ -5,6 +5,7 @@ import * as express from 'express';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import 'zone.js/dist/zone-node';
+import { checkJwt } from './auth/auth';
 import { AppServerModule } from './src/main.server';
 import db from './src/server/models/index';
 
@@ -31,7 +32,7 @@ export function app(): express.Express {
 
   // Express Rest API endpoints
   // Add a task
-  server.post('/api/task/submit', async (req, res) => {
+  server.post('/api/task/submit', checkJwt, async (req, res) => {
     try {
       const {
         data: { task },
@@ -82,7 +83,7 @@ export function app(): express.Express {
   });
 
   // Update a task with a due date
-  server.put('/api/task/due/:id', async (req, res) => {
+  server.put('/api/task/due/:id', checkJwt, async (req, res) => {
     try {
       const { id } = req.params;
       const { isDueBy, email } = req.body;
@@ -132,7 +133,7 @@ export function app(): express.Express {
   });
 
   // Delete a task
-  server.delete('/api/task/delete/:id', async (req, res) => {
+  server.delete('/api/task/delete/:id', checkJwt, async (req, res) => {
     try {
       const { id } = req.params;
       const { email } = req.body;
@@ -178,7 +179,7 @@ export function app(): express.Express {
   });
 
   // Update a task to be completed/incomplete
-  server.put('/api/task/complete/:id', async (req, res) => {
+  server.put('/api/task/complete/:id', checkJwt, async (req, res) => {
     try {
       const { id } = req.params;
       const { isCompleted, email } = req.body;
@@ -231,7 +232,7 @@ export function app(): express.Express {
   });
 
   // Update a task to be important/unimportant
-  server.put('/api/task/important/:id', async (req, res) => {
+  server.put('/api/task/important/:id', checkJwt, async (req, res) => {
     try {
       const { id } = req.params;
       const { isImportant, email } = req.body;
@@ -283,7 +284,7 @@ export function app(): express.Express {
   });
 
   // Find all tasks
-  server.get('/api/task/get/:email', async (req, res) => {
+  server.get('/api/task/get/:email', checkJwt, async (req, res) => {
     try {
       const { email } = req.params;
       // If the email parameter exists and isn't emptry search for the user
@@ -325,10 +326,10 @@ export function app(): express.Express {
   });
 
   // Add a user
-  server.get('/api/user/get/:email', async (req, res) => {
+  server.get('/api/user/get/:email', checkJwt, async (req, res) => {
     try {
       const { email } = req.params;
-      // If the email parameter exists and isn't emptry search for the user
+      // If the email parameter exists and isn't empty search for the user
       if (email && email !== '') {
         const findUser = await db.Users.findOne({
           where: {
@@ -430,3 +431,4 @@ if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
 }
 
 export * from './src/main.server';
+

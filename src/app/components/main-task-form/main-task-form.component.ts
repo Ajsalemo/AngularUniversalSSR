@@ -336,6 +336,7 @@ export class MainTaskFormComponent implements OnInit {
   checkIfAuth0UserExists(): void {
     try {
       this.isError = false;
+      this.isLoading = true;
       this.auth.isLoading$.subscribe((isLoading) => {
         if (!isLoading) {
           this.auth.user$.subscribe(async (user) => {
