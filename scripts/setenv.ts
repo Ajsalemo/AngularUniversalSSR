@@ -20,7 +20,10 @@ const environmentFileContent = `
         POSTGRES_PASSWORD: "${process.env.POSTGRES_PASSWORD}",
         POSTGRES_HOST: "${process.env.POSTGRES_HOST}",
         AUTH0_DOMAIN: "${process.env.AUTH0_DOMAIN}",
-        AUTH0_CLIENT_ID: "${process.env.AUTH0_CLIENT_ID}"
+        AUTH0_CLIENT_ID: "${process.env.AUTH0_CLIENT_ID}",
+        AUTH0_AUDIENCE: "${process.env.AUTH0_AUDIENCE}",
+        AUTH0_ALGORITHMS: "${process.env.AUTH0_ALGORITHMS}",
+        AUTH0_JWKS_URI: "${process.env.AUTH0_JWKS_URI}",
     };
 `;
 // Write the content to the respective file
