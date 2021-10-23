@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "config": "npx ts-node ./scripts/setenv.ts",
+    "config": "npx --yes ts-node ./scripts/setenv.ts",
     "start": "npm run config -- --environment=prod && ng serve",
     "build": "npm run config -- --environment=prod && ng build && ng run AngularUniversalSSR:server",
     "watch": "ng build --watch --configuration development",
@@ -32,8 +32,6 @@
     "date-fns": "^2.23.0",
     "express": "^4.15.2",
     "express-jwt": "^6.1.0",
-    "express-jwt-authz": "^2.4.1",
-    "express-oauth2-jwt-bearer": "^1.0.0",
     "jwks-rsa": "^2.0.5",
     "mysql2": "^2.3.0",
     "pg-hstore": "^2.3.4",

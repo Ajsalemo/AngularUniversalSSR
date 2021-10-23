@@ -15,10 +15,10 @@ const targetPath = isProduction
 const environmentFileContent = `
     export const environment = {
         production: ${isProduction},
-        POSTGRES_DATABASE: "${process.env.POSTGRES_DATABASE}",
-        POSTGRES_USERNAME: "${process.env.POSTGRES_USERNAME}",
-        POSTGRES_PASSWORD: "${process.env.POSTGRES_PASSWORD}",
-        POSTGRES_HOST: "${process.env.POSTGRES_HOST}",
+        MYSQL_DATABASE: "${process.env.MYSQL_DATABASE}",
+        MYSQL_USERNAME: "${process.env.MYSQL_USERNAME}",
+        MYSQL_PASSWORD: "${process.env.MYSQL_PASSWORD}",
+        MYSQL_HOST: "${process.env.MYSQL_HOST}",
         AUTH0_DOMAIN: "${process.env.AUTH0_DOMAIN}",
         AUTH0_CLIENT_ID: "${process.env.AUTH0_CLIENT_ID}",
         AUTH0_AUDIENCE: "${process.env.AUTH0_AUDIENCE}",
