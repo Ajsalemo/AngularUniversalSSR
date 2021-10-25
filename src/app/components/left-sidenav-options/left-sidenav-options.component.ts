@@ -21,7 +21,6 @@ export class LeftSidenavOptionsComponent implements OnInit {
   isTasksFilterChange = new EventEmitter();
 
   setIsImportantFilterChange(): void {
-    console.log(this.isImportantFilter)
     if (this.isImportantFilter === true) {
       this.isImportantFilter = false;
       this.isImportantFilterChange.emit(this.isImportantFilter);
