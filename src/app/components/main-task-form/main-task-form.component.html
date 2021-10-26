@@ -2,6 +2,11 @@
 
 <div class="flex flex-col items-center min-h-3/4 mb-16">
   <ul class="flex flex-col items-left w-5/6">
+    <!-- 
+      The ngClass 'hidden' is dictated by whether or not those properties (i.e, isImportantFilter, isCompletedFilter, etc) is true or false
+      These are set programatically to show/hide those filters to reflect in the UI when toggled by a user
+      The logic for this can be found in 'left-sidenav-options.component.ts', which is also implemented via 2-way binding inside 'main-task-form.component.html'
+    -->
     <li
       class="
         w-full

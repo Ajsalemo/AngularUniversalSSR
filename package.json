@@ -4,8 +4,10 @@
   "scripts": {
     "ng": "ng",
     "config": "npx --yes ts-node ./scripts/setenv.ts",
+    "config:prod": "ts-node ./scripts/setenv.ts",
     "start": "npm run config -- --environment=prod && ng serve",
     "build": "npm run config -- --environment=prod && ng build && ng run AngularUniversalSSR:server",
+    "build:prod": "npm run config:prod -- --environment=prod && npm run prerender",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "npm run config -- --environment=prod && ng run AngularUniversalSSR:serve-ssr",
