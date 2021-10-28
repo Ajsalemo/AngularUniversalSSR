@@ -11,9 +11,18 @@ COPY . /app/
 RUN npm run build:prod
 
 FROM node:14-alpine3.10
-ENV DOCKER_CONTAINER=true
 
 COPY --from=build /app/ /app/
-RUN npm install -g pm2
-EXPOSE 4000
-CMD [ "pm2", "start", "/app/dist/AngularUniversalSSR/server/main.js", "--no-daemon", "-i", "0" ]
+COPY sshd_config /etc/ssh/
+
+WORKDIR /etc/ssh/
+RUN apk add openssh \
+    && echo "root:Docker!" | chpasswd \
+    && chmod +x /app/init_container.sh \
+    && ssh-keygen -A \
+    && npm install -g pm2
+# Switch back to /app/ to the logic in server.ts on line 16 can properly evaluate
+WORKDIR /app/
+
+EXPOSE 4000 2222
+ENTRYPOINT [ "/app/init_container.sh" ]

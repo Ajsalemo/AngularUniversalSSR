@@ -1,8 +1,20 @@
 import * as mysql2 from 'mysql2';
+import * as os from 'os';
 import { Sequelize } from 'sequelize';
 import { environment } from 'src/environments/environment.prod';
 import todoWrapper from './todos';
 import userWrapper from './user';
+
+const calculatePoolfromCPU = () => {
+  if (os.cpus().length > 0) {
+    const val = 128 / os.cpus().length
+    return Math.floor(val)
+  } else if (os.cpus().length === 0 || os.cpus().length === 128) {
+    return 128
+  } else {
+    return 128
+  }
+}
 
 const sequelize = new Sequelize(
   // Database
@@ -22,7 +34,7 @@ const sequelize = new Sequelize(
     */
     dialectModule: mysql2,
     pool: {
-      max: 128,
+      max: calculatePoolfromCPU(),
       min: 0,
       acquire: 30000,
       idle: 10000,

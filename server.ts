@@ -12,8 +12,7 @@ import db from './src/server/models/index';
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
-  // If the current environment is the docker container, change the distFolder directory to prefix it with /app/ to avoid 'view' lookup failures
-  const distFolder = join(process.cwd(), process.env.DOCKER_CONTAINER ? '/app/dist/AngularUniversalSSR/browser' : 'dist/AngularUniversalSSR/browser');
+  const distFolder = join(process.cwd(), 'dist/AngularUniversalSSR/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? 'index.original.html'
     : 'index';
