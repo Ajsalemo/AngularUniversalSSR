@@ -347,7 +347,6 @@ export function app(): express.Express {
             .send({ message: `User added: ${createNonExistentUser?.email}` });
         } else {
           // Else the user already exists and skip creation
-          console.log('User found: ' + findUser?.email);
           res.status(200).send({ message: 'User exists' });
         }
       } else {
@@ -385,17 +384,6 @@ export function app(): express.Express {
   return server;
 }
 
-// Sync the database depending on the current environment
-function syncDatabaseIfDevelopment(): boolean {
-  if (process.env.NODE_ENV === 'development') {
-    console.log(`Current environment is: ${process.env.NODE_ENV}`);
-    return true;
-  } else {
-    console.log(`Current development environment is: ${process.env.NODE_ENV}`);
-    return false;
-  }
-}
-
 function run(): void {
   const port = process.env.PORT || 4000;
   const server = app();
@@ -413,10 +401,10 @@ function run(): void {
         });
       })
       .catch((e: any) =>
-        console.log(`An error has occurred with Sequelize and MySQL: ${e}`)
+        console.error(`An error has occurred with Sequelize and MySQL: ${e}`)
       );
   } catch (error) {
-    console.log(`An error has occurred: ${error}`);
+    console.error(`An error has occurred: ${error}`);
   }
 }
 
