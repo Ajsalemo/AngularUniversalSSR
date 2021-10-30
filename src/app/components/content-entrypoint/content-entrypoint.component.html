@@ -31,6 +31,7 @@
               : 'bg-gray-800 h-8 w-8 mt-2 ml-2'
           "
           [matMenuTriggerFor]="filterMenu"
+          type="button"
         >
           <mat-icon class="text-white text-sm">menu</mat-icon>
         </button>
@@ -62,6 +63,7 @@
           "
           aria-label="Open suggestions"
           class="p-1 mr-2 my-2 bg-gray-800"
+          type="button"
         >
           <mat-icon class="text-white text-sm">lightbulb</mat-icon>
         </button>
@@ -70,6 +72,7 @@
           aria-label="Open themes"
           class="p-1 mr-2 my-2 bg-gray-800"
           [matMenuTriggerFor]="themeMenu"
+          type="button"
         >
           <mat-icon class="text-white text-sm">more_horiz</mat-icon>
         </button>
@@ -124,6 +127,7 @@
       <button
         (click)="isRightSideNavOpen = !isRightSideNavOpen"
         aria-label="Close sidenav button"
+        type="button"
       >
         <mat-icon class="text-gray-400">arrow_forward_ios</mat-icon>
       </button>

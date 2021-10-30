@@ -57,13 +57,18 @@
         <button
           class="flex items-center"
           (click)="makeTaskImportant(task.id, task.important)"
+          type="button"
         >
           <mat-icon
             class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
             >{{ task.important ? "star" : "star_border" }}</mat-icon
           >
         </button>
-        <button [matMenuTriggerFor]="menu" class="flex items-center">
+        <button
+          [matMenuTriggerFor]="menu"
+          class="flex items-center"
+          type="button"
+        >
           <mat-icon
             class="text-white mr-2 ml-1 cursor-pointer hover:text-blue-500"
             >more_vert</mat-icon
@@ -79,6 +84,7 @@
                 flex
                 items-center
               "
+              type="button"
               (click)="makeTaskImportant(task.id, task.important)"
             >
               <mat-icon class="text-gray-300 text-sm">star_border</mat-icon
@@ -96,6 +102,7 @@
                 items-center
               "
               (click)="completeTask(task.id, task.completed)"
+              type="button"
             >
               <mat-icon class="text-gray-300 text-sm">{{
                 task.completed ? "check_circle" : "check_circle_outline"
@@ -119,6 +126,7 @@
                   ? removeTaskDueDate(task.id)
                   : setTaskDueDateToToday(task.id)
               "
+              type="button"
             >
               <mat-icon class="text-gray-300 text-sm">today</mat-icon>
               <!-- If the format function returns a value then this will show "Remove Due Date" else it'll show 'Due today' since nothing was returned-->
@@ -140,6 +148,7 @@
                   ? setTaskDueDateToTomorrow(task.id)
                   : setTaskDueDateToToday(task.id)
               "
+              type="button"
             >
               <mat-icon class="text-gray-300 text-sm">event</mat-icon>
               <span>{{
@@ -160,13 +169,13 @@
                   items-center
                 "
               >
-                <label>Choose a date</label>
                 <input
                   matInput
                   [min]="datePickerMinDate"
                   [max]="datePickerMaxDate"
                   [matDatepicker]="picker"
                   formControlName="datePicker"
+                  placeholder="Choose a date"
                 />
                 <mat-datepicker-toggle
                   matSuffix
@@ -190,6 +199,7 @@
                 items-center
               "
               (click)="deleteTask(task.id)"
+              type="button"
             >
               <mat-icon class="text-gray-300 text-sm">delete_outline</mat-icon>
               <span>Delete</span>

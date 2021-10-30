@@ -9,7 +9,7 @@ export class MobileBottomSuggestionsComponent implements OnInit {
   isImportantFilter = this.data.isImportantFilter;
   isCompletedFilter = this.data.isCompletedFilter;
   isTasksFilter = this.data.isTasksFilter;
-  
+
   constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {}
 
   ngOnInit(): void {}

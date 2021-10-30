@@ -14,7 +14,8 @@ interface TodoAttributes {
   updatedAt: Date;
 }
 
-export interface TodoCreationAttributes extends Optional<TodoAttributes, 'id'> {}
+export interface TodoCreationAttributes
+  extends Optional<TodoAttributes, 'id'> {}
 
 export class Todo
   extends Model<TodoAttributes, TodoCreationAttributes>
@@ -27,7 +28,6 @@ export class Todo
   public important!: boolean;
   public dueBy!: number;
 
-  // Timestamps
   // Timestamps
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

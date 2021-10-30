@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RightSidenavTitleComponent } from './right-sidenav-title.component';
 
 describe('RightSidenavTitleComponent', () => {
@@ -8,9 +7,8 @@ describe('RightSidenavTitleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RightSidenavTitleComponent ]
-    })
-    .compileComponents();
+      declarations: [RightSidenavTitleComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

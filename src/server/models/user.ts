@@ -3,8 +3,8 @@ import {
   Association,
   HasManyCreateAssociationMixin,
   HasManyGetAssociationsMixin,
-  HasManyRemoveAssociationMixin, Model,
-  Optional
+  Model,
+  Optional,
 } from 'sequelize';
 import { Todo, TodoCreationAttributes } from './todos';
 

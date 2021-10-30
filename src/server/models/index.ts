@@ -7,14 +7,14 @@ import userWrapper from './user';
 
 const calculatePoolfromCPU = () => {
   if (os.cpus().length > 0) {
-    const val = 128 / os.cpus().length
-    return Math.floor(val)
+    const val = 128 / os.cpus().length;
+    return Math.floor(val);
   } else if (os.cpus().length === 0 || os.cpus().length === 128) {
-    return 128
+    return 128;
   } else {
-    return 128
+    return 128;
   }
-}
+};
 
 const sequelize = new Sequelize(
   // Database
@@ -52,13 +52,13 @@ const db = {
 db.Users.hasMany(db.Todos, {
   sourceKey: 'id',
   foreignKey: 'userId',
-  as: 'todos'
-})
+  as: 'todos',
+});
 
 db.Todos.belongsTo(db.Users, {
   foreignKey: 'userId',
-  as: 'user'
-})
+  as: 'user',
+});
 
 Object.values(db).forEach((model: any) => {
   if (model.associate) {

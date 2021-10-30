@@ -38,7 +38,7 @@ export class ContentEntrypointComponent implements OnInit {
       data: {
         isCompletedFilter: this.isCompletedFilter,
         isImportantFilter: this.isImportantFilter,
-        isTasksFilter: this.isTasksFilter
+        isTasksFilter: this.isTasksFilter,
       },
     });
   }

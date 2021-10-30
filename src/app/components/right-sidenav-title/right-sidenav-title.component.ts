@@ -5,10 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './right-sidenav-title.component.html',
 })
 export class RightSidenavTitleComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

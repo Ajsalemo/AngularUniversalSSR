@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MainTaskFormComponent } from './main-task-form.component';
 
 describe('MainTaskFormComponent', () => {
@@ -8,9 +7,8 @@ describe('MainTaskFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainTaskFormComponent ]
-    })
-    .compileComponents();
+      declarations: [MainTaskFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

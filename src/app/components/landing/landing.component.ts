@@ -12,15 +12,15 @@ export class LandingComponent implements OnInit {
     try {
       this.auth.loginWithRedirect();
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   }
 
   ngOnInit(): void {
-    this.auth.isAuthenticated$.subscribe(isAuthenticated => {
+    this.auth.isAuthenticated$.subscribe((isAuthenticated) => {
       if (isAuthenticated) {
-        this.router.navigate(['/tasks'])
+        this.router.navigate(['/tasks']);
       }
-    })
+    });
   }
 }

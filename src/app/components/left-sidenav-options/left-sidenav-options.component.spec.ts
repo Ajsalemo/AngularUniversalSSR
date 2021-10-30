@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LeftSidenavOptionsComponent } from './left-sidenav-options.component';
 
 describe('LeftSidenavOptionsComponent', () => {
@@ -8,9 +7,8 @@ describe('LeftSidenavOptionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LeftSidenavOptionsComponent ]
-    })
-    .compileComponents();
+      declarations: [LeftSidenavOptionsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

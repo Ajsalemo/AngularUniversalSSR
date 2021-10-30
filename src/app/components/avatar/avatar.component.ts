@@ -12,6 +12,5 @@ export class AvatarComponent implements OnInit {
     this.auth.logout({ returnTo: window.location.origin });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

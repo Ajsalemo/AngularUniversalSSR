@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MobileBottomSuggestionsComponent } from './mobile-bottom-suggestions.component';
 
 describe('MobileBottomSuggestionsComponent', () => {
@@ -8,9 +7,8 @@ describe('MobileBottomSuggestionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MobileBottomSuggestionsComponent ]
-    })
-    .compileComponents();
+      declarations: [MobileBottomSuggestionsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
