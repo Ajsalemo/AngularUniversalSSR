@@ -1,6 +1,6 @@
 # AngularUniversalSSR
 
-A todo application using [Angular Universal](https://angular.io/guide/universal#:~:text=This%20guide%20describes%20Angular%20Universal%2C%20a%20technology%20that,pages%20that%20later%20get%20bootstrapped%20on%20the%20client.), [Angular Material](https://material.angular.io/), [Tailwind](https://tailwindcss.com/), [Sequelize](https://sequelize.org/) and [Azure Database for Postgres](https://docs.microsoft.com/en-us/azure/postgresql/overview) along with [Auth0](https://auth0.com/) for Authentication. 
+A To Do application using [Angular Universal](https://angular.io/guide/universal#:~:text=This%20guide%20describes%20Angular%20Universal%2C%20a%20technology%20that,pages%20that%20later%20get%20bootstrapped%20on%20the%20client.), [Angular Material](https://material.angular.io/), [Tailwind](https://tailwindcss.com/), [Sequelize](https://sequelize.org/) and [Azure Database for Postgres](https://docs.microsoft.com/en-us/azure/postgresql/overview) along with [Auth0](https://auth0.com/) for Authentication. 
 
 Some functionality includes:
 - Mark a todo as important
